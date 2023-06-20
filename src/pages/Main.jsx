@@ -15,7 +15,7 @@ const Main = () => {
 
   return (
     <div>
-      Here will be main page when user is logged in
+      <h1>Here will be main page when user is logged in</h1>
       <button onClick={handleLogOut}>logout</button>
     </div>
   );
