@@ -1,3 +1,4 @@
-import SignupBlock from './Auth/SignupBlock';
+import SignupBlock from './Auth/Signup/SignupBlock';
+import LoginBlock from './Auth/Login/LoginBlock';
 
-export { SignupBlock };
+export { SignupBlock, LoginBlock };

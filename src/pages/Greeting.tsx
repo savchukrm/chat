@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { setUser } from '../redux/user/slice';
-
-import { SignupBlock } from '../components';
+import { SignupBlock, LoginBlock } from '../components';
 import { RootState } from '../redux/store';
 
 const Greeting = () => {
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
   const { name } = useSelector((state: RootState) => state.user);
 
   const [signModal, setSignModal] = useState(false);
+  const [logModal, setLogModal] = useState(false);
 
   useEffect(() => {
     if (name) {
@@ -27,21 +25,21 @@ const Greeting = () => {
     setSignModal(true);
   };
 
-  const handleLogin = () => {
-    dispatch(setUser({ name: 'John Doe', email: 'upchh@example.com' }));
-    navigate('/main');
+  const openLogModal = () => {
+    setLogModal(true);
   };
 
   return (
     <>
       {signModal && <SignupBlock setSignModal={setSignModal} />}
+      {logModal && <LoginBlock setLogModal={setLogModal} />}
 
       <div style={styles.container}>
         <header style={styles.header}>
           <h3>Ok to talk!</h3>
 
           <div style={styles.buttonBlock}>
-            <button onClick={handleLogin}>Log in</button>
+            <button onClick={openLogModal}>Log in</button>
             <button onClick={openSighModal}>Sign up free</button>
           </div>
         </header>
