@@ -5,22 +5,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../redux/user/slice';
 
 import { SignupBlock } from '../components';
+import { RootState } from '../redux/store';
 
 const Greeting = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const { name } = useSelector((state: RootState) => state.user);
 
   const [signModal, setSignModal] = useState(false);
 
   useEffect(() => {
-    if (user) {
+    if (name) {
       navigate('/main');
     } else {
       navigate('/');
     }
-  }, [user, navigate]);
+  }, [name, navigate]);
 
   const openSighModal = () => {
     setSignModal(true);
@@ -57,7 +58,7 @@ const styles = {
   },
   header: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'row' as 'row',
     justifyContent: 'space-between',
   },
   buttonBlock: {

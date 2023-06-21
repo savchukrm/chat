@@ -5,21 +5,30 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import { setUser } from '../../redux/user/slice';
 
-const SignupForm = () => {
+interface FormValues {
+  name: string;
+  email: string;
+  password: string;
+}
+
+const SignupForm: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const initialValues = {
+  const initialValues: FormValues = {
     name: '',
     email: '',
     password: '',
   };
 
-  const validateForm = (values) => {
-    const errors = {};
+  const validateForm = (values: FormValues) => {
+    const errors: Partial<FormValues> = {};
 
     if (!values.name) {
       errors.name = 'Required';
+    } else if (!/^[A-Za-z0-9-_.]{1,30}$/.test(values.name)) {
+      errors.name =
+        'Name can only contain alphanumeric characters, "-", ".", and "_"';
     }
 
     if (!values.email) {
@@ -37,9 +46,12 @@ const SignupForm = () => {
     return errors;
   };
 
-  const handleSubmit = (values, { setSubmitting }) => {
+  const handleSubmit = (
+    values: FormValues,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
     setTimeout(() => {
-      alert(`welcome ${values.name}`);
+      alert(`Welcome ${values.name}`);
       setSubmitting(false);
     }, 400);
 
@@ -57,16 +69,17 @@ const SignupForm = () => {
       <Form>
         <div style={styles.formGroup}>
           <label htmlFor="name" style={styles.label}>
-            Full name , how users will see you
+            Full name, how users will see you
           </label>
           <Field
             type="text"
             id="name"
             name="name"
             style={styles.input}
+            maxLength={30}
             placeholder="John Smith"
           />
-          <ErrorMessage name="name" component="div" style={styles.error} />
+          <ErrorMessage name="name" component="div" className="error" />
         </div>
 
         <div style={styles.formGroup}>
@@ -80,7 +93,7 @@ const SignupForm = () => {
             style={styles.input}
             placeholder="name@example.com"
           />
-          <ErrorMessage name="email" component="div" style={styles.error} />
+          <ErrorMessage name="email" component="div" className="error" />
         </div>
 
         <div style={styles.formGroup}>
@@ -94,7 +107,7 @@ const SignupForm = () => {
             style={styles.input}
             placeholder="8 characters or more"
           />
-          <ErrorMessage name="password" component="div" style={styles.error} />
+          <ErrorMessage name="password" component="div" className="error" />
         </div>
 
         <button type="submit" style={styles.submitButton}>
@@ -112,9 +125,6 @@ const styles = {
   label: {
     display: 'block',
     marginBottom: 5,
-  },
-  error: {
-    color: 'red',
   },
   input: {
     padding: 10,

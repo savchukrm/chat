@@ -1,9 +1,15 @@
 import React from 'react';
 
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { FcGoogle } from 'react-icons/fc';
+
 import SignupForm from './SignupForm';
 
-const SignupBlock = ({ setSignModal }) => {
+interface SignupBlockProps {
+  setSignModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const SignupBlock: React.FC<SignupBlockProps> = ({ setSignModal }) => {
   const closeModal = () => {
     setSignModal(false);
   };
@@ -20,6 +26,15 @@ const SignupBlock = ({ setSignModal }) => {
         </div>
 
         <SignupForm />
+
+        <div style={styles.devider}>
+          <span>or</span>
+        </div>
+
+        <div style={styles.googleBtn}>
+          <FcGoogle />
+          <span>Sign up with Google</span>
+        </div>
       </div>
     </div>
   );
@@ -29,20 +44,34 @@ const styles = {
   header: {
     fontSize: 28,
     fontWeight: 600,
-    textAlign: 'center',
+    textAlign: 'center' as 'center',
     marginBottom: '1rem',
   },
   top: {
-    position: 'relative',
+    position: 'relative' as 'relative',
+  },
+  devider: {
+    margin: 17,
+    textAlign: 'center' as 'center',
   },
   closeBtn: {
-    position: 'absolute',
+    position: 'absolute' as 'absolute',
     top: -12,
     right: -15,
     color: '#000000',
     fontSize: 28,
     fontWeight: 600,
     cursor: 'pointer',
+  },
+  googleBtn: {
+    cursor: 'pointer',
+    borderRadius: 4,
+    padding: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    border: '1px solid #000',
   },
 };
 
