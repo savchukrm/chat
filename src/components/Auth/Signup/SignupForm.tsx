@@ -46,18 +46,50 @@ const SignupForm: React.FC = () => {
     return errors;
   };
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: FormValues,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
-    setTimeout(() => {
-      alert(`Welcome ${values.name}`);
-      setSubmitting(false);
-    }, 400);
+    try {
+      const url = 'http://localhost:8200/auth/signUp';
+      const headers = {
+        'Content-Type': 'application/json',
+      };
 
-    navigate('/main');
+      const response = await fetch(url, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          password: values.password,
+          passwordConfirm: values.password, // Assuming the backend expects a "passwordConfirm" field as well
+          // roles: ['USER'], // Assuming the backend expects a "roles" field as an array
+          // active: true, // Assuming the backend expects an "active" field
+          // creationDate: new Date().toISOString(), // Assuming the backend expects a "creationDate" field
+        }),
+      });
 
-    dispatch(setUser({ name: values.name, email: values.email }));
+      if (response.ok) {
+        const { id, name, email, creationDate } = await response.json();
+
+        alert(
+          `Welcome ${name}! User ID: ${id}, Email: ${email}, Created At: ${creationDate}`
+        );
+
+        console.log('Signup response:', { id, name, email, creationDate });
+
+        navigate('/main');
+        dispatch(setUser({ name, email }));
+      } else {
+        // Handle the error response
+        throw new Error('Failed to sign up');
+      }
+    } catch (error: any) {
+      console.error(error.message);
+    }
+
+    setSubmitting(false);
   };
 
   return (
