@@ -21,4 +21,5 @@ export const FONTS = {
   medium: 'InterMedium',
   regular: 'InterRegular',
   light: 'InterLight',
+  hanSansRegular: 'BlackHanSansRegular',
 };
