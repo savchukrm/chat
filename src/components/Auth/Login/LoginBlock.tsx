@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { FcGoogle } from 'react-icons/fc';
+import { SlClose } from 'react-icons/sl';
+
+import { google } from '../../../constants/images';
 
 import LoginForm from './LoginForm';
 
@@ -18,8 +19,8 @@ const LoginBlock: React.FC<LoginBlockProps> = ({ setLogModal }) => {
     <div className="modalBlock">
       <div className="modalContainer">
         <div style={styles.top}>
-          <button style={styles.closeBtn} onClick={closeModal}>
-            <AiOutlineCloseCircle />
+          <button className="closeBtn" onClick={closeModal}>
+            <SlClose />
           </button>
 
           <h3 style={styles.header}>Log in</h3>
@@ -32,7 +33,7 @@ const LoginBlock: React.FC<LoginBlockProps> = ({ setLogModal }) => {
         </div>
 
         <div style={styles.googleBtn}>
-          <FcGoogle />
+          <img src={google} alt="google-icon" />
           <span>Log in with Google</span>
         </div>
       </div>
@@ -42,26 +43,21 @@ const LoginBlock: React.FC<LoginBlockProps> = ({ setLogModal }) => {
 
 const styles = {
   header: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: 600,
     textAlign: 'center' as 'center',
-    marginBottom: '1rem',
+    marginBottom: '20px',
   },
   top: {
     position: 'relative' as 'relative',
+    display: 'flex',
+    alignItems: 'flex-start',
   },
   devider: {
-    margin: 17,
+    fontSize: 14,
+    fontWeight: 500,
+    margin: 10,
     textAlign: 'center' as 'center',
-  },
-  closeBtn: {
-    position: 'absolute' as 'absolute',
-    top: -12,
-    right: -15,
-    color: '#000000',
-    fontSize: 28,
-    fontWeight: 600,
-    cursor: 'pointer',
   },
   googleBtn: {
     cursor: 'pointer',
@@ -72,6 +68,8 @@ const styles = {
     justifyContent: 'center',
     width: '100%',
     border: '1px solid #000',
+    fontSize: 20,
+    gap: 10,
   },
 };
 

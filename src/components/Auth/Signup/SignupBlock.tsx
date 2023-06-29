@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { FcGoogle } from 'react-icons/fc';
+import { SlClose } from 'react-icons/sl';
+
+import { google } from '../../../constants/images';
 
 import SignupForm from './SignupForm';
 
@@ -18,8 +19,8 @@ const SignupBlock: React.FC<SignupBlockProps> = ({ setSignModal }) => {
     <div className="modalBlock">
       <div className="modalContainer">
         <div style={styles.top}>
-          <button style={styles.closeBtn} onClick={closeModal}>
-            <AiOutlineCloseCircle />
+          <button className="closeBtn" onClick={closeModal}>
+            <SlClose />
           </button>
 
           <h3 style={styles.header}>Create your free account</h3>
@@ -32,7 +33,7 @@ const SignupBlock: React.FC<SignupBlockProps> = ({ setSignModal }) => {
         </div>
 
         <div style={styles.googleBtn}>
-          <FcGoogle />
+          <img src={google} alt="google-icon" />
           <span>Sign up with Google</span>
         </div>
       </div>
@@ -49,9 +50,13 @@ const styles = {
   },
   top: {
     position: 'relative' as 'relative',
+    display: 'flex',
+    alignItems: 'flex-start',
   },
   devider: {
-    margin: 17,
+    fontSize: 14,
+    fontWeight: 500,
+    margin: 10,
     textAlign: 'center' as 'center',
   },
   closeBtn: {
@@ -72,6 +77,8 @@ const styles = {
     justifyContent: 'center',
     width: '100%',
     border: '1px solid #000',
+    fontSize: 20,
+    gap: 10,
   },
 };
 

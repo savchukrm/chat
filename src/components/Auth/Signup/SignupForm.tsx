@@ -5,6 +5,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import { setUser } from '../../../redux/user/slice';
 
+import { COLORS } from '../../../constants';
+
 interface FormValues {
   name: string;
   email: string;
@@ -28,7 +30,7 @@ const SignupForm: React.FC = () => {
       errors.name = 'Required';
     } else if (!/^[A-Za-z0-9-_.\s]{1,30}$/.test(values.name)) {
       errors.name =
-        'Name can only contain alphanumeric characters, "-", ".", and "_"';
+        'You can use letters, digits and symbols “-” “_” “.” (up to 30)';
     }
 
     if (!values.email) {
@@ -82,7 +84,6 @@ const SignupForm: React.FC = () => {
         navigate('/main');
         dispatch(setUser({ name, email }));
       } else {
-        // Handle the error response
         throw new Error('Failed to sign up');
       }
     } catch (error: any) {
@@ -113,7 +114,7 @@ const SignupForm: React.FC = () => {
             placeholder="John Smith"
           />
 
-          <div style={{ color: 'red' }}>
+          <div style={{ color: 'red', fontSize: '12px' }}>
             <ErrorMessage name="name" component="div" />
           </div>
         </div>
@@ -128,10 +129,10 @@ const SignupForm: React.FC = () => {
             id="email"
             name="email"
             style={styles.input}
-            placeholder="name@example.com"
+            placeholder="name@gmail.com"
           />
 
-          <div style={{ color: 'red' }}>
+          <div style={{ color: 'red', fontSize: '12px' }}>
             <ErrorMessage name="email" component="div" />
           </div>
         </div>
@@ -150,7 +151,7 @@ const SignupForm: React.FC = () => {
             placeholder="8 characters or more"
           />
 
-          <div style={{ color: 'red' }}>
+          <div style={{ color: 'red', fontSize: '12px' }}>
             <ErrorMessage name="password" component="div" />
           </div>
         </div>
@@ -170,6 +171,8 @@ const styles = {
   label: {
     display: 'block',
     marginBottom: 5,
+    fontSize: 14,
+    fontWeight: 500,
   },
   input: {
     padding: 10,
@@ -179,14 +182,15 @@ const styles = {
     border: '1px solid #ccc',
   },
   submitButton: {
-    fontSize: 18,
+    marginTop: 22,
+    fontSize: 20,
     width: '100%',
     color: '#fff',
     border: 'none',
     borderRadius: 4,
     cursor: 'pointer',
     padding: '10px 20px',
-    backgroundColor: '#007bff',
+    backgroundColor: COLORS.blue,
   },
 };
 

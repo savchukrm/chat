@@ -69,3 +69,17 @@ body {
   background-color: #fff;
   color: var(--color-white);
 }
+
+.closeBtn {
+  position: absolute;
+  top: -12px;
+  right: -15px;
+  color: #bbbbbb;
+  font-size: 28px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.closeBtn:hover {
+  color: black;
+}
