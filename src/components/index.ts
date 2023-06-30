@@ -1,4 +1,3 @@
-import SignupBlock from './Auth/Signup/SignupBlock';
-import LoginBlock from './Auth/Login/LoginBlock';
+import GreetModals from './Modals/GreetModals';
 
-export { SignupBlock, LoginBlock };
+export { GreetModals };

@@ -1,19 +1,25 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-import { setUser } from '../../../redux/user/slice';
+import axios from 'axios';
 
-import { COLORS } from '../../../constants';
+import { setUser, setVerified } from '../../../redux/user/slice';
+
+interface LoginFormProps {
+  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
+  setLoadingModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 interface FormValues {
   email: string;
   password: string;
 }
 
-const LoginForm = () => {
-  const navigate = useNavigate();
+const LoginForm: React.FC<LoginFormProps> = ({
+  setErrorMessage,
+  setLoadingModal,
+}) => {
   const dispatch = useDispatch();
 
   const initialValues: FormValues = {
@@ -39,18 +45,48 @@ const LoginForm = () => {
     return errors;
   };
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: FormValues,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
-    setTimeout(() => {
-      alert(`Welcome ${values.email}`);
-      setSubmitting(false);
-    }, 400);
+    try {
+      setLoadingModal(true);
+      const url = `${process.env.REACT_APP_API_URL}/auth/login`;
+      const headers = {
+        'Content-Type': 'application/json',
+      };
 
-    navigate('/main');
+      const response = await axios.post(
+        url,
+        {
+          login: values.email,
+          password: values.password,
+        },
+        { headers }
+      );
 
-    dispatch(setUser({ name: 'undefined so far', email: values.email }));
+      if (
+        response.status === 200 &&
+        response.data.message ===
+          'Authentication failed, check given credentials'
+      ) {
+        setLoadingModal(false);
+        setErrorMessage('Password or email is incorrect');
+      } else if (response.status === 200) {
+        const { login } = response.data;
+
+        setLoadingModal(false);
+
+        dispatch(setUser({ name: null, email: login }));
+        dispatch(setVerified(true));
+      } else {
+        throw new Error('Failed to sign up');
+      }
+    } catch (error: any) {
+      console.error(error.message);
+    }
+
+    setSubmitting(false);
   };
 
   return (
@@ -96,7 +132,7 @@ const LoginForm = () => {
           </div>
         </div>
 
-        <button type="submit" style={styles.submitButton}>
+        <button type="submit" className="submitBtn">
           Log in
         </button>
       </Form>
@@ -120,16 +156,6 @@ const styles = {
     width: '100%',
     borderRadius: 4,
     border: '1px solid #ccc',
-  },
-  submitButton: {
-    marginTop: 22,
-    fontSize: 20,
-    width: '100%',
-    color: '#fff',
-    borderRadius: 4,
-    cursor: 'pointer',
-    padding: '10px 20px',
-    backgroundColor: COLORS.blue,
   },
 };
 

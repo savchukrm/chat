@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { SlClose } from 'react-icons/sl';
 
@@ -8,9 +8,15 @@ import LoginForm from './LoginForm';
 
 interface LoginBlockProps {
   setLogModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoadingModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const LoginBlock: React.FC<LoginBlockProps> = ({ setLogModal }) => {
+const LoginBlock: React.FC<LoginBlockProps> = ({
+  setLogModal,
+  setLoadingModal,
+}) => {
+  const [errorMessage, setErrorMessage] = useState('');
+
   const closeModal = () => {
     setLogModal(false);
   };
@@ -26,13 +32,27 @@ const LoginBlock: React.FC<LoginBlockProps> = ({ setLogModal }) => {
           <h3 style={styles.header}>Log in</h3>
         </div>
 
-        <LoginForm />
+        <p
+          style={{
+            color: 'red',
+            fontWeight: 500,
+            marginBottom: 20,
+            fontSize: 18,
+          }}
+        >
+          {errorMessage}
+        </p>
+
+        <LoginForm
+          setErrorMessage={setErrorMessage}
+          setLoadingModal={setLoadingModal}
+        />
 
         <div style={styles.devider}>
           <span>or</span>
         </div>
 
-        <div style={styles.googleBtn}>
+        <div className="googleBtn">
           <img src={google} alt="google-icon" />
           <span>Log in with Google</span>
         </div>
@@ -58,18 +78,6 @@ const styles = {
     fontWeight: 500,
     margin: 10,
     textAlign: 'center' as 'center',
-  },
-  googleBtn: {
-    cursor: 'pointer',
-    borderRadius: 4,
-    padding: 10,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    border: '1px solid #000',
-    fontSize: 20,
-    gap: 10,
   },
 };
 

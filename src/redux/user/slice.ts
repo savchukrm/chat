@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 type UserItem = {
   name: number | null;
   email: string | null;
+  verified: boolean;
 };
 
 const initialStates: UserItem = {
   name: null,
   email: null,
+  verified: false,
 };
 
 const user = createSlice({
@@ -18,6 +20,9 @@ const user = createSlice({
       state.name = action.payload.name;
       state.email = action.payload.email;
     },
+    setVerified(state, action) {
+      state.verified = action.payload;
+    },
     removeUser(state) {
       state.name = null;
       state.email = null;
@@ -25,6 +30,6 @@ const user = createSlice({
   },
 });
 
-export const { setUser, removeUser } = user.actions;
+export const { setUser, removeUser, setVerified } = user.actions;
 
 export default user.reducer;

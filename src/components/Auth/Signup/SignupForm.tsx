@@ -1,11 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-import { setUser } from '../../../redux/user/slice';
+import axios from 'axios';
 
-import { COLORS } from '../../../constants';
+import { setUser } from '../../../redux/user/slice';
 
 interface FormValues {
   name: string;
@@ -13,8 +12,19 @@ interface FormValues {
   password: string;
 }
 
-const SignupForm: React.FC = () => {
-  const navigate = useNavigate();
+interface SignupBlockProps {
+  setSignModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setVerifyModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoadingModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const SignupForm: React.FC<SignupBlockProps> = ({
+  setSignModal,
+  setVerifyModal,
+  setLoadingModal,
+  setErrorMessage,
+}) => {
   const dispatch = useDispatch();
 
   const initialValues: FormValues = {
@@ -53,40 +63,37 @@ const SignupForm: React.FC = () => {
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     try {
-      const url = 'http://localhost:8200/auth/signUp';
+      setLoadingModal(true);
+      const url = `${process.env.REACT_APP_API_URL}/auth/signUp`;
       const headers = {
         'Content-Type': 'application/json',
       };
 
-      const response = await fetch(url, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
+      const response = await axios.post(
+        url,
+        {
           name: values.name,
           email: values.email,
           password: values.password,
-          passwordConfirm: values.password, // Assuming the backend expects a "passwordConfirm" field as well
-          // roles: ['USER'], // Assuming the backend expects a "roles" field as an array
-          // active: true, // Assuming the backend expects an "active" field
-          // creationDate: new Date().toISOString(), // Assuming the backend expects a "creationDate" field
-        }),
-      });
+          passwordConfirm: values.password,
+        },
+        { headers }
+      );
 
-      if (response.ok) {
-        const { id, name, email, creationDate } = await response.json();
+      if (response.status === 200) {
+        const { name, login } = response.data;
 
-        alert(
-          `Welcome ${name}! User ID: ${id}, Email: ${email}, Created At: ${creationDate}`
-        );
-
-        console.log('Signup response:', { id, name, email, creationDate });
-
-        navigate('/main');
-        dispatch(setUser({ name, email }));
+        setSignModal(false);
+        setLoadingModal(false);
+        setVerifyModal(true);
+        dispatch(setUser({ name, email: login }));
       } else {
         throw new Error('Failed to sign up');
       }
     } catch (error: any) {
+      setLoadingModal(false);
+      setErrorMessage('Failed to sign up');
+
       console.error(error.message);
     }
 
@@ -156,7 +163,7 @@ const SignupForm: React.FC = () => {
           </div>
         </div>
 
-        <button type="submit" style={styles.submitButton}>
+        <button type="submit" className="submitBtn">
           Create account
         </button>
       </Form>
@@ -180,17 +187,6 @@ const styles = {
     width: '100%',
     borderRadius: 4,
     border: '1px solid #ccc',
-  },
-  submitButton: {
-    marginTop: 22,
-    fontSize: 20,
-    width: '100%',
-    color: '#fff',
-    border: 'none',
-    borderRadius: 4,
-    cursor: 'pointer',
-    padding: '10px 20px',
-    backgroundColor: COLORS.blue,
   },
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { SlClose } from 'react-icons/sl';
 
@@ -8,9 +8,17 @@ import SignupForm from './SignupForm';
 
 interface SignupBlockProps {
   setSignModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setVerifyModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoadingModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SignupBlock: React.FC<SignupBlockProps> = ({ setSignModal }) => {
+const SignupBlock: React.FC<SignupBlockProps> = ({
+  setSignModal,
+  setVerifyModal,
+  setLoadingModal,
+}) => {
+  const [errorMessage, setErrorMessage] = useState('');
+
   const closeModal = () => {
     setSignModal(false);
   };
@@ -25,14 +33,22 @@ const SignupBlock: React.FC<SignupBlockProps> = ({ setSignModal }) => {
 
           <h3 style={styles.header}>Create your free account</h3>
         </div>
+        <p style={{ color: 'red', fontWeight: 500, marginBottom: 20 }}>
+          {errorMessage}
+        </p>
 
-        <SignupForm />
+        <SignupForm
+          setSignModal={setSignModal}
+          setVerifyModal={setVerifyModal}
+          setLoadingModal={setLoadingModal}
+          setErrorMessage={setErrorMessage}
+        />
 
         <div style={styles.devider}>
           <span>or</span>
         </div>
 
-        <div style={styles.googleBtn}>
+        <div className="googleBtn">
           <img src={google} alt="google-icon" />
           <span>Sign up with Google</span>
         </div>
@@ -58,27 +74,6 @@ const styles = {
     fontWeight: 500,
     margin: 10,
     textAlign: 'center' as 'center',
-  },
-  closeBtn: {
-    position: 'absolute' as 'absolute',
-    top: -12,
-    right: -15,
-    color: '#000000',
-    fontSize: 28,
-    fontWeight: 600,
-    cursor: 'pointer',
-  },
-  googleBtn: {
-    cursor: 'pointer',
-    borderRadius: 4,
-    padding: 10,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    border: '1px solid #000',
-    fontSize: 20,
-    gap: 10,
   },
 };
 

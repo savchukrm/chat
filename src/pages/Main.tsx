@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { removeUser } from '../redux/user/slice';
+import { removeUser, setVerified } from '../redux/user/slice';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -9,6 +9,7 @@ const Main = () => {
 
   const handleLogOut = () => {
     dispatch(removeUser());
+    dispatch(setVerified(false));
     navigate('/');
   };
 
