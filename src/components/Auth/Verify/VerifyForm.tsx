@@ -50,7 +50,7 @@ const VerifyForm: React.FC<VerifyFormProps> = ({
         response.data.message ===
           'Something went wrong due to verification, please try again'
       ) {
-        setErrorMessage('Something went wrong, please try again');
+        setErrorMessage('Wrong verification code');
       } else if (response.status === 200) {
         dispatch(setVerified(true));
         setVerifyModal(false);

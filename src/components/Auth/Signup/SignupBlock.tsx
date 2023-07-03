@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 import { SlClose } from 'react-icons/sl';
 
+import { RootState } from '../../../redux/store';
 import { google } from '../../../constants/images';
 
 import SignupForm from './SignupForm';
@@ -19,8 +22,32 @@ const SignupBlock: React.FC<SignupBlockProps> = ({
 }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
+  const { email } = useSelector((state: RootState) => state.user);
+
   const closeModal = () => {
     setSignModal(false);
+  };
+
+  const handleVerifyModal = async () => {
+    setVerifyModal(true);
+
+    try {
+      const url = `${process.env.REACT_APP_API_URL}/auth/resendCode/${email}`;
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+
+      const response = await axios.post(url, email, { headers });
+
+      if (response.status === 200) {
+        console.log('Code resend successful');
+      } else {
+        console.log(response);
+        throw new Error('Failed to resend code');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -33,8 +60,25 @@ const SignupBlock: React.FC<SignupBlockProps> = ({
 
           <h3 style={styles.header}>Create your free account</h3>
         </div>
-        <p style={{ color: 'red', fontWeight: 500, marginBottom: 20 }}>
-          {errorMessage}
+
+        <p
+          style={{
+            color: 'red',
+            fontWeight: 500,
+            marginBottom: 20,
+            fontSize: 18,
+          }}
+        >
+          {errorMessage === 'An account is not verified' ? (
+            <span>
+              {errorMessage}{' '}
+              <span className="reverifyBtn" onClick={() => handleVerifyModal()}>
+                Verify email
+              </span>
+            </span>
+          ) : (
+            errorMessage
+          )}
         </p>
 
         <SignupForm

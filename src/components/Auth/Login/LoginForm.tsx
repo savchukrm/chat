@@ -71,13 +71,24 @@ const LoginForm: React.FC<LoginFormProps> = ({
           'Authentication failed, check given credentials'
       ) {
         setLoadingModal(false);
+
         setErrorMessage('Password or email is incorrect');
+      } else if (
+        response.status === 200 &&
+        response.data.message === `User's account is not verified`
+      ) {
+        setLoadingModal(false);
+
+        setErrorMessage('An account is not verified');
+
+        dispatch(setUser({ email: values.email }));
       } else if (response.status === 200) {
-        const { login } = response.data;
+        const { login, name } = response.data;
 
         setLoadingModal(false);
 
-        dispatch(setUser({ name: null, email: login }));
+        dispatch(setUser({ name: name, email: login }));
+
         dispatch(setVerified(true));
       } else {
         throw new Error('Failed to sign up');
@@ -135,6 +146,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
         <button type="submit" className="submitBtn">
           Log in
         </button>
+
+        <div className="forgotBtn">Forgot password?</div>
       </Form>
     </Formik>
   );

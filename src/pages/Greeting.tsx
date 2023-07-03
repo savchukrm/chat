@@ -15,7 +15,7 @@ const Greeting = () => {
 
   const [signModal, setSignModal] = useState(false);
   const [logModal, setLogModal] = useState(false);
-  const [verifyModal, setVerifyModal] = useState(true);
+  const [verifyModal, setVerifyModal] = useState(false);
   const [loadingModal, setLoadingModal] = useState(false);
 
   useEffect(() => {
@@ -58,6 +58,7 @@ const Greeting = () => {
           </div>
         </div>
       </div>
+
       <GreetModals
         signModal={signModal}
         logModal={logModal}

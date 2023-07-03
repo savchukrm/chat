@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 import { SlClose } from 'react-icons/sl';
 
+import { RootState } from '../../../redux/store';
 import { google } from '../../../constants/images';
 
 import LoginForm from './LoginForm';
@@ -9,16 +12,42 @@ import LoginForm from './LoginForm';
 interface LoginBlockProps {
   setLogModal: React.Dispatch<React.SetStateAction<boolean>>;
   setLoadingModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setVerifyModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const LoginBlock: React.FC<LoginBlockProps> = ({
   setLogModal,
   setLoadingModal,
+  setVerifyModal,
 }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
+  const { email } = useSelector((state: RootState) => state.user);
+
   const closeModal = () => {
     setLogModal(false);
+  };
+
+  const handleVerifyModal = async () => {
+    setVerifyModal(true);
+
+    try {
+      const url = `${process.env.REACT_APP_API_URL}/auth/resendCode/${email}`;
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+
+      const response = await axios.post(url, email, { headers });
+
+      if (response.status === 200) {
+        console.log('Code resend successful');
+      } else {
+        console.log(response);
+        throw new Error('Failed to resend code');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -40,7 +69,16 @@ const LoginBlock: React.FC<LoginBlockProps> = ({
             fontSize: 18,
           }}
         >
-          {errorMessage}
+          {errorMessage === 'An account is not verified' ? (
+            <span>
+              {errorMessage}{' '}
+              <span className="reverifyBtn" onClick={() => handleVerifyModal()}>
+                Verify email
+              </span>
+            </span>
+          ) : (
+            errorMessage
+          )}
         </p>
 
         <LoginForm

@@ -10,6 +10,7 @@ interface FormValues {
   name: string;
   email: string;
   password: string;
+  passwordConfirm: string;
 }
 
 interface SignupBlockProps {
@@ -31,6 +32,7 @@ const SignupForm: React.FC<SignupBlockProps> = ({
     name: '',
     email: '',
     password: '',
+    passwordConfirm: '',
   };
 
   const validateForm = (values: FormValues) => {
@@ -53,6 +55,12 @@ const SignupForm: React.FC<SignupBlockProps> = ({
       errors.password = 'Required';
     } else if (values.password.length < 8) {
       errors.password = 'Password must be at least 8 characters long';
+    }
+
+    if (!values.passwordConfirm) {
+      errors.passwordConfirm = 'Required';
+    } else if (values.password !== values.passwordConfirm) {
+      errors.passwordConfirm = 'Passwords do not match';
     }
 
     return errors;
@@ -80,7 +88,23 @@ const SignupForm: React.FC<SignupBlockProps> = ({
         { headers }
       );
 
-      if (response.status === 200) {
+      if (
+        response.status === 200 &&
+        response.data.message === 'User is not verified'
+      ) {
+        setErrorMessage('An account is not verified');
+
+        setLoadingModal(false);
+
+        dispatch(setUser({ email: values.email }));
+      } else if (
+        response.status === 200 &&
+        response.data.message === 'User creation error: email must be unique'
+      ) {
+        setErrorMessage('An account with this email already exists');
+
+        setLoadingModal(false);
+      } else if (response.status === 200) {
         const { name, login } = response.data;
 
         setSignModal(false);
@@ -88,6 +112,7 @@ const SignupForm: React.FC<SignupBlockProps> = ({
         setVerifyModal(true);
         dispatch(setUser({ name, email: login }));
       } else {
+        console.log(response);
         throw new Error('Failed to sign up');
       }
     } catch (error: any) {
@@ -125,7 +150,6 @@ const SignupForm: React.FC<SignupBlockProps> = ({
             <ErrorMessage name="name" component="div" />
           </div>
         </div>
-
         <div style={styles.formGroup}>
           <label htmlFor="email" style={styles.label}>
             Email
@@ -143,7 +167,6 @@ const SignupForm: React.FC<SignupBlockProps> = ({
             <ErrorMessage name="email" component="div" />
           </div>
         </div>
-
         <div style={styles.formGroup}>
           <label htmlFor="password" style={styles.label}>
             Password
@@ -160,6 +183,23 @@ const SignupForm: React.FC<SignupBlockProps> = ({
 
           <div style={{ color: 'red', fontSize: '12px' }}>
             <ErrorMessage name="password" component="div" />
+          </div>
+        </div>
+
+        <div style={styles.formGroup}>
+          <label htmlFor="passwordConfirm" style={styles.label}>
+            Confirm Password
+          </label>
+          <Field
+            type="password"
+            id="passwordConfirm"
+            name="passwordConfirm"
+            style={styles.input}
+            maxLength={20}
+            placeholder="Confirm your password"
+          />
+          <div style={{ color: 'red', fontSize: '12px' }}>
+            <ErrorMessage name="passwordConfirm" component="div" />
           </div>
         </div>
 

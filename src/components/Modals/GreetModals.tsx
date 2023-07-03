@@ -39,6 +39,7 @@ const GreetModals: React.FC<GreetModalsProps> = ({
         <LoginBlock
           setLogModal={setLogModal}
           setLoadingModal={setLoadingModal}
+          setVerifyModal={setVerifyModal}
         />
       )}
       {verifyModal && <VerifyBlock setVerifyModal={setVerifyModal} />}
