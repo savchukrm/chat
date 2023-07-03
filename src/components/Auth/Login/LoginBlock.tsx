@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import { SlClose } from 'react-icons/sl';
 
 import { RootState } from '../../../redux/store';
 import { google } from '../../../constants/images';
+import { setUser, setVerified } from '../../../redux/user/slice';
+
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 
 import LoginForm from './LoginForm';
 
@@ -23,6 +26,10 @@ const LoginBlock: React.FC<LoginBlockProps> = ({
   const [errorMessage, setErrorMessage] = useState('');
 
   const { email } = useSelector((state: RootState) => state.user);
+
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+  const dispatch = useDispatch();
 
   const closeModal = () => {
     setLogModal(false);
@@ -48,6 +55,62 @@ const LoginBlock: React.FC<LoginBlockProps> = ({
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const loginViaGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then(async (credential) => {
+        const user = credential.user;
+
+        console.log(user);
+
+        try {
+          setLoadingModal(true);
+          const url = `${process.env.REACT_APP_API_URL}/auth/login`;
+          const headers = {
+            'Content-Type': 'application/json',
+          };
+
+          const response = await axios.post(
+            url,
+            {
+              login: user.email,
+              password: '12345678',
+            },
+            { headers }
+          );
+
+          console.log(response);
+
+          if (
+            response.status === 200 &&
+            response.data.message ===
+              'Authentication failed, check given credentials'
+          ) {
+            setLoadingModal(false);
+            setErrorMessage('Password or email is incorrect');
+          } else if (
+            response.status === 200 &&
+            response.data.message === "User's account is not verified"
+          ) {
+            setLoadingModal(false);
+            setErrorMessage('An account is not verified');
+            dispatch(setUser({ email: user.email }));
+          } else if (response.status === 200) {
+            const { login, name } = response.data;
+            setLoadingModal(false);
+            dispatch(setUser({ name: name, email: login }));
+            dispatch(setVerified(true));
+          } else {
+            throw new Error('Failed to sign up');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -90,7 +153,7 @@ const LoginBlock: React.FC<LoginBlockProps> = ({
           <span>or</span>
         </div>
 
-        <div className="googleBtn">
+        <div className="googleBtn" onClick={loginViaGoogle}>
           <img src={google} alt="google-icon" />
           <span>Log in with Google</span>
         </div>

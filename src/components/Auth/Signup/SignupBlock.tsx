@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+
 import axios from 'axios';
 
 import { SlClose } from 'react-icons/sl';
 
 import { RootState } from '../../../redux/store';
 import { google } from '../../../constants/images';
+
+import { setUser } from '../../../redux/user/slice';
 
 import SignupForm from './SignupForm';
 
@@ -23,6 +27,10 @@ const SignupBlock: React.FC<SignupBlockProps> = ({
   const [errorMessage, setErrorMessage] = useState('');
 
   const { email } = useSelector((state: RootState) => state.user);
+
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+  const dispatch = useDispatch();
 
   const closeModal = () => {
     setSignModal(false);
@@ -48,6 +56,62 @@ const SignupBlock: React.FC<SignupBlockProps> = ({
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const signUpViaGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then(async ({ user }) => {
+        try {
+          setLoadingModal(true);
+          const url = `${process.env.REACT_APP_API_URL}/auth/signUp`;
+          const headers = {
+            'Content-Type': 'application/json',
+          };
+
+          const response = await axios.post(
+            url,
+            {
+              name: user.displayName,
+              email: user.email,
+              password: '12345678',
+              passwordConfirm: '12345678',
+            },
+            { headers }
+          );
+
+          if (
+            response.status === 200 &&
+            response.data.message === 'User is not verified'
+          ) {
+            setErrorMessage('An account is not verified');
+            setLoadingModal(false);
+            dispatch(setUser({ email: user.email }));
+          } else if (
+            response.status === 200 &&
+            response.data.message ===
+              'User creation error: email must be unique'
+          ) {
+            setErrorMessage('An account with this email already exists');
+            setLoadingModal(false);
+          } else if (response.status === 200) {
+            const { name, login } = response.data;
+            setSignModal(false);
+            setLoadingModal(false);
+            setVerifyModal(true);
+            dispatch(setUser({ name, email: login }));
+          } else {
+            console.log(response);
+            throw new Error('Failed to sign up');
+          }
+        } catch (error) {
+          setLoadingModal(false);
+          setErrorMessage('Failed to sign up');
+          console.error(error);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -92,7 +156,7 @@ const SignupBlock: React.FC<SignupBlockProps> = ({
           <span>or</span>
         </div>
 
-        <div className="googleBtn">
+        <div className="googleBtn" onClick={signUpViaGoogle}>
           <img src={google} alt="google-icon" />
           <span>Sign up with Google</span>
         </div>
