@@ -107,12 +107,10 @@ const SignupForm: React.FC<SignupBlockProps> = ({
       } else if (response.status === 200) {
         const { name, login } = response.data;
 
-        setSignModal(false);
         setLoadingModal(false);
         setVerifyModal(true);
         dispatch(setUser({ name, email: login }));
       } else {
-        console.log(response);
         throw new Error('Failed to sign up');
       }
     } catch (error: any) {

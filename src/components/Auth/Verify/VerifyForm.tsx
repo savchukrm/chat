@@ -109,7 +109,7 @@ const VerifyForm: React.FC<VerifyFormProps> = ({
             Verify
           </button>
 
-          <div style={styles.backBtn}>
+          <div style={styles.backBtn} onClick={() => setVerifyModal(false)}>
             <IoIosArrowRoundBack size={25} color={'#2c3fe1'} />
             <span style={styles.backText}>Back</span>
           </div>

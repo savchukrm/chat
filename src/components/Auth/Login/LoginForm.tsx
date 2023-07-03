@@ -106,7 +106,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
       validate={validateForm}
       onSubmit={handleSubmit}
     >
-      <Form>
+      <Form style={{ position: 'relative' }}>
         <div style={styles.formGroup}>
           <label htmlFor="email" style={styles.label}>
             Email

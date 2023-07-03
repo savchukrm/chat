@@ -174,8 +174,8 @@ body {
 .forgotBtn {
   cursor: pointer;
   position: absolute;
-  right: 40px;
-  top: 203px;
+  right: 2px;
+  top: 87px;
   font-size: 11px;
   color: #2c3fe1;
 }
