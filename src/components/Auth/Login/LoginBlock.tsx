@@ -64,7 +64,7 @@ const LoginBlock: React.FC<LoginBlockProps> = ({
 
         try {
           setLoadingModal(true);
-          const url = `${process.env.REACT_APP_API_URL}/auth/login`;
+          const url = `${process.env.REACT_APP_API_URL}/auth/google/login`;
           const headers = {
             'Content-Type': 'application/json',
           };
@@ -73,7 +73,6 @@ const LoginBlock: React.FC<LoginBlockProps> = ({
             url,
             {
               login: user.email,
-              password: '12345678',
             },
             { headers }
           );
@@ -95,7 +94,9 @@ const LoginBlock: React.FC<LoginBlockProps> = ({
           } else if (response.status === 200) {
             const { login, name } = response.data;
             setLoadingModal(false);
+
             dispatch(setUser({ name: name, email: login }));
+
             dispatch(setVerified(true));
           } else {
             throw new Error('Failed to sign up');

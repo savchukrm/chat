@@ -63,7 +63,7 @@ const SignupBlock: React.FC<SignupBlockProps> = ({
       .then(async ({ user }) => {
         try {
           setLoadingModal(true);
-          const url = `${process.env.REACT_APP_API_URL}/auth/signUp`;
+          const url = `${process.env.REACT_APP_API_URL}/auth/google/signUp`;
           const headers = {
             'Content-Type': 'application/json',
           };
@@ -73,8 +73,6 @@ const SignupBlock: React.FC<SignupBlockProps> = ({
             {
               name: user.displayName,
               email: user.email,
-              password: '12345678',
-              passwordConfirm: '12345678',
             },
             { headers }
           );
