@@ -78,8 +78,6 @@ const LoginBlock: React.FC<LoginBlockProps> = ({
             { headers }
           );
 
-          console.log(response);
-
           if (
             response.status === 200 &&
             response.data.message ===
