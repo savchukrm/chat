@@ -195,6 +195,21 @@ body {
   border-bottom: 2px solid #2c3fe1;
 }
 
+.menuItem {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px;
+  font-size: 16px;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.menuItem:hover {
+  background-color: #2c3fe1;
+}
+
 @media (max-width: 1070px) {
   .greet {
     font-size: 2.5em;
