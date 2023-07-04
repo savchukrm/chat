@@ -4,7 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { removeUser, setVerified } from '../../redux/user/slice';
 
-import { logo } from '../../constants/images';
+import {
+  logo,
+  myChats,
+  allChats,
+  settings,
+  privateChat,
+  activeChats,
+} from '../../constants/images';
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -20,18 +27,37 @@ const NavBar = () => {
   return (
     <div style={styles.navBarBlock}>
       <div style={styles.logoContainer}>
-        <div>
+        <div style={{ paddingLeft: '7px' }}>
           <img src={logo} alt="logo" />
         </div>
+
         <ul style={styles.menuList}>
-          <li>All Chats</li>
-          <li>Active Chats</li>
-          <li>Private messages</li>
-          <li>My Created Chats</li>
+          <li className="menuItem">
+            <img src={allChats} alt="myChats" width={24} height={24} />
+            <span>All Chats</span>
+          </li>
+
+          <li className="menuItem">
+            <img src={activeChats} alt="myChats" width={24} height={24} />
+            <span>Active Chats</span>
+          </li>
+
+          <li className="menuItem">
+            <img src={privateChat} alt="myChats" width={24} height={24} />
+            <span>Private messages</span>
+          </li>
+
+          <li className="menuItem">
+            <img src={myChats} alt="myChats" width={24} height={24} />
+            <span>My Created Chats</span>
+          </li>
         </ul>
       </div>
 
-      <div style={styles.settings}>Settings</div>
+      <div style={styles.settings}>
+        <img src={settings} alt="settings" width={24} height={24} />
+        <span>Settings</span>
+      </div>
       <div onClick={() => handleLogOut()} style={styles.settings}>
         Log Out
       </div>
@@ -56,9 +82,10 @@ const styles = {
   },
   menuList: {
     listStyle: 'none',
-    padding: 0,
-    margin: 0,
-    marginBottom: 'auto',
+    marginTop: '37px',
+    display: 'flex',
+    flexDirection: 'column' as 'column',
+    gap: '26px',
   },
   settings: {
     color: 'white',
