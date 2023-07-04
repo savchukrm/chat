@@ -1,22 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { removeUser, setVerified } from '../redux/user/slice';
+import Header from '../components/Header/Header';
+import NavBar from '../components/NavBar/NavBar';
 
 const Main = () => {
-  const navigate = useNavigate();
-
-  const dispatch = useDispatch();
-
-  const handleLogOut = () => {
-    dispatch(removeUser());
-    dispatch(setVerified(false));
-    navigate('/');
-  };
-
   return (
-    <div>
-      <h1>Here will be main page when user is logged in</h1>
-      <button onClick={handleLogOut}>logout</button>
+    <div style={{ backgroundColor: '#1E1F22', height: '100vh' }}>
+      <Header />
+      <NavBar />
     </div>
   );
 };

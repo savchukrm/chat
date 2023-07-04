@@ -62,8 +62,6 @@ const LoginBlock: React.FC<LoginBlockProps> = ({
       .then(async (credential) => {
         const user = credential.user;
 
-        console.log(user);
-
         try {
           setLoadingModal(true);
           const url = `${process.env.REACT_APP_API_URL}/auth/login`;
@@ -79,8 +77,6 @@ const LoginBlock: React.FC<LoginBlockProps> = ({
             },
             { headers }
           );
-
-          console.log(response);
 
           if (
             response.status === 200 &&
