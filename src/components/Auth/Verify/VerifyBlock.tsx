@@ -13,7 +13,7 @@ const VerifyBlock: React.FC<VerifyBlockProps> = ({ setVerifyModal }) => {
 
   return (
     <div className="modalBlock">
-      <div className="modalContainer">
+      <div className="modalContainerVerification">
         <div style={styles.top}>
           <button className="closeBtn" onClick={() => setVerifyModal(false)}>
             <SlClose />

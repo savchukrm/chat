@@ -47,7 +47,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
   const handleSubmit = async (
     values: FormValues,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+    {
+      setSubmitting,
+      resetForm,
+    }: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
   ) => {
     try {
       setLoadingModal(true);
@@ -71,8 +74,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
           'Authentication failed, check given credentials'
       ) {
         setLoadingModal(false);
-
         setErrorMessage('Password or email is incorrect');
+        resetForm();
       } else if (
         response.status === 200 &&
         response.data.message === `User's account is not verified`
@@ -135,7 +138,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
             id="password"
             name="password"
             style={styles.input}
-            placeholder="at least 8 characters long"
           />
 
           <div style={{ color: 'red', fontSize: '12px' }}>

@@ -152,7 +152,7 @@ const LoginBlock: React.FC<LoginBlockProps> = ({
 
         <div className="googleBtn" onClick={loginViaGoogle}>
           <img src={google} alt="google-icon" />
-          <span>Log in with Google</span>
+          <span style={styles.span}>Sign up with Google</span>
         </div>
       </div>
     </div>
@@ -176,6 +176,11 @@ const styles = {
     fontWeight: 500,
     margin: 10,
     textAlign: 'center' as 'center',
+  },
+  span: {
+    paddingLeft: 5,
+    fontSize: 20,
+    fontWeight: 400,
   },
 };
 

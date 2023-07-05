@@ -76,10 +76,9 @@ const Greeting = () => {
 const styles = {
   background: {
     height: '100vh',
-    padding: 20,
+    padding: '20px 0',
     backgroundImage: `url(${background})`,
     backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
   },
   container: {

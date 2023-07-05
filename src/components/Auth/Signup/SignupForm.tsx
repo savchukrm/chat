@@ -67,6 +67,8 @@ const SignupForm: React.FC<SignupBlockProps> = ({
 
     if (!values.password) {
       errors.password = 'Required';
+    } else if (/\s/.test(values.password)) {
+      errors.password = 'Password cannot contain spaces';
     } else if (values.password.length < 8) {
       errors.password = 'Password must be at least 8 characters long';
     }
@@ -146,7 +148,7 @@ const SignupForm: React.FC<SignupBlockProps> = ({
       <Form>
         <div style={styles.formGroup}>
           <label htmlFor="name" style={styles.label}>
-            Full name, how users will see you
+            Your name (how users will see you)
           </label>
 
           <Field
