@@ -42,13 +42,27 @@ const SignupForm: React.FC<SignupBlockProps> = ({
       errors.name = 'Required';
     } else if (!/^[A-Za-z0-9-_.\s]{1,30}$/.test(values.name)) {
       errors.name =
-        'You can use letters, digits and symbols “-” “_” “.” (up to 30)';
+        'You can use letters, digits and symbols "-", "_", "." (up to 30)';
     }
 
     if (!values.email) {
       errors.email = 'Required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-      errors.email = 'Invalid email address';
+    } else {
+      const emailParts = values.email.split('@');
+      const domain = emailParts[1];
+
+      if (
+        domain &&
+        (domain.startsWith('-') ||
+          domain.includes('-.') ||
+          domain.endsWith('-'))
+      ) {
+        errors.email = 'Invalid email address';
+      } else if (
+        !/^[A-Za-z0-9_.%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$/i.test(values.email)
+      ) {
+        errors.email = 'Invalid email address';
+      }
     }
 
     if (!values.password) {
