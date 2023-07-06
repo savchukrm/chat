@@ -75,6 +75,8 @@ const SignupForm: React.FC<SignupBlockProps> = ({
 
     if (!values.passwordConfirm) {
       errors.passwordConfirm = 'Required';
+    } else if (/\s/.test(values.passwordConfirm)) {
+      errors.password = 'Password cannot contain spaces';
     } else if (values.password !== values.passwordConfirm) {
       errors.passwordConfirm = 'Passwords do not match';
     }

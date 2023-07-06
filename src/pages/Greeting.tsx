@@ -80,6 +80,7 @@ const styles = {
     backgroundImage: `url(${background})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    margin: 0,
   },
   container: {
     maxWidth: 1440,
