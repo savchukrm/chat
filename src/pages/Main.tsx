@@ -1,11 +1,12 @@
-import Header from '../components/Header/Header';
-import NavBar from '../components/NavBar/NavBar';
-
 const Main = () => {
   return (
-    <div style={{ backgroundColor: '#1E1F22', height: '100vh' }}>
-      <Header />
-      <NavBar />
+    <div
+      style={{
+        backgroundColor: '#313338',
+        height: '100vh',
+      }}
+    >
+      Main
     </div>
   );
 };

@@ -10,7 +10,7 @@ import { FiChevronDown } from 'react-icons/fi';
 const Header = () => {
   const { name } = useSelector((state: RootState) => state.user);
   return (
-    <>
+    <div style={styles.headerContainer}>
       <header style={styles.header}>
         <button style={styles.btn}>Create chat</button>
 
@@ -20,18 +20,18 @@ const Header = () => {
           <FiChevronDown color="#fff" size={27} />
         </div>
       </header>
-
-      <div style={styles.subtitleBlock}>
-        <p style={styles.subtitileText}>
-          Hello, {name}! We're so glad you're here! Choose any chat or create
-          your own unique and enjoy chatting!
-        </p>
-      </div>
-    </>
+    </div>
   );
 };
 
 const styles = {
+  headerContainer: {
+    position: 'fixed' as 'fixed',
+    right: 0,
+    width: '90%',
+    backgroundColor: '#313338',
+    borderBottom: '1px solid #000',
+  },
   header: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -54,14 +54,6 @@ const styles = {
     fontWeight: 500,
     fontSize: '14px',
     color: '#fff',
-  },
-  subtitleBlock: {
-    backgroundColor: '#2C3FE1',
-  },
-  subtitileText: {
-    fontSize: '14px',
-    color: '#fff',
-    padding: '1px 20px',
   },
 };
 

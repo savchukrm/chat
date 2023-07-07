@@ -218,10 +218,52 @@ body {
   font-size: 16px;
   color: #fff;
   border-radius: 4px;
+  user-select: none;
 }
 
 .menuItem:hover {
   background-color: #2c3fe1;
+}
+
+.menuItem .allChatsItem {
+  content: url('../assets/images/all-chats.svg');
+}
+
+.menuItem:hover .allChatsItem {
+  content: url('../assets/images/all-chats-white.svg');
+  padding: 1px 1px 1px 0;
+  width: 22px;
+  height: 22px;
+}
+
+.menuItem .activeChatsItem {
+  content: url('../assets/images/active-chats.svg');
+  width: 22px;
+  height: 22px;
+}
+
+.menuItem:hover .activeChatsItem {
+  content: url('../assets/images/active-chats-white.svg');
+}
+
+.menuItem .privateChatsItem {
+  content: url('../assets/images/private.svg');
+  width: 22px;
+  height: 22px;
+}
+
+.menuItem:hover .privateChatsItem {
+  content: url('../assets/images/private-white.svg');
+}
+
+.menuItem .myChatsItem {
+  content: url('../assets/images/my-created.svg');
+  width: 22px;
+  height: 22px;
+}
+
+.menuItem:hover .myChatsItem {
+  content: url('../assets/images/my-created-whitesvg.svg');
 }
 
 @media (max-width: 1070px) {
