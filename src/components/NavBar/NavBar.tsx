@@ -1,16 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
+import { Link, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
 import { removeUser, setVerified } from '../../redux/user/slice';
 
 import { logo, settings } from '../../constants/images';
 
 const NavBar = () => {
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const handleLogOut = () => {
     dispatch(removeUser());
@@ -27,44 +27,91 @@ const NavBar = () => {
 
         <ul style={styles.menuList}>
           <Link to="/main">
-            <li className="menuItem">
-              <img className="allChatsItem" alt="myChats" />
+            <li
+              className={`menuItem  ${
+                location.pathname === '/main' && 'menuItemActive'
+              } `}
+            >
+              <img
+                className={`allChatsItem ${
+                  location.pathname === '/main' && 'allChatsItemActive'
+                }`}
+                alt="myChats"
+              />
               <span>All Chats</span>
             </li>
           </Link>
 
           <Link to="/active-chats">
-            <li className="menuItem">
-              <img className="activeChatsItem" alt="myChats" />
+            <li
+              className={`menuItem  ${
+                location.pathname === '/active-chats' && 'menuItemActive'
+              } `}
+            >
+              <img
+                className={`activeChatsItem ${
+                  location.pathname === '/active-chats' &&
+                  'activeChatsItemActive'
+                }`}
+                alt="myChats"
+              />
               <span>Active Chats</span>
             </li>
           </Link>
 
           <Link to="/private-messages">
-            <li className="menuItem">
-              <img className="privateChatsItem" alt="myChats" />
+            <li
+              className={`menuItem  ${
+                location.pathname === '/private-messages' && 'menuItemActive'
+              } `}
+            >
+              <img
+                className={`privateChatsItem ${
+                  location.pathname === '/private-messages' &&
+                  'privateChatsItemActive '
+                }`}
+                alt="myChats"
+              />
               <span>Private messages</span>
             </li>
           </Link>
 
           <Link to="/my-created-chats">
-            <li className="menuItem">
-              <img className="myChatsItem" alt="myChats" />
+            <li
+              className={`menuItem  ${
+                location.pathname === '/my-created-chats' && 'menuItemActive'
+              } `}
+            >
+              <img
+                className={`myChatsItem ${
+                  location.pathname === '/my-created-chats' &&
+                  'myChatsItemActive'
+                }`}
+                alt="myChats"
+              />
               <span>My Created Chats</span>
             </li>
           </Link>
         </ul>
       </div>
 
-      <Link to="/settings">
-        <div style={styles.settings}>
-          <img src={settings} alt="settings" width={24} height={24} />
-          <span>Settings</span>
+      <Link to="/setting">
+        <div
+          className={`menuItem  ${
+            location.pathname === '/setting' && 'menuItemActive'
+          } `}
+        >
+          <img
+            className={`settingItem ${
+              location.pathname === '/setting' && 'settingItemActive'
+            }`}
+            alt="setting"
+          />
+          <span>Setting</span>
         </div>
       </Link>
-      <div onClick={() => handleLogOut()} style={styles.settings}>
-        Log Out
-      </div>
+
+      <div onClick={() => handleLogOut()}>Log Out</div>
     </div>
   );
 };
@@ -90,9 +137,6 @@ const styles = {
     display: 'flex',
     flexDirection: 'column' as 'column',
     gap: '26px',
-  },
-  settings: {
-    color: 'white',
   },
 };
 
