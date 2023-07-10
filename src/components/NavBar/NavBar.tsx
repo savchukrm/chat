@@ -1,22 +1,10 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
-import { removeUser, setVerified } from '../../redux/user/slice';
-
-import { logo, settings } from '../../constants/images';
+import { logo } from '../../constants/images';
 
 const NavBar = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const location = useLocation();
-
-  const handleLogOut = () => {
-    dispatch(removeUser());
-    dispatch(setVerified(false));
-    navigate('/');
-  };
 
   return (
     <div style={styles.navBarBlock}>
@@ -110,8 +98,6 @@ const NavBar = () => {
           <span>Setting</span>
         </div>
       </Link>
-
-      <div onClick={() => handleLogOut()}>Log Out</div>
     </div>
   );
 };
@@ -123,7 +109,7 @@ const styles = {
     left: 0,
     width: '231px',
     height: '100%',
-    padding: '24px 13px 0px 38px',
+    padding: '24px 13px 10px 38px',
     display: 'flex',
     flexDirection: 'column' as 'column',
     backgroundColor: '#1E1F22',

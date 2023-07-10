@@ -15,7 +15,9 @@ const Header = () => {
     <div style={styles.headerContainer}>
       <header style={styles.header}>
         <button style={styles.btn}>
-          <BsPlusLg width={14} height={14} />
+          <div style={styles.plusCircle}>
+            <BsPlusLg width={20} height={20} />
+          </div>
           <span style={styles.btnText}>Create chat</span>
         </button>
 
@@ -48,10 +50,15 @@ const styles = {
     alignItems: 'center',
     gap: '8px',
 
-    borderRadius: '4px',
-    backgroundColor: '#2C3FE1',
-    padding: '10px 20px',
+    padding: '8px 12px',
     color: '#fff',
+  },
+  plusCircle: {
+    borderRadius: '50%',
+    backgroundColor: '#2C3FE1',
+    padding: '4px',
+    width: '28px',
+    height: '28px',
   },
   btnText: {
     fontSize: '14px',
