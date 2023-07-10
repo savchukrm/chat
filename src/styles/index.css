@@ -310,8 +310,20 @@ body {
 .page-container {
   background-color: #313338;
   height: 100vh;
-  padding-top: 81px;
-  padding-left: 231px;
+  padding-top: 104px;
+  padding-left: 273px;
+  padding-right: 43px;
+}
+
+/* Categories */
+
+.category-item {
+  color: #fff;
+  font-weight: 400;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px 0;
+  margin-right: 36px;
 }
 
 @media (max-width: 1070px) {

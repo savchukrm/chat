@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import { BsPlusLg } from 'react-icons/bs';
+
 import { RootState } from '../../redux/store';
 
 import { userPhoto } from '../../constants/images';
@@ -12,7 +14,10 @@ const Header = () => {
   return (
     <div style={styles.headerContainer}>
       <header style={styles.header}>
-        <button style={styles.btn}>Create chat</button>
+        <button style={styles.btn}>
+          <BsPlusLg width={14} height={14} />
+          <span style={styles.btnText}>Create chat</span>
+        </button>
 
         <div style={styles.userInfo}>
           <img src={userPhoto} alt="userPhoto" width={30} height={24} />
@@ -39,10 +44,17 @@ const styles = {
     gap: '49px',
   },
   btn: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+
     borderRadius: '4px',
     backgroundColor: '#2C3FE1',
     padding: '10px 20px',
     color: '#fff',
+  },
+  btnText: {
+    fontSize: '14px',
   },
   userInfo: {
     display: 'flex',

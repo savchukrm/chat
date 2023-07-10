@@ -6,7 +6,7 @@ import Main from './pages/Main';
 import MyCreatedChats from './pages/MyCreatedChats';
 import ActiveChats from './pages/ActiveChats';
 import PrivateMessages from './pages/PrivateMessages';
-import Settings from './pages/Settings';
+import Setting from './pages/Setting';
 
 import Header from './components/Header/Header';
 import NavBar from './components/NavBar/NavBar';
@@ -33,7 +33,7 @@ function App() {
           <Route path="/my-created-chats" element={<MyCreatedChats />} />
         )}
 
-        {verified && <Route path="/settings" element={<Settings />} />}
+        {verified && <Route path="/setting" element={<Setting />} />}
       </Routes>
     </>
   );

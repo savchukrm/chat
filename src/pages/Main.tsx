@@ -1,12 +1,9 @@
+import { Categories } from '../components';
+
 const Main = () => {
   return (
-    <div
-      style={{
-        backgroundColor: '#313338',
-        height: '100vh',
-      }}
-    >
-      Main
+    <div className="page-container">
+      <Categories />
     </div>
   );
 };

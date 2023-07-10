@@ -1,7 +1,7 @@
 import React from 'react';
 
 const PrivateMessages = () => {
-  return <div></div>;
+  return <div className="page-container">Private Messages</div>;
 };
 
 export default PrivateMessages;
