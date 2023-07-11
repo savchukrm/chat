@@ -14,14 +14,12 @@ interface FormValues {
 }
 
 interface SignupBlockProps {
-  setSignModal: React.Dispatch<React.SetStateAction<boolean>>;
   setVerifyModal: React.Dispatch<React.SetStateAction<boolean>>;
   setLoadingModal: React.Dispatch<React.SetStateAction<boolean>>;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const SignupForm: React.FC<SignupBlockProps> = ({
-  setSignModal,
   setVerifyModal,
   setLoadingModal,
   setErrorMessage,

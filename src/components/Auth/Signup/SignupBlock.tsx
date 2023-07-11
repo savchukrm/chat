@@ -144,7 +144,6 @@ const SignupBlock: React.FC<SignupBlockProps> = ({
         </p>
 
         <SignupForm
-          setSignModal={setSignModal}
           setVerifyModal={setVerifyModal}
           setLoadingModal={setLoadingModal}
           setErrorMessage={setErrorMessage}

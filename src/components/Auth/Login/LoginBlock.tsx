@@ -16,12 +16,14 @@ interface LoginBlockProps {
   setLogModal: React.Dispatch<React.SetStateAction<boolean>>;
   setLoadingModal: React.Dispatch<React.SetStateAction<boolean>>;
   setVerifyModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setForgotPasswordModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const LoginBlock: React.FC<LoginBlockProps> = ({
   setLogModal,
   setLoadingModal,
   setVerifyModal,
+  setForgotPasswordModal,
 }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -144,6 +146,7 @@ const LoginBlock: React.FC<LoginBlockProps> = ({
         <LoginForm
           setErrorMessage={setErrorMessage}
           setLoadingModal={setLoadingModal}
+          setForgotPasswordModal={setForgotPasswordModal}
         />
 
         <div style={styles.devider}>

@@ -3,11 +3,21 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 
+interface SubmitFormProps {
+  setLoadingModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
+  setSuccessfulSubmit: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 interface FormValues {
   email: string;
 }
 
-const SubmitForm = () => {
+const SubmitForm: React.FC<SubmitFormProps> = ({
+  setLoadingModal,
+  setErrorMessage,
+  setSuccessfulSubmit,
+}) => {
   const initialValues: FormValues = {
     email: '',
   };
@@ -17,30 +27,36 @@ const SubmitForm = () => {
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     try {
-      // change url to proper
-      const url = `${process.env.REACT_APP_API_URL}/auth/reset-password`;
+      setLoadingModal(true);
+      const baseUrl = process.env.REACT_APP_API_URL;
+      const endpoint = 'forgot-password/request';
+      const queryParams = `email=${values.email}`;
+      const url = `${baseUrl}/${endpoint}?${queryParams}`;
       const headers = {
         'Content-Type': 'application/json',
       };
 
-      const response = await axios.post(
-        url,
-        {
-          login: '',
-        },
-        { headers }
-      );
+      const response = await axios.post(url, null, { headers });
 
-      // handle error
       if (response.status === 200) {
-        console.log('ok');
+        setLoadingModal(false);
+        setSuccessfulSubmit(true);
+      } else if (response.status === 404) {
+        setLoadingModal(false);
+        setErrorMessage('User not found');
+      } else if (response.status === 500) {
+        setLoadingModal(false);
+        setErrorMessage('Server error. Please try again later.');
       } else {
-        throw new Error('Failed to verify');
+        setLoadingModal(false);
+        throw new Error('User not found');
       }
     } catch (error) {
       console.error(error);
-      //   setErrorMessage('Failed to verify');
+      setLoadingModal(false);
+      setErrorMessage('User not found');
     } finally {
+      setLoadingModal(false);
       setSubmitting(false);
     }
   };
@@ -73,8 +89,7 @@ const SubmitForm = () => {
             style={styles.input}
             type="text"
             name="email"
-            maxLength={6}
-            placeholder="123456"
+            placeholder="name@gmail.com"
           />
 
           <div style={{ color: 'red', fontSize: '12px' }}>

@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { RootState } from './redux/store';
 
 import Greeting from './pages/Greeting';
 import Main from './pages/Main';
@@ -7,10 +8,11 @@ import MyCreatedChats from './pages/MyCreatedChats';
 import ActiveChats from './pages/ActiveChats';
 import PrivateMessages from './pages/PrivateMessages';
 import Setting from './pages/Setting';
+import ResetPassword from './pages/ResetPassword';
+import NotFoundPage from './pages/NotFoundPage';
 
 import Header from './components/Header/Header';
 import NavBar from './components/NavBar/NavBar';
-import { RootState } from './redux/store';
 
 function App() {
   const { verified } = useSelector((state: RootState) => state.user);
@@ -34,6 +36,10 @@ function App() {
         )}
 
         {verified && <Route path="/setting" element={<Setting />} />}
+
+        <Route path="/reset-password" element={<ResetPassword />} />
+
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

@@ -17,6 +17,7 @@ const Greeting = () => {
   const [logModal, setLogModal] = useState(false);
   const [verifyModal, setVerifyModal] = useState(false);
   const [loadingModal, setLoadingModal] = useState(false);
+  const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
 
   useEffect(() => {
     if (verified) {
@@ -68,6 +69,8 @@ const Greeting = () => {
         setLogModal={setLogModal}
         setVerifyModal={setVerifyModal}
         setSignModal={setSignModal}
+        forgotPasswordModal={forgotPasswordModal}
+        setForgotPasswordModal={setForgotPasswordModal}
       />
     </>
   );

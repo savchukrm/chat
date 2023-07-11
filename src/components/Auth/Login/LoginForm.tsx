@@ -9,6 +9,7 @@ import { setUser, setVerified } from '../../../redux/user/slice';
 interface LoginFormProps {
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
   setLoadingModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setForgotPasswordModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface FormValues {
@@ -19,6 +20,7 @@ interface FormValues {
 const LoginForm: React.FC<LoginFormProps> = ({
   setErrorMessage,
   setLoadingModal,
+  setForgotPasswordModal,
 }) => {
   const dispatch = useDispatch();
 
@@ -103,6 +105,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
     setSubmitting(false);
   };
 
+  const openForgotPasswordModal = () => {
+    setForgotPasswordModal(true);
+  };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -149,7 +155,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
           Log in
         </button>
 
-        <div className="forgotBtn">Forgot password?</div>
+        <div className="forgotBtn" onClick={() => openForgotPasswordModal()}>
+          Forgot password?
+        </div>
       </Form>
     </Formik>
   );
