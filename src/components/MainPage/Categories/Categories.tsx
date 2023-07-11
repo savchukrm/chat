@@ -1,22 +1,6 @@
 import React from 'react';
 
-const All_CATEGORIES = [
-  'All chats',
-  'Nature',
-  'Politics',
-  'Education',
-  'Fashion',
-  'Movies',
-  'Relationships',
-  'Food',
-  'Children',
-  'Traveling',
-  'Books',
-  'Art',
-  'Science',
-  'Finance',
-  'Other',
-];
+import { All_CATEGORIES } from '../../../constants';
 
 const Categories = () => {
   return (

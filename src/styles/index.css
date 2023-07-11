@@ -76,6 +76,10 @@ body {
   padding: 30px;
 }
 
+.modalForgot {
+  top: 20%;
+}
+
 .modalContainerVerification {
   margin: auto;
   position: absolute;
@@ -313,7 +317,7 @@ body {
   height: 100vh;
   padding-top: 104px;
   padding-left: 273px;
-  padding-right: 43px;
+  padding-right: 20px;
 }
 
 /* Categories */

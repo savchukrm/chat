@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { CgCloseO } from 'react-icons/cg';
 import { RootState } from '../../redux/store';
-import { closeWelcome } from '../../redux/user/slice';
+import { closeWelcome } from '../../redux/modals/slice';
 
 import { welcome } from '../../constants/images';
 
@@ -25,7 +25,8 @@ const Welcome: React.FC = () => {
 
         <div style={styles.content}>
           <div>
-            <h3 style={styles.h3}>Welcome to Oktotalk, {name}!</h3>
+            <h3 style={styles.h3}>Hello {name},</h3>
+            <h3 style={styles.h3}>welcome to Oktotalk!</h3>
             <p style={styles.welcomeText}>
               We are so happy that you are here! Join the conversation or create
               your own chat and invite friends!
@@ -66,13 +67,12 @@ const styles = {
   h3: {
     fontSize: '30px',
     fontWeight: 600,
-    width: '310px',
-    paddingBottom: '24px',
   },
   welcomeText: {
     fontSize: '14px',
     fontWeight: 400,
     lineHeight: '20px',
+    paddingTop: '24px',
   },
   btn: {
     color: '#fff',

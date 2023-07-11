@@ -8,6 +8,7 @@ import myChats from '../assets/images/my-created.svg';
 import privateChat from '../assets/images/private.svg';
 import settings from '../assets/images/settings.svg';
 import welcome from '../assets/images/welcome.svg';
+import createChat from '../assets/images/create-chat.svg';
 
 export {
   background,
@@ -20,4 +21,5 @@ export {
   settings,
   privateChat,
   welcome,
+  createChat,
 };

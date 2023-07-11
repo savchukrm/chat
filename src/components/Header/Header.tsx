@@ -1,20 +1,26 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { BsPlusLg } from 'react-icons/bs';
-
-import { RootState } from '../../redux/store';
-
-import { userPhoto } from '../../constants/images';
-
 import { FiChevronDown } from 'react-icons/fi';
 
+import { RootState } from '../../redux/store';
+import { openCreateChatModal } from '../../redux/modals/slice';
+import { userPhoto } from '../../constants/images';
+
 const Header = () => {
+  const dispatch = useDispatch();
+
   const { name } = useSelector((state: RootState) => state.user);
+
+  const openModalCreateChat = () => {
+    dispatch(openCreateChatModal());
+  };
+
   return (
     <div style={styles.headerContainer}>
       <header style={styles.header}>
-        <button style={styles.btn}>
+        <button style={styles.btn} onClick={() => openModalCreateChat()}>
           <div style={styles.plusCircle}>
             <BsPlusLg width={20} height={20} />
           </div>

@@ -22,7 +22,7 @@ const ForgotPasswordBlock: React.FC<ForgotPasswordProps> = ({
 
   return (
     <div className="modalBlock">
-      <div className="modalContainer">
+      <div className="modalContainer modalForgot">
         <div style={styles.top}>
           <button
             className="closeBtn"
@@ -81,7 +81,7 @@ const styles = {
   text: {
     fontSize: 16,
     fontWeight: 400,
-    marginTop: '4px',
+    margin: '20px 0',
   },
 };
 
