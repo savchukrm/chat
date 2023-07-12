@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { SlClose } from 'react-icons/sl';
 
 import SubmitForm from './SubmitForm';
+import SuccessForm from './SuccessBlock';
 
 interface ForgotPasswordProps {
   setLoadingModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -41,10 +42,7 @@ const ForgotPasswordBlock: React.FC<ForgotPasswordProps> = ({
         )}
 
         {successfulSubmit ? (
-          <p style={styles.text}>
-            A password recovery link has been sent to your email adress. Follow
-            that link to reset your password.
-          </p>
+          <SuccessForm />
         ) : (
           <SubmitForm
             setLoadingModal={setLoadingModal}

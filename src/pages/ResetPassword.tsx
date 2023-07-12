@@ -5,6 +5,8 @@ import { ResetPasswordForm } from '../components';
 
 import axios from 'axios';
 
+import { resetPassword, logo, backToHome } from '../constants/images';
+
 const ResetPassword = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,44 +51,83 @@ const ResetPassword = () => {
   }, [email, navigate, token, verifiedToken]);
 
   return (
-    <div style={styles.container}>
-      {errorMessage && <p>{errorMessage}</p>}
+    <div style={styles.background}>
+      <div style={styles.container}>
+        <img src={logo} alt="logo" />
 
-      {verifiedToken && !successfulMessage && (
-        <div style={styles.formBlock}>
-          <h3 style={styles.h3}>Enter a new password</h3>
-
-          <p style={styles.subtitle}>Now you can change your password:</p>
-
-          <ResetPasswordForm
-            userLogin={email}
-            passwordResetToken={token}
-            setErrorMessage={setErrorMessage}
-            setSuccessMessage={setSuccessMessage}
-          />
+        <div style={styles.backToHome}>
+          <img src={backToHome} alt="backArrow" />
+          <button style={styles.redirectBtn} onClick={() => navigate('/')}>
+            Back to Homepage
+          </button>
         </div>
-      )}
 
-      {successfulMessage && <p>{successfulMessage}</p>}
+        <div style={styles.messageBlock}>
+          {errorMessage && (
+            <div style={styles.messegeForm}>
+              <p>{errorMessage}</p>
+            </div>
+          )}
 
-      <button style={styles.redirectBtn} onClick={() => navigate('/')}>
-        Go to main page
-      </button>
+          {verifiedToken && !successfulMessage && (
+            <div style={styles.formBlock}>
+              <h3 style={styles.h3}>Enter a new password</h3>
+
+              <p style={styles.subtitle}>Now you can change your password:</p>
+
+              <ResetPasswordForm
+                userLogin={email}
+                passwordResetToken={token}
+                setErrorMessage={setErrorMessage}
+                setSuccessMessage={setSuccessMessage}
+              />
+            </div>
+          )}
+
+          {successfulMessage && (
+            <div style={styles.messegeForm}>
+              <p>{successfulMessage}</p>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
 
 const styles = {
+  background: {
+    height: '100vh',
+    padding: '20px 0',
+    backgroundImage: `url(${resetPassword})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    margin: 0,
+  },
   container: {
-    marginTop: '50px',
+    maxWidth: 1440,
+    margin: '10px auto 0',
     display: 'flex',
     flexDirection: 'column' as 'column',
     alignItems: 'center',
   },
-  formBlock: {
-    border: '1px solid #000',
+  messageBlock: {
+    position: 'absolute' as 'absolute',
+    right: 280,
+    top: 200,
+  },
+  messegeForm: {
+    backgroundColor: '#fff',
+    width: '432px',
+    padding: '20px 16px',
     borderRadius: '4px',
-    padding: '16px',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  formBlock: {
+    padding: '20px 16px',
+    backgroundColor: '#fff',
+    borderRadius: '4px',
   },
   h3: {
     fontSize: '30px',
@@ -97,8 +138,18 @@ const styles = {
     fontWeight: 400,
     margin: '24px 0',
   },
+  backToHome: {
+    position: 'absolute' as 'absolute',
+    left: 45,
+    top: 30,
+    display: 'flex',
+    alignItems: 'center',
+    gap: '7px',
+    cursor: 'pointer',
+  },
   redirectBtn: {
-    marginTop: '30px',
+    color: '#fff',
+    fontSize: '18px',
   },
 };
 

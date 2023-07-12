@@ -9,6 +9,8 @@ import privateChat from '../assets/images/private.svg';
 import settings from '../assets/images/settings.svg';
 import welcome from '../assets/images/welcome.svg';
 import createChat from '../assets/images/create-chat.svg';
+import resetPassword from '../assets/images/Resetpassword.svg';
+import backToHome from '../assets/images/backtohome.svg';
 
 export {
   background,
@@ -22,4 +24,6 @@ export {
   privateChat,
   welcome,
   createChat,
+  resetPassword,
+  backToHome,
 };

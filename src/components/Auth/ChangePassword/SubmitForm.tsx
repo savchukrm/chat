@@ -1,7 +1,9 @@
 import React from 'react';
-
+import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
+
+import { setUser } from '../../../redux/user/slice';
 
 interface SubmitFormProps {
   setLoadingModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,6 +20,7 @@ const SubmitForm: React.FC<SubmitFormProps> = ({
   setErrorMessage,
   setSuccessfulSubmit,
 }) => {
+  const dispatch = useDispatch();
   const initialValues: FormValues = {
     email: '',
   };
@@ -41,6 +44,7 @@ const SubmitForm: React.FC<SubmitFormProps> = ({
       if (response.status === 200) {
         setLoadingModal(false);
         setSuccessfulSubmit(true);
+        dispatch(setUser({ email: values.email }));
       } else if (response.status === 404) {
         setLoadingModal(false);
         setErrorMessage('User not found');
@@ -54,7 +58,7 @@ const SubmitForm: React.FC<SubmitFormProps> = ({
     } catch (error) {
       console.error(error);
       setLoadingModal(false);
-      setErrorMessage('User not found');
+      setErrorMessage('Server error. Please try again later.');
     } finally {
       setLoadingModal(false);
       setSubmitting(false);
