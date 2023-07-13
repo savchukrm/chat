@@ -19,6 +19,8 @@ const ResetPassword = () => {
   const [successfulMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
+    localStorage.clear();
+
     if (!email || !token) {
       navigate('/');
     } else {
