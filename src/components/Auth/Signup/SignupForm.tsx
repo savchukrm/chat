@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 
 import { setUser } from '../../../redux/user/slice';
+import { openWelcome } from '../../../redux/modals/slice';
 
 interface FormValues {
   name: string;
@@ -126,6 +127,7 @@ const SignupForm: React.FC<SignupBlockProps> = ({
         setLoadingModal(false);
         setVerifyModal(true);
         dispatch(setUser({ name, email: login }));
+        dispatch(openWelcome());
       } else {
         throw new Error('Failed to sign up');
       }
@@ -145,82 +147,88 @@ const SignupForm: React.FC<SignupBlockProps> = ({
       validate={validateForm}
       onSubmit={handleSubmit}
     >
-      <Form>
-        <div style={styles.formGroup}>
-          <label htmlFor="name" style={styles.label}>
-            Your name (how users will see you)
-          </label>
+      {({ values }) => (
+        <Form>
+          <div style={styles.formGroup}>
+            <label htmlFor="name" style={styles.label}>
+              Your name (how users will see you)
+            </label>
 
-          <Field
-            type="text"
-            id="name"
-            name="name"
-            style={styles.input}
-            maxLength={30}
-            placeholder="John Smith"
-          />
+            <Field
+              type="text"
+              id="name"
+              name="name"
+              style={styles.input}
+              maxLength={30}
+              placeholder="John Smith"
+              defaultValue={values.name}
+            />
 
-          <div style={{ color: 'red', fontSize: '12px' }}>
-            <ErrorMessage name="name" component="div" />
+            <div style={{ color: 'red', fontSize: '12px' }}>
+              <ErrorMessage name="name" component="div" />
+            </div>
           </div>
-        </div>
-        <div style={styles.formGroup}>
-          <label htmlFor="email" style={styles.label}>
-            Email
-          </label>
 
-          <Field
-            type="email"
-            id="email"
-            name="email"
-            style={styles.input}
-            placeholder="name@gmail.com"
-          />
+          <div style={styles.formGroup}>
+            <label htmlFor="email" style={styles.label}>
+              Email
+            </label>
 
-          <div style={{ color: 'red', fontSize: '12px' }}>
-            <ErrorMessage name="email" component="div" />
+            <Field
+              type="email"
+              id="email"
+              name="email"
+              style={styles.input}
+              placeholder="name@gmail.com"
+              defaultValue={values.email}
+            />
+
+            <div style={{ color: 'red', fontSize: '12px' }}>
+              <ErrorMessage name="email" component="div" />
+            </div>
           </div>
-        </div>
-        <div style={styles.formGroup}>
-          <label htmlFor="password" style={styles.label}>
-            Password
-          </label>
 
-          <Field
-            type="password"
-            id="password"
-            name="password"
-            style={styles.input}
-            maxLength={20}
-            placeholder="8 characters or more"
-          />
+          <div style={styles.formGroup}>
+            <label htmlFor="password" style={styles.label}>
+              Password
+            </label>
 
-          <div style={{ color: 'red', fontSize: '12px' }}>
-            <ErrorMessage name="password" component="div" />
+            <Field
+              type="password"
+              id="password"
+              name="password"
+              style={styles.input}
+              maxLength={20}
+              placeholder="8 characters or more"
+            />
+
+            <div style={{ color: 'red', fontSize: '12px' }}>
+              <ErrorMessage name="password" component="div" />
+            </div>
           </div>
-        </div>
 
-        <div style={styles.formGroup}>
-          <label htmlFor="passwordConfirm" style={styles.label}>
-            Confirm Password
-          </label>
-          <Field
-            type="password"
-            id="passwordConfirm"
-            name="passwordConfirm"
-            style={styles.input}
-            maxLength={20}
-            placeholder="Confirm your password"
-          />
-          <div style={{ color: 'red', fontSize: '12px' }}>
-            <ErrorMessage name="passwordConfirm" component="div" />
+          <div style={styles.formGroup}>
+            <label htmlFor="passwordConfirm" style={styles.label}>
+              Confirm Password
+            </label>
+            <Field
+              type="password"
+              id="passwordConfirm"
+              name="passwordConfirm"
+              style={styles.input}
+              maxLength={20}
+              placeholder="Confirm your password"
+            />
+            <div style={{ color: 'red', fontSize: '12px' }}>
+              <ErrorMessage name="passwordConfirm" component="div" />
+            </div>
           </div>
-        </div>
 
-        <button type="submit" className="submitBtn">
-          Create account
-        </button>
-      </Form>
+          <button type="submit" className="submitBtn">
+            Create account
+          </button>
+        </Form>
+      )}
     </Formik>
   );
 };

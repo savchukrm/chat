@@ -1,16 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 type UserItem = {
-  name: number | null;
+  name: string | null;
   email: string | null;
   verified: boolean;
+  isLoggedIn: boolean;
 };
 
-const initialStates: UserItem = {
-  name: null,
-  email: null,
-  verified: false,
-};
+const storedUser = localStorage.getItem('user');
+
+const initialStates: UserItem = storedUser
+  ? JSON.parse(storedUser)
+  : {
+      name: null,
+      email: null,
+      verified: false,
+      isLoggedIn: false,
+    };
 
 const user = createSlice({
   name: 'user',
@@ -19,13 +25,19 @@ const user = createSlice({
     setUser(state, action) {
       state.name = action.payload.name;
       state.email = action.payload.email;
+      state.isLoggedIn = true;
+      localStorage.setItem('user', JSON.stringify(state));
     },
     setVerified(state, action) {
       state.verified = action.payload;
+      localStorage.setItem('user', JSON.stringify(state));
     },
     removeUser(state) {
       state.name = null;
       state.email = null;
+      state.verified = false;
+      state.isLoggedIn = false;
+      localStorage.removeItem('user');
     },
   },
 });

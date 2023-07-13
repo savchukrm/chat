@@ -6,7 +6,7 @@ type ModalsItem = {
 };
 
 const initialStates: ModalsItem = {
-  welcomeModal: true,
+  welcomeModal: false,
   createChatModal: false,
 };
 
@@ -14,6 +14,9 @@ const modals = createSlice({
   name: 'modals',
   initialState: initialStates,
   reducers: {
+    openWelcome(state) {
+      state.welcomeModal = true;
+    },
     closeWelcome(state) {
       state.welcomeModal = false;
     },
@@ -26,7 +29,11 @@ const modals = createSlice({
   },
 });
 
-export const { closeWelcome, openCreateChatModal, closeCreateChatModal } =
-  modals.actions;
+export const {
+  openWelcome,
+  closeWelcome,
+  openCreateChatModal,
+  closeCreateChatModal,
+} = modals.actions;
 
 export default modals.reducer;

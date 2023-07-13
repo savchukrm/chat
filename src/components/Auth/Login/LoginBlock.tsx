@@ -7,6 +7,7 @@ import { SlClose } from 'react-icons/sl';
 import { RootState } from '../../../redux/store';
 import { google } from '../../../constants/images';
 import { setUser, setVerified } from '../../../redux/user/slice';
+import { openWelcome } from '../../../redux/modals/slice';
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 
@@ -100,6 +101,8 @@ const LoginBlock: React.FC<LoginBlockProps> = ({
             dispatch(setUser({ name: name, email: login }));
 
             dispatch(setVerified(true));
+
+            dispatch(openWelcome());
           } else {
             throw new Error('Failed to sign up');
           }

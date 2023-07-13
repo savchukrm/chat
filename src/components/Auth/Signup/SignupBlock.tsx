@@ -10,6 +10,7 @@ import { RootState } from '../../../redux/store';
 import { google } from '../../../constants/images';
 
 import { setUser } from '../../../redux/user/slice';
+import { openWelcome } from '../../../redux/modals/slice';
 
 import SignupForm from './SignupForm';
 
@@ -97,6 +98,7 @@ const SignupBlock: React.FC<SignupBlockProps> = ({
             setLoadingModal(false);
             setVerifyModal(true);
             dispatch(setUser({ name, email: login }));
+            dispatch(openWelcome());
           } else {
             console.log(response);
             throw new Error('Failed to sign up');

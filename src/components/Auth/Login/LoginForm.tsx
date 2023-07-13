@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 
 import { setUser, setVerified } from '../../../redux/user/slice';
+import { openWelcome } from '../../../redux/modals/slice';
 
 interface LoginFormProps {
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
@@ -95,6 +96,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
         dispatch(setUser({ name: name, email: login }));
 
         dispatch(setVerified(true));
+
+        dispatch(openWelcome());
       } else {
         throw new Error('Failed to sign up');
       }
