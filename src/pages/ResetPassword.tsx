@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
-import { ResetPasswordForm } from '../components';
+import { useDispatch } from 'react-redux';
 
 import axios from 'axios';
 
+import { removeUser } from '../redux/user/slice';
+
+import { ResetPasswordForm } from '../components';
 import { resetPassword, logo, backToHome } from '../constants/images';
 
 const ResetPassword = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -19,7 +22,8 @@ const ResetPassword = () => {
   const [successfulMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
-    localStorage.clear();
+    dispatch(removeUser());
+    localStorage.removeItem('user');
 
     if (!email || !token) {
       navigate('/');
@@ -50,7 +54,7 @@ const ResetPassword = () => {
 
       checkedToken();
     }
-  }, [email, navigate, token, verifiedToken]);
+  }, [dispatch, email, navigate, token, verifiedToken]);
 
   return (
     <div style={styles.background}>
