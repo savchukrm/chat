@@ -50,7 +50,7 @@ const SubmitForm: React.FC<SubmitFormProps> = ({
         setErrorMessage('User not found');
       } else if (response.status === 500) {
         setLoadingModal(false);
-        setErrorMessage('Server error. Please try again later.');
+        setErrorMessage('User not found.');
       } else {
         setLoadingModal(false);
         throw new Error('User not found');
@@ -58,7 +58,7 @@ const SubmitForm: React.FC<SubmitFormProps> = ({
     } catch (error) {
       console.error(error);
       setLoadingModal(false);
-      setErrorMessage('Server error. Please try again later.');
+      setErrorMessage('User not found');
     } finally {
       setLoadingModal(false);
       setSubmitting(false);
