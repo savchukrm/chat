@@ -89,11 +89,11 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
         dispatch(setUser({ email: values.email }));
       } else if (response.status === 200) {
-        const { login, name } = response.data;
+        const { login, name, token } = response.data;
 
         setLoadingModal(false);
 
-        dispatch(setUser({ name: name, email: login }));
+        dispatch(setUser({ name: name, email: login, token: token }));
 
         dispatch(setVerified(true));
 

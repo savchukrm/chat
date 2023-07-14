@@ -331,6 +331,11 @@ body {
   margin-right: 36px;
 }
 
+.category-item-active {
+  color: #2c3fe1;
+  border-bottom: 1px solid #2c3fe1;
+}
+
 @media (max-width: 1070px) {
   .greet {
     font-size: 2.5em;

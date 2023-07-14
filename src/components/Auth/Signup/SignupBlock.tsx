@@ -93,11 +93,13 @@ const SignupBlock: React.FC<SignupBlockProps> = ({
             setErrorMessage('An account with this email already exists');
             setLoadingModal(false);
           } else if (response.status === 200) {
-            const { name, login } = response.data;
+            const { name, login, token } = response.data;
+
             setSignModal(false);
             setLoadingModal(false);
             setVerifyModal(true);
-            dispatch(setUser({ name, email: login }));
+
+            dispatch(setUser({ name, email: login, token: token }));
             dispatch(openWelcome());
           } else {
             console.log(response);

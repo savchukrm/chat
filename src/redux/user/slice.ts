@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 type UserItem = {
   name: string | null;
   email: string | null;
+  token: string | null;
   verified: boolean;
   isLoggedIn: boolean;
 };
@@ -14,6 +15,7 @@ const initialStates: UserItem = storedUser
   : {
       name: null,
       email: null,
+      token: null,
       verified: false,
       isLoggedIn: false,
     };
@@ -25,6 +27,7 @@ const user = createSlice({
     setUser(state, action) {
       state.name = action.payload.name;
       state.email = action.payload.email;
+      state.token = action.payload.token;
       state.isLoggedIn = true;
       localStorage.setItem('user', JSON.stringify(state));
     },
@@ -35,6 +38,7 @@ const user = createSlice({
     removeUser(state) {
       state.name = null;
       state.email = null;
+      state.token = null;
       state.verified = false;
       state.isLoggedIn = false;
       localStorage.removeItem('user');
