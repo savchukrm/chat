@@ -15,7 +15,7 @@ const SuccessForm = () => {
         A password recovery link has been sent to your email adress. Follow that
         link to reset your password.
       </p>
-      <button className="submitBtn" onClick={handleGoToEmail}>
+      <button className="submitBtn verifyBtn" onClick={handleGoToEmail}>
         Go to mail
       </button>
     </div>
