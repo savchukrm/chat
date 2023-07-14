@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { notFound, logo, backToHome } from '../constants/images';
 
-const NotFoundPage = () => {
+interface NotFoundPageProps {
+  setShowHeader: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const NotFoundPage: React.FC<NotFoundPageProps> = ({ setShowHeader }) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setShowHeader(false);
+
+    return () => {
+      setShowHeader(true);
+    };
+  }, [setShowHeader]);
 
   return (
     <div style={styles.background}>

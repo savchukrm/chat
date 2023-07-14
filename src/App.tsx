@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from './redux/store';
@@ -16,10 +17,13 @@ import NavBar from './components/NavBar/NavBar';
 
 function App() {
   const { verified } = useSelector((state: RootState) => state.user);
+
+  const [showHeader, setShowHeader] = useState(true);
+
   return (
     <>
-      {verified && <Header />}
-      {verified && <NavBar />}
+      {verified && showHeader && <Header />}
+      {verified && showHeader && <NavBar />}
 
       <Routes>
         <Route index={true} path="/" element={<Greeting />} />
@@ -39,7 +43,10 @@ function App() {
 
         <Route path="/reset-password" element={<ResetPassword />} />
 
-        <Route path="*" element={<NotFoundPage />} />
+        <Route
+          path="*"
+          element={<NotFoundPage setShowHeader={setShowHeader} />}
+        />
       </Routes>
     </>
   );
