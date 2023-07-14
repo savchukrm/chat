@@ -1,5 +1,6 @@
 import background from '../assets/images/BACKGROUND.svg';
 import logo from '../assets/images/logo.svg';
+import shortLogo from '../assets/images/shortLogosvg.svg';
 import google from '../assets/images/google.svg';
 import userPhoto from '../assets/images/user-avatar.png';
 import activeChats from '../assets/images/active-chats.svg';
@@ -11,11 +12,15 @@ import welcome from '../assets/images/welcome.svg';
 import createChat from '../assets/images/create-chat.svg';
 import resetPassword from '../assets/images/Resetpassword.svg';
 import backToHome from '../assets/images/backtohome.svg';
+import hideNavBar from '../assets/images/hide-navbar.svg';
+import showNavBar from '../assets/images/show-navbar.svg';
+import vector from '../assets/images/Vector.svg';
 import notFound from '../assets/images/404.svg';
 
 export {
   background,
   logo,
+  shortLogo,
   google,
   userPhoto,
   activeChats,
@@ -27,5 +32,8 @@ export {
   createChat,
   resetPassword,
   backToHome,
+  hideNavBar,
+  showNavBar,
+  vector,
   notFound,
 };

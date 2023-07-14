@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { BsPlusLg } from 'react-icons/bs';
 import { FiChevronDown } from 'react-icons/fi';
@@ -10,10 +11,12 @@ import { userPhoto } from '../../constants/images';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { name } = useSelector((state: RootState) => state.user);
 
   const openModalCreateChat = () => {
+    navigate('/main');
     dispatch(openCreateChatModal());
   };
 
@@ -41,9 +44,8 @@ const styles = {
   headerContainer: {
     position: 'fixed' as 'fixed',
     right: 0,
-    width: '90%',
+    width: '100%',
     backgroundColor: '#313338',
-    borderBottom: '1px solid #000',
   },
   header: {
     display: 'flex',

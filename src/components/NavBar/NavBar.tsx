@@ -1,83 +1,162 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import { logo } from '../../constants/images';
+import {
+  logo,
+  hideNavBar,
+  shortLogo,
+  showNavBar,
+  vector,
+} from '../../constants/images';
 
 const NavBar = () => {
   const location = useLocation();
+  const [isExpanded, setIsExpanded] = useState(true);
+
+  const handleToggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   return (
-    <div style={styles.navBarBlock}>
+    <div
+      style={{
+        ...styles.navBarBlock,
+        width: isExpanded ? '231px' : '117px',
+      }}
+    >
       <div style={styles.logoContainer}>
-        <div style={{ paddingLeft: '7px' }}>
-          <img src={logo} alt="logo" />
+        <div style={styles.arrow} onClick={handleToggleExpand}>
+          <img src={isExpanded ? hideNavBar : showNavBar} alt="arrow" />
         </div>
+
+        {isExpanded ? (
+          <div style={{ paddingLeft: '7px' }}>
+            <img src={logo} alt="logo" />
+          </div>
+        ) : (
+          <div style={{ paddingLeft: '7px' }}>
+            <img src={shortLogo} alt="logo" />
+          </div>
+        )}
+
+        {isExpanded && (
+          <div style={styles.vector}>
+            <img src={vector} alt="vector" />
+          </div>
+        )}
 
         <ul style={styles.menuList}>
           <Link to="/main">
             <li
-              className={`menuItem  ${
+              className={`menuItem ${!isExpanded && 'menuItemShort'} ${
                 location.pathname === '/main' && 'menuItemActive'
               } `}
             >
-              <img
-                className={`allChatsItem ${
-                  location.pathname === '/main' && 'allChatsItemActive'
-                }`}
-                alt="myChats"
-              />
-              <span>All Chats</span>
+              {isExpanded ? (
+                <>
+                  <img
+                    className={`allChatsItem ${
+                      location.pathname === '/main' && 'allChatsItemActive'
+                    }`}
+                    alt="myChats"
+                  />
+                  <span>All Chats</span>
+                </>
+              ) : (
+                <img
+                  className={`allChatsItemBig ${
+                    location.pathname === '/main' && 'allChatsItemActive'
+                  }`}
+                  alt="myChats"
+                />
+              )}
             </li>
           </Link>
 
           <Link to="/active-chats">
             <li
-              className={`menuItem  ${
+              className={`menuItem ${!isExpanded && 'menuItemShort'} ${
                 location.pathname === '/active-chats' && 'menuItemActive'
               } `}
             >
-              <img
-                className={`activeChatsItem ${
-                  location.pathname === '/active-chats' &&
-                  'activeChatsItemActive'
-                }`}
-                alt="myChats"
-              />
-              <span>Active Chats</span>
+              {isExpanded ? (
+                <>
+                  <img
+                    className={`activeChatsItem ${
+                      location.pathname === '/active-chats' &&
+                      'activeChatsItemActive'
+                    }`}
+                    alt="myChats"
+                  />
+                  <span>Active Chats</span>
+                </>
+              ) : (
+                <img
+                  className={`activeChatsItemBig ${
+                    location.pathname === '/active-chats' &&
+                    'activeChatsItemActive'
+                  }`}
+                  alt="myChats"
+                />
+              )}
             </li>
           </Link>
 
           <Link to="/private-messages">
             <li
-              className={`menuItem  ${
+              className={`menuItem ${!isExpanded && 'menuItemShort'}   ${
                 location.pathname === '/private-messages' && 'menuItemActive'
               } `}
             >
-              <img
-                className={`privateChatsItem ${
-                  location.pathname === '/private-messages' &&
-                  'privateChatsItemActive '
-                }`}
-                alt="myChats"
-              />
-              <span>Private messages</span>
+              {isExpanded ? (
+                <>
+                  <img
+                    className={`privateChatsItem ${
+                      location.pathname === '/private-messages' &&
+                      'privateChatsItemActive '
+                    }`}
+                    alt="myChats"
+                  />
+                  <span>Private messages</span>
+                </>
+              ) : (
+                <img
+                  className={`privateChatsItemBig ${
+                    location.pathname === '/private-messages' &&
+                    'privateChatsItemActive '
+                  }`}
+                  alt="myChats"
+                />
+              )}
             </li>
           </Link>
 
           <Link to="/my-created-chats">
             <li
-              className={`menuItem  ${
+              className={`menuItem ${!isExpanded && 'menuItemShort'}  ${
                 location.pathname === '/my-created-chats' && 'menuItemActive'
               } `}
             >
-              <img
-                className={`myChatsItem ${
-                  location.pathname === '/my-created-chats' &&
-                  'myChatsItemActive'
-                }`}
-                alt="myChats"
-              />
-              <span>My Created Chats</span>
+              {isExpanded ? (
+                <>
+                  <img
+                    className={`myChatsItem ${
+                      location.pathname === '/my-created-chats' &&
+                      'myChatsItemActive'
+                    }`}
+                    alt="myChats"
+                  />
+                  <span>My Created Chats</span>
+                </>
+              ) : (
+                <img
+                  className={`myChatsItemBig ${isExpanded && 'bigImage'} ${
+                    location.pathname === '/my-created-chats' &&
+                    'myChatsItemActive'
+                  }`}
+                  alt="myChats"
+                />
+              )}
             </li>
           </Link>
         </ul>
@@ -85,17 +164,28 @@ const NavBar = () => {
 
       <Link to="/setting">
         <div
-          className={`menuItem  ${
+          className={`menuItem ${!isExpanded && 'menuItemShort'} ${
             location.pathname === '/setting' && 'menuItemActive'
           } `}
         >
-          <img
-            className={`settingItem ${
-              location.pathname === '/setting' && 'settingItemActive'
-            }`}
-            alt="setting"
-          />
-          <span>Setting</span>
+          {isExpanded ? (
+            <>
+              <img
+                className={`settingItem ${
+                  location.pathname === '/setting' && 'settingItemActive'
+                }`}
+                alt="setting"
+              />
+              <span>Setting</span>
+            </>
+          ) : (
+            <img
+              className={`settingItemBig ${
+                location.pathname === '/setting' && 'settingItemActive'
+              }`}
+              alt="setting"
+            />
+          )}
         </div>
       </Link>
     </div>
@@ -107,15 +197,26 @@ const styles = {
     position: 'fixed' as 'fixed',
     top: 0,
     left: 0,
-    width: '231px',
     height: '100%',
     padding: '24px 13px 10px 38px',
     display: 'flex',
     flexDirection: 'column' as 'column',
-    backgroundColor: '#1E1F22',
+    backgroundColor: '#313338',
+    transition: 'width 0.3s ease',
   },
   logoContainer: {
     marginBottom: 'auto',
+  },
+  arrow: {
+    position: 'absolute' as 'absolute',
+    right: -8,
+    top: 330,
+    cursor: 'pointer',
+  },
+  vector: {
+    position: 'absolute' as 'absolute',
+    top: 79.5,
+    left: 0,
   },
   menuList: {
     listStyle: 'none',

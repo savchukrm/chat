@@ -41,7 +41,7 @@ const Categories = () => {
     };
 
     getCategories();
-  });
+  }, []);
 
   return (
     <div style={styles.categories}>

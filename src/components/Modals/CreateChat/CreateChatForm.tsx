@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
+
+import { closeCreateChatModal } from '../../../redux/modals/slice';
+
 import { All_CATEGORIES, LANGUAGES } from '../../../constants';
 
 interface FormData {
@@ -9,6 +13,12 @@ interface FormData {
 }
 
 const CreateChatForm: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const closeModal = () => {
+    dispatch(closeCreateChatModal());
+  };
+
   const [formData, setFormData] = useState<FormData>({
     topic: '',
     category: '',
@@ -16,7 +26,9 @@ const CreateChatForm: React.FC = () => {
   });
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    event: React.ChangeEvent<
+      HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
+    >
   ) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
@@ -26,7 +38,7 @@ const CreateChatForm: React.FC = () => {
 
     try {
       await axios.post('/api/create-chat', formData);
-      // Reset the form after successful submission
+      //write the logic to post data on the server
       setFormData({ topic: '', category: '', language: '' });
     } catch (error) {
       console.error('Error creating chat:', error);
@@ -39,15 +51,14 @@ const CreateChatForm: React.FC = () => {
         <label style={styles.label} htmlFor="topicInput">
           Write a short topic:
         </label>
-        <input
-          type="text"
+        <textarea
           id="topicInput"
           name="topic"
           style={styles.input}
           value={formData.topic}
           onChange={handleChange}
           maxLength={40}
-        />
+        ></textarea>
 
         <label style={styles.label} htmlFor="categorySelect">
           Category:
@@ -84,7 +95,7 @@ const CreateChatForm: React.FC = () => {
         </select>
 
         <div style={styles.buttonsContainer}>
-          <button>Cancel</button>
+          <button onClick={() => closeModal()}>Cancel</button>
           <button style={styles.submitBtn} type="submit">
             Create Chat
           </button>
@@ -107,6 +118,7 @@ const styles = {
     borderRadius: '4px',
     margin: '8px 0 12px',
     color: '#fff',
+    padding: '6px 10px',
   },
   label: {
     fontSize: '14px',
