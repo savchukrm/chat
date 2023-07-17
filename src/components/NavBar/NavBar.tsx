@@ -22,6 +22,7 @@ const NavBar = () => {
       style={{
         ...styles.navBarBlock,
         width: isExpanded ? '231px' : '117px',
+        padding: isExpanded ? '24px 13px 10px 38px' : '24px 47px 10px 25px',
       }}
     >
       <div style={styles.logoContainer}>

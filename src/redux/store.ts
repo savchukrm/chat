@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 
 import user from './user/slice';
 import modals from './modals/slice';
+import chats from './chat/slice';
 
 export const store = configureStore({
-  reducer: { user, modals },
+  reducer: { user, modals, chats },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import { closeCreateChatModal } from '../../../redux/modals/slice';
+import { createChat } from '../../../redux/chat/slice';
 
 import { All_CATEGORIES, LANGUAGES } from '../../../constants';
 
@@ -21,8 +22,8 @@ const CreateChatForm: React.FC = () => {
 
   const [formData, setFormData] = useState<FormData>({
     topic: '',
-    category: '',
-    language: '',
+    category: All_CATEGORIES[0],
+    language: LANGUAGES[0],
   });
 
   const handleChange = (
@@ -36,13 +37,29 @@ const CreateChatForm: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    try {
-      await axios.post('/api/create-chat', formData);
-      //write the logic to post data on the server
-      setFormData({ topic: '', category: '', language: '' });
-    } catch (error) {
-      console.error('Error creating chat:', error);
+    if (formData.topic.trim() === '') {
+      return;
     }
+
+    if (formData.category === '') {
+      setFormData({ ...formData, category: All_CATEGORIES[0] });
+    }
+
+    if (formData.language === '') {
+      setFormData({ ...formData, language: LANGUAGES[0] });
+    }
+
+    dispatch(createChat(formData));
+    dispatch(closeCreateChatModal());
+
+    // try {
+    //   await axios.post('/api/create-chat', formData);
+    //   //write the logic to post data on the server
+
+    //   setFormData({ topic: '', category: '', language: '' });
+    // } catch (error) {
+    //   console.error('Error creating chat:', error);
+    // }
   };
 
   return (

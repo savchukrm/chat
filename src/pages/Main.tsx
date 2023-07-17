@@ -1,10 +1,7 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 
-import { Categories } from '../components';
-import Welcome from '../components/Modals/Welcome';
-
-import CreateChat from '../components/Modals/CreateChat/CreateChat';
+import { Categories, CreateChat, Welcome, ChatsContainer } from '../components';
 
 const Main = () => {
   const { welcomeModal, createChatModal } = useSelector(
@@ -14,6 +11,8 @@ const Main = () => {
   return (
     <div className="page-container">
       <Categories />
+
+      <ChatsContainer />
 
       {createChatModal && <CreateChat />}
       {welcomeModal && <Welcome />}
