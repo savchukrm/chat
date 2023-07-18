@@ -8,8 +8,13 @@ const Main = () => {
     (state: RootState) => state.modals
   );
 
+  const { isExpanded } = useSelector((state: RootState) => state.size);
+
   return (
-    <div className="page-container">
+    <div
+      className="page-container"
+      style={{ paddingLeft: isExpanded ? '273px' : '170px' }}
+    >
       <Categories />
 
       <ChatsContainer />

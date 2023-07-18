@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { RootState } from '../../redux/store';
+import { setIsExpanded } from '../../redux/size/slice';
 
 import {
   logo,
@@ -11,10 +15,12 @@ import {
 
 const NavBar = () => {
   const location = useLocation();
-  const [isExpanded, setIsExpanded] = useState(true);
+  const dispatch = useDispatch();
+
+  const { isExpanded } = useSelector((state: RootState) => state.size);
 
   const handleToggleExpand = () => {
-    setIsExpanded(!isExpanded);
+    dispatch(setIsExpanded(!isExpanded));
   };
 
   return (
@@ -177,7 +183,7 @@ const NavBar = () => {
                 }`}
                 alt="setting"
               />
-              <span>Setting</span>
+              <span>Settings</span>
             </>
           ) : (
             <img
