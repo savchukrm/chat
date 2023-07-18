@@ -5,9 +5,11 @@ import user from './user/slice';
 import modals from './modals/slice';
 import chats from './chat/slice';
 import size from './size/slice';
+import languages from './languages/slice';
+import categories from './categories/slice';
 
 export const store = configureStore({
-  reducer: { user, modals, chats, size },
+  reducer: { user, modals, chats, size, languages, categories },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

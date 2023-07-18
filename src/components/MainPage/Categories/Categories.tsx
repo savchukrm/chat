@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import axios from 'axios';
 
 import { RootState } from '../../../redux/store';
-
+import { setCategories } from '../../../redux/categories/slice';
 const Categories = () => {
-  const [allCategories, setAllCategories] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(0);
-
-  const handleCategoryClick = (index: number) => {
-    setActiveCategory(index);
-  };
+  const dispatch = useDispatch();
 
   const { token } = useSelector((state: RootState) => state.user);
+  const categoriesState = useSelector((state: RootState) => state.categories);
+
+  const [activeCategory, setActiveCategory] = useState(0);
+
   useEffect(() => {
     const getCategories = async () => {
       try {
         const baseUrl = process.env.REACT_APP_API_URL;
         const endpoint = 'api/v1/chat-category';
-
         const url = `${baseUrl}/${endpoint}`;
         const headers = {
           'Content-Type': 'application/json',
@@ -27,14 +25,9 @@ const Categories = () => {
         };
 
         const response = await axios.get(url, { headers });
-
         const data = response.data.data;
 
-        const category = data.reduce((acc: string[], item: any) => {
-          return [...acc, item.name];
-        }, []);
-
-        setAllCategories(category);
+        dispatch(setCategories(data));
       } catch (error) {
         console.error(error);
       }
@@ -48,15 +41,15 @@ const Categories = () => {
       <h2 style={styles.title}>Choose category:</h2>
 
       <div style={styles.itemsBlock}>
-        {allCategories.map((item, index) => (
+        {categoriesState.categories.map((item, index) => (
           <li
             className={`category-item ${
               activeCategory === index ? 'category-item-active' : ''
             }`}
-            key={item}
-            onClick={() => handleCategoryClick(index)}
+            onClick={() => setActiveCategory(index)}
+            key={item.id}
           >
-            {item}
+            {item.name}
           </li>
         ))}
       </div>
