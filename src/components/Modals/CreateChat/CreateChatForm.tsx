@@ -71,6 +71,10 @@ const CreateChatForm: React.FC = () => {
       setMaxCharError(false);
     }
 
+    if (name === 'topic' && value.trim() !== '') {
+      setEmptyInputError(false);
+    }
+
     setFormData({ ...formData, [name]: value });
   };
 
@@ -100,11 +104,11 @@ const CreateChatForm: React.FC = () => {
 
       if (response.status === 200) {
         if (formData.category === '') {
-          setFormData({ ...formData, category: categories[0].id });
+          setFormData({ ...formData, category: categories[0].name });
         }
 
         if (formData.language === '') {
-          setFormData({ ...formData, language: languages[0].id });
+          setFormData({ ...formData, language: languages[0].name });
         }
 
         dispatch(

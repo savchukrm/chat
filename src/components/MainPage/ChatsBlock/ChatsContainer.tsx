@@ -29,6 +29,7 @@ const style = {
     marginTop: '51px',
     display: 'flex',
     gap: '30px',
+    flexWrap: 'wrap' as 'wrap',
   },
 };
 export default ChatsContainer;
