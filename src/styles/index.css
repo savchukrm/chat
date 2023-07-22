@@ -237,10 +237,13 @@ body {
 }
 
 .menuItemShort {
+  position: relative;
+
   width: 55px;
   height: 55px;
   padding: 5px;
   border-radius: 4px;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -366,6 +369,28 @@ body {
 
 .menuItem .settingItemActive {
   content: url('../assets/images/settings-white.svg');
+}
+
+.tooltip {
+  position: absolute;
+  top: 0;
+
+  right: -165px;
+  width: 170px;
+  height: 55px;
+
+  padding: 16px 10px 0px;
+  background-color: #2c3fe1;
+  border-radius: 4px;
+  color: white;
+
+  font-size: 17px;
+  line-height: 1.4;
+  display: none;
+}
+
+.menuItemShort:hover .tooltip {
+  display: block;
 }
 
 /* Pages */

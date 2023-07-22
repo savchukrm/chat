@@ -70,12 +70,15 @@ const NavBar = () => {
                   <span>All Chats</span>
                 </>
               ) : (
-                <img
-                  className={`allChatsItemBig ${
-                    location.pathname === '/main' && 'allChatsItemActive'
-                  }`}
-                  alt="myChats"
-                />
+                <>
+                  <img
+                    className={`allChatsItemBig ${
+                      location.pathname === '/main' && 'allChatsItemActive'
+                    }`}
+                    alt="myChats"
+                  />
+                  <span className="tooltip">All Chats</span>
+                </>
               )}
             </li>
           </Link>
@@ -98,13 +101,16 @@ const NavBar = () => {
                   <span>Active Chats</span>
                 </>
               ) : (
-                <img
-                  className={`activeChatsItemBig ${
-                    location.pathname === '/active-chats' &&
-                    'activeChatsItemActive'
-                  }`}
-                  alt="myChats"
-                />
+                <>
+                  <img
+                    className={`activeChatsItemBig ${
+                      location.pathname === '/active-chats' &&
+                      'activeChatsItemActive'
+                    }`}
+                    alt="myChats"
+                  />
+                  <span className="tooltip">Active Chats</span>
+                </>
               )}
             </li>
           </Link>
@@ -127,13 +133,16 @@ const NavBar = () => {
                   <span>Private messages</span>
                 </>
               ) : (
-                <img
-                  className={`privateChatsItemBig ${
-                    location.pathname === '/private-messages' &&
-                    'privateChatsItemActive '
-                  }`}
-                  alt="myChats"
-                />
+                <>
+                  <img
+                    className={`privateChatsItemBig ${
+                      location.pathname === '/private-messages' &&
+                      'privateChatsItemActive '
+                    }`}
+                    alt="myChats"
+                  />
+                  <span className="tooltip">Private messages</span>
+                </>
               )}
             </li>
           </Link>
@@ -156,13 +165,16 @@ const NavBar = () => {
                   <span>My Created Chats</span>
                 </>
               ) : (
-                <img
-                  className={`myChatsItemBig ${isExpanded && 'bigImage'} ${
-                    location.pathname === '/my-created-chats' &&
-                    'myChatsItemActive'
-                  }`}
-                  alt="myChats"
-                />
+                <>
+                  <img
+                    className={`myChatsItemBig ${isExpanded && 'bigImage'} ${
+                      location.pathname === '/my-created-chats' &&
+                      'myChatsItemActive'
+                    }`}
+                    alt="myChats"
+                  />
+                  <span className="tooltip">My Created Chats</span>
+                </>
               )}
             </li>
           </Link>
@@ -186,12 +198,15 @@ const NavBar = () => {
               <span>Settings</span>
             </>
           ) : (
-            <img
-              className={`settingItemBig ${
-                location.pathname === '/setting' && 'settingItemActive'
-              }`}
-              alt="setting"
-            />
+            <>
+              <img
+                className={`settingItemBig ${
+                  location.pathname === '/setting' && 'settingItemActive'
+                }`}
+                alt="setting"
+              />
+              <span className="tooltip">Settings</span>
+            </>
           )}
         </div>
       </Link>
