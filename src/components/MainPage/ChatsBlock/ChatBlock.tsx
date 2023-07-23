@@ -38,7 +38,7 @@ const ChatBlock: React.FC<ChatBlockProps> = ({ topic, category, language }) => {
           <div style={styles.btnJoin}>Join</div>
           <div style={styles.info}>
             {flagImage && <div style={styles.flagContainer}>{flagImage}</div>}
-            <span style={styles.time}>16 hours ago</span>
+            <span style={styles.time}>Be first to talk!</span>
           </div>
         </div>
       </div>
@@ -100,9 +100,7 @@ const styles = {
     paddingTop: '15px',
   },
   time: {
-    paddingTop: '2px',
-
-    fontSize: '10px',
+    fontSize: '11px',
     color: '#fff',
   },
   flagContainer: {

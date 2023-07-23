@@ -29,6 +29,8 @@ const CreateChatForm: React.FC = () => {
     dispatch(closeCreateChatModal());
   };
 
+  const [firstCategory, ...onlyCategories] = categories;
+
   useEffect(() => {
     const getLanguages = async () => {
       try {
@@ -86,7 +88,7 @@ const CreateChatForm: React.FC = () => {
       return;
     }
 
-    const selectedCategory = categories.find(
+    const selectedCategory = onlyCategories.find(
       (category) => category.id === formData.category
     );
     const selectedLanguage = languages.find(
@@ -103,7 +105,8 @@ const CreateChatForm: React.FC = () => {
 
       const requestBody = {
         name: formData.topic,
-        categoryId: formData.category || categories[0].id,
+        categoryId:
+          formData.category || onlyCategories[onlyCategories.length - 1].id,
         languageId: formData.language || languages[0].id,
       };
 
@@ -113,7 +116,9 @@ const CreateChatForm: React.FC = () => {
         dispatch(
           createChat({
             topic: formData.topic,
-            category: selectedCategory?.name || categories[0].name,
+            category:
+              selectedCategory?.name ||
+              onlyCategories[onlyCategories.length - 1].name,
             language: selectedLanguage?.name || languages[0].name,
           })
         );
@@ -141,7 +146,7 @@ const CreateChatForm: React.FC = () => {
     <div>
       <form style={styles.formBlock} onSubmit={handleSubmit}>
         <label style={styles.label} htmlFor="topicInput">
-          Write a short topic:
+          Write a short topic
         </label>
         <textarea
           id="topicInput"
@@ -165,7 +170,7 @@ const CreateChatForm: React.FC = () => {
         )}
 
         <label style={styles.label} htmlFor="categorySelect">
-          Category:
+          Category
         </label>
         <select
           id="categorySelect"
@@ -174,7 +179,7 @@ const CreateChatForm: React.FC = () => {
           onChange={handleChange}
           style={styles.select}
         >
-          {categories.map((category) => (
+          {onlyCategories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
             </option>

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { BsPlusLg, BsFillBellFill } from 'react-icons/bs';
+import { HiCamera } from 'react-icons/hi';
 
 import { RootState } from '../../redux/store';
 import { openCreateChatModal } from '../../redux/modals/slice';
@@ -32,6 +33,9 @@ const Header = () => {
         </div>
 
         <div style={styles.userInfo}>
+          <div style={styles.camera}>
+            <HiCamera width={20} height={20} color="#fff" />
+          </div>
           <img src={userPhoto} alt="userPhoto" width={25} height={25} />
           <span style={styles.userName}>{name}</span>
         </div>
@@ -68,11 +72,13 @@ const styles = {
     color: '#fff',
   },
   plusCircle: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
     borderRadius: '50%',
     backgroundColor: '#2C3FE1',
     padding: '10px',
-    width: '38px',
-    height: '38px',
 
     cursor: 'pointer',
   },
@@ -80,6 +86,7 @@ const styles = {
     fontSize: '14px',
   },
   userInfo: {
+    position: 'relative' as 'relative',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -89,6 +96,12 @@ const styles = {
     fontWeight: 500,
     fontSize: '14px',
     color: '#fff',
+  },
+  camera: {
+    position: 'absolute' as 'absolute',
+    top: 20,
+    left: 10,
+    cursor: 'pointer',
   },
 };
 
