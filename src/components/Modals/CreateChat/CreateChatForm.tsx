@@ -22,6 +22,9 @@ const CreateChatForm: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.categories);
   const { languages } = useSelector((state: RootState) => state.languages);
 
+  const [maxCharError, setMaxCharError] = useState(false);
+  const [emptyInputError, setEmptyInputError] = useState(false);
+
   const closeModal = () => {
     dispatch(closeCreateChatModal());
   };
@@ -55,9 +58,6 @@ const CreateChatForm: React.FC = () => {
     language: '',
   });
 
-  const [maxCharError, setMaxCharError] = useState(false);
-  const [emptyInputError, setEmptyInputError] = useState(false);
-
   const handleChange = (
     event: React.ChangeEvent<
       HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
@@ -86,6 +86,13 @@ const CreateChatForm: React.FC = () => {
       return;
     }
 
+    const selectedCategory = categories.find(
+      (category) => category.id === formData.category
+    );
+    const selectedLanguage = languages.find(
+      (language) => language.id === formData.language
+    );
+
     try {
       const url = `${process.env.REACT_APP_API_URL}/api/v1/chat-channel/public/new`;
 
@@ -103,19 +110,11 @@ const CreateChatForm: React.FC = () => {
       const response = await axios.post(url, requestBody, { headers });
 
       if (response.status === 200) {
-        if (formData.category === '') {
-          setFormData({ ...formData, category: categories[0].name });
-        }
-
-        if (formData.language === '') {
-          setFormData({ ...formData, language: languages[0].name });
-        }
-
         dispatch(
           createChat({
             topic: formData.topic,
-            category: formData.category || categories[0].name,
-            language: formData.language || languages[0].name,
+            category: selectedCategory?.name || categories[0].name,
+            language: selectedLanguage?.name || languages[0].name,
           })
         );
 
@@ -129,7 +128,7 @@ const CreateChatForm: React.FC = () => {
           'Failed. Some field of ChatChannelDto don`t fit requirements.'
         );
       } else if (response.status === 404) {
-        console.log('Failed. User, ChatCategory or ChatLanguage not found.');
+        console.log('Failed. User, ChatCategory, or ChatLanguage not found.');
       } else {
         throw new Error('Failed to create chat');
       }

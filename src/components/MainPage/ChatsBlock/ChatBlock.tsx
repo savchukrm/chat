@@ -1,5 +1,23 @@
 import React from 'react';
 
+import {
+  ENGLISH_FLAG,
+  UKRAINE_FLAG,
+  POLAND_FLAG,
+  FRENCH_FLAG,
+  GERMAN_FLAG,
+} from './index';
+
+type FlagType = JSX.Element;
+
+const FLAGS: { [key: string]: FlagType } = {
+  English: ENGLISH_FLAG,
+  Polski: POLAND_FLAG,
+  Français: FRENCH_FLAG,
+  Українська: UKRAINE_FLAG,
+  Deutsch: GERMAN_FLAG,
+};
+
 interface ChatBlockProps {
   topic: string;
   category: string;
@@ -7,13 +25,22 @@ interface ChatBlockProps {
 }
 
 const ChatBlock: React.FC<ChatBlockProps> = ({ topic, category, language }) => {
+  const flagImage = FLAGS[language] || null;
+
   return (
     <div style={styles.chatBlock}>
       <div style={styles.header}>{category}</div>
 
       <div style={styles.blockContent}>
         <h4 style={styles.title}>{topic}</h4>
-        <div style={styles.bottomBlock}>here will be button</div>
+
+        <div style={styles.bottomContainer}>
+          <div style={styles.btnJoin}>Join</div>
+          <div style={styles.info}>
+            {flagImage && <div style={styles.flagContainer}>{flagImage}</div>}
+            <span style={styles.time}>16 hours ago</span>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -50,8 +77,39 @@ const styles = {
     color: '#fff',
     fontFamily: '',
   },
-  bottomBlock: {
-    // marginTop: 'auto',
+  bottomContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alightContent: 'center',
+  },
+  btnJoin: {
+    display: 'flex',
+    justifyContent: 'center',
+
+    padding: '10px 20px',
+    backgroundColor: '#2c3fe1',
+    fontSize: '14px',
+    color: '#fff',
+
+    borderRadius: '4px',
+    cursor: 'pointer',
+  },
+  info: {
+    display: 'flex',
+    justifyContent: 'center',
+    paddingTop: '15px',
+  },
+  time: {
+    paddingTop: '2px',
+
+    fontSize: '10px',
+    color: '#fff',
+  },
+  flagContainer: {
+    display: 'inline-block',
+    width: '30px',
+    height: '20px',
+    marginLeft: '10px',
   },
 };
 

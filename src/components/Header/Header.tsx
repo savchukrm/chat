@@ -2,8 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { BsPlusLg } from 'react-icons/bs';
-import { FiChevronDown } from 'react-icons/fi';
+import { BsPlusLg, BsFillBellFill } from 'react-icons/bs';
 
 import { RootState } from '../../redux/store';
 import { openCreateChatModal } from '../../redux/modals/slice';
@@ -23,17 +22,18 @@ const Header = () => {
   return (
     <div style={styles.headerContainer}>
       <header style={styles.header}>
-        <button style={styles.btn} onClick={() => openModalCreateChat()}>
+        <div style={styles.btnContainer}>
           <div style={styles.plusCircle}>
-            <BsPlusLg width={20} height={20} />
+            <BsFillBellFill width={20} height={20} color="#fff" />
           </div>
-          <span style={styles.btnText}>Create chat</span>
-        </button>
+          <div onClick={() => openModalCreateChat()} style={styles.plusCircle}>
+            <BsPlusLg width={20} height={20} color="#fff" />
+          </div>
+        </div>
 
         <div style={styles.userInfo}>
-          <img src={userPhoto} alt="userPhoto" width={30} height={24} />
+          <img src={userPhoto} alt="userPhoto" width={25} height={25} />
           <span style={styles.userName}>{name}</span>
-          <FiChevronDown color="#fff" size={27} />
         </div>
       </header>
     </div>
@@ -53,6 +53,12 @@ const styles = {
     padding: '18px 30px',
     gap: '49px',
   },
+  btnContainer: {
+    display: 'flex',
+    alignItems: 'center',
+
+    gap: '12px',
+  },
   btn: {
     display: 'flex',
     alignItems: 'center',
@@ -64,9 +70,11 @@ const styles = {
   plusCircle: {
     borderRadius: '50%',
     backgroundColor: '#2C3FE1',
-    padding: '4px',
-    width: '28px',
-    height: '28px',
+    padding: '10px',
+    width: '38px',
+    height: '38px',
+
+    cursor: 'pointer',
   },
   btnText: {
     fontSize: '14px',

@@ -399,6 +399,8 @@ body {
   background-color: #1e1f22;
   padding-top: 104px;
   padding-left: 273px;
+
+  height: 100vh;
 }
 
 /* Categories */
