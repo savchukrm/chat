@@ -48,8 +48,6 @@ Welcome to **Ok to Talk**, a chat application that allows users to communicate w
 
 The project uses the following dependencies:
 
-## Dependencies
-
 - **`@reduxjs/toolkit`**: A comprehensive Redux library that simplifies the state management process by providing utilities and abstractions.
 
 - **`axios`**: A promise-based HTTP client for making requests to APIs and handling responses.
