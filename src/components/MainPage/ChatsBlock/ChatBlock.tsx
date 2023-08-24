@@ -1,4 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
+import { itemsLang } from './constans';
 
 import {
   ENGLISH_FLAG,
@@ -25,20 +28,26 @@ interface ChatBlockProps {
 }
 
 const ChatBlock: React.FC<ChatBlockProps> = ({ topic, category, language }) => {
-  const flagImage = FLAGS[language] || null;
+  const languageName =
+    itemsLang.find((item) => item.id === language)?.name || '';
+  const flagImage = FLAGS[languageName] || null;
+
+  const { isExpanded } = useSelector((state: RootState) => state.size);
 
   return (
-    <div style={styles.chatBlock}>
-      <div style={styles.header}>{category}</div>
+    <div style={{ width: isExpanded ? '385px' : '421px' }}>
+      <div style={styles.chatBlock}>
+        <div style={styles.header}>{category}</div>
 
-      <div style={styles.blockContent}>
-        <h4 style={styles.title}>{topic}</h4>
+        <div style={styles.blockContent}>
+          <h4 style={styles.title}>{topic}</h4>
 
-        <div style={styles.bottomContainer}>
-          <div style={styles.btnJoin}>Join</div>
-          <div style={styles.info}>
-            {flagImage && <div style={styles.flagContainer}>{flagImage}</div>}
-            <span style={styles.time}>Be first to talk!</span>
+          <div style={styles.bottomContainer}>
+            <div style={styles.btnJoin}>Join</div>
+            <div style={styles.info}>
+              {flagImage && <div style={styles.flagContainer}>{flagImage}</div>}
+              <span style={styles.time}>Be first to talk!</span>
+            </div>
           </div>
         </div>
       </div>
@@ -48,7 +57,6 @@ const ChatBlock: React.FC<ChatBlockProps> = ({ topic, category, language }) => {
 
 const styles = {
   chatBlock: {
-    width: '362px',
     height: '240px',
 
     display: 'flex',
@@ -63,7 +71,7 @@ const styles = {
     lineHeight: '30px',
     color: '#fff',
 
-    background: 'linear-gradient(90deg, #05386B 0%, #5CDB95 100%)',
+    background: 'linear-gradient(90deg, #2C3FE1 0%, #66166D 100%)',
   },
   blockContent: {
     height: '100%',

@@ -1,21 +1,20 @@
 import React from 'react';
-
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 
 import ChatBlock from './ChatBlock';
 
 const ChatsContainer = () => {
-  const { chats } = useSelector((state: RootState) => state.chats);
+  const { allChats } = useSelector((state: RootState) => state.allChats);
 
   return (
     <div style={style.block}>
-      {chats.map((chat, index) => {
+      {allChats.map((chat, index) => {
         return (
           <ChatBlock
-            topic={chat.topic}
-            language={chat.language}
-            category={chat.category}
+            topic={chat.name}
+            language={chat.languageId}
+            category={chat.categoryId}
             key={index}
           />
         );
