@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../redux/store';
+import { Chat } from '../components';
 
 const ActiveChats = () => {
   const { isExpanded } = useSelector((state: RootState) => state.size);
@@ -12,7 +13,7 @@ const ActiveChats = () => {
       className="page-container"
       style={{ paddingLeft: isExpanded ? '273px' : '170px' }}
     >
-      Active chats
+      <Chat/>
     </div>
   );
 };

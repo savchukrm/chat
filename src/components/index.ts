@@ -4,6 +4,7 @@ import ResetPasswordForm from './Auth/ResetPassword/ResetPasswordForm';
 import CreateChat from './Modals/CreateChat/CreateChat';
 import Welcome from './Modals/Welcome';
 import ChatsContainer from './MainPage/ChatsBlock/ChatsContainer';
+import Chat from './Chat/Chat';
 
 export {
   GreetModals,
@@ -12,4 +13,5 @@ export {
   CreateChat,
   Welcome,
   ChatsContainer,
+  Chat,
 };
