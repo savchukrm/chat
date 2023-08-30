@@ -17,8 +17,9 @@ const NewMessage = () => {
     };
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form style={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <input
+                    style={styles.input}
                     type="text"
                     placeholder="Write a message..."
                     {...register("messageText", {
@@ -30,6 +31,20 @@ const NewMessage = () => {
             </form>
         </>
     );
+};
+
+const styles = {
+    form: {
+        width: "100%",
+        height: "60px",
+        backgroundColor: "#292B31",
+    },
+    input: {
+        height: "100%",
+        backgroundColor: "#292B31",
+        color: "#BBB",
+        paddingLeft: "40px",
+    },
 };
 
 export default NewMessage;
