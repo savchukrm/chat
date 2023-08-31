@@ -3,7 +3,9 @@ import Categories from './MainPage/Categories/Categories';
 import ResetPasswordForm from './Auth/ResetPassword/ResetPasswordForm';
 import CreateChat from './Modals/CreateChat/CreateChat';
 import Welcome from './Modals/Welcome';
-import ChatsContainer from './MainPage/ChatsBlock/ChatsContainer';
+import ChatsContainer from './MainPage/ChatsBlock/ChatsContainer/ChatsContainer';
+import SearchBlock from './MainPage/SearchBlock/SearchBlock';
+import AllFilters from './MainPage/Filters/AllFilters';
 import Chat from './Chat/Chat';
 
 export {
@@ -14,4 +16,6 @@ export {
   Welcome,
   ChatsContainer,
   Chat,
+  SearchBlock,
+  AllFilters,
 };

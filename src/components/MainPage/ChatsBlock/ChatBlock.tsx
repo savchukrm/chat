@@ -1,4 +1,6 @@
 import React from 'react';
+import { itemsLang, itemsCategories } from './constans';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
 import {
   ENGLISH_FLAG,
@@ -25,20 +27,33 @@ interface ChatBlockProps {
 }
 
 const ChatBlock: React.FC<ChatBlockProps> = ({ topic, category, language }) => {
-  const flagImage = FLAGS[language] || null;
+  const languageName =
+    itemsLang.find((item) => item.id === language)?.name || '';
+  const flagImage = FLAGS[languageName] || null;
+
+  const categoryName =
+    itemsCategories.find((item) => item.id === category)?.name || 'Other';
 
   return (
-    <div style={styles.chatBlock}>
-      <div style={styles.header}>{category}</div>
+    <div>
+      <div style={styles.chatBlock}>
+        <div style={styles.header}>
+          <p>{categoryName}</p>
 
-      <div style={styles.blockContent}>
-        <h4 style={styles.title}>{topic}</h4>
+          <div style={styles.dots}>
+            <BsThreeDotsVertical color="#979DED" size={20} />
+          </div>
+        </div>
 
-        <div style={styles.bottomContainer}>
-          <div style={styles.btnJoin}>Join</div>
-          <div style={styles.info}>
-            {flagImage && <div style={styles.flagContainer}>{flagImage}</div>}
-            <span style={styles.time}>Be first to talk!</span>
+        <div style={styles.blockContent}>
+          <h4 style={styles.title}>{topic}</h4>
+
+          <div style={styles.bottomContainer}>
+            <div style={styles.btnJoin}>Join</div>
+            <div style={styles.info}>
+              {flagImage && <div style={styles.flagContainer}>{flagImage}</div>}
+              <span style={styles.time}>Be first to talk!</span>
+            </div>
           </div>
         </div>
       </div>
@@ -48,14 +63,20 @@ const ChatBlock: React.FC<ChatBlockProps> = ({ topic, category, language }) => {
 
 const styles = {
   chatBlock: {
-    width: '362px',
     height: '240px',
-
     display: 'flex',
     flexDirection: 'column' as 'column',
     backgroundColor: '#313338',
+    borderRadius: '4px',
+  },
+  dots: {
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
   },
   header: {
+    display: 'flex',
+    justifyContent: 'space-between',
     height: '40px',
     width: '100%',
     padding: '4px 12px',
@@ -63,7 +84,7 @@ const styles = {
     lineHeight: '30px',
     color: '#fff',
 
-    background: 'linear-gradient(90deg, #05386B 0%, #5CDB95 100%)',
+    background: 'linear-gradient(90deg, #66166D 0%,#2C3FE1  100%)',
   },
   blockContent: {
     height: '100%',
