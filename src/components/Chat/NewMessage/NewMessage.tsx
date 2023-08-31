@@ -5,10 +5,11 @@ import { sendMessage } from '../../../redux/activeChat/slice';
 import { ImAttachment } from 'react-icons/im';
 import { BsEmojiSmile, BsFillSendFill } from 'react-icons/bs';
 
+interface IForm {
+  messageText: string;
+}
+
 const NewMessage = () => {
-  interface IForm {
-    messageText: string;
-  }
   const dispatch = useDispatch();
 
   const { register, handleSubmit, reset } = useForm<IForm>();

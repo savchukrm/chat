@@ -12,7 +12,11 @@ const ActiveChats = () => {
     <div
       className="page-container"
       style={{ paddingLeft: isExpanded ? '273px' : '170px' }}>
-      <Chat />
+      <Chat
+        titleChat="Why Imagine Dragons supports Ukraine through the UNITED24
+              platform?"
+        peopleChat="23 Members, 15 online"
+      />
     </div>
   );
 };

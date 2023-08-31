@@ -2,22 +2,24 @@ import React from 'react';
 import NewMessage from './NewMessage/NewMessage';
 import { SlOptionsVertical } from 'react-icons/sl';
 
-const Chat = () => {
+interface IChat {
+  titleChat: string;
+  peopleChat: string;
+}
+
+const Chat: React.FC<IChat> = ({ titleChat, peopleChat }) => {
   return (
     <>
       <div style={styles.chatName}>
         <div>
           <div style={styles.chatTitle}>
             <img src="" alt="" />
-            <p style={styles.nameTitle}>
-              Why Imagine Dragons supports Ukraine through the UNITED24
-              platform?
-            </p>
+            <p style={styles.nameTitle}>{titleChat}</p>
           </div>
 
           <div style={styles.chatPeople}>
             <img src="" alt="" />
-            <p style={styles.namePeople}>23 Members, 15 online </p>
+            <p style={styles.namePeople}>{peopleChat}</p>
           </div>
         </div>
         <div style={styles.chatBtn}>
