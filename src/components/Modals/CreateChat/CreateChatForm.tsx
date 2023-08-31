@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import axios from 'axios';
@@ -6,7 +6,7 @@ import axios from 'axios';
 import { RootState } from '../../../redux/store';
 import { closeCreateChatModal } from '../../../redux/modals/slice';
 import { createChat } from '../../../redux/chat/slice';
-import { setLanguages } from '../../../redux/languages/slice';
+import { setAllChats } from '../../../redux/allChats/allChats';
 
 interface FormData {
   topic: string;
@@ -30,29 +30,6 @@ const CreateChatForm: React.FC = () => {
   };
 
   const [firstCategory, ...onlyCategories] = categories;
-
-  useEffect(() => {
-    const getLanguages = async () => {
-      try {
-        const baseUrl = process.env.REACT_APP_API_URL;
-        const endpoint = 'api/v1/chat-language';
-        const url = `${baseUrl}/${endpoint}`;
-        const headers = {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        };
-
-        const response = await axios.get(url, { headers });
-        const data = response.data.data;
-
-        dispatch(setLanguages(data));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getLanguages();
-  }, [dispatch, token]);
 
   const [formData, setFormData] = useState<FormData>({
     topic: '',
@@ -78,6 +55,25 @@ const CreateChatForm: React.FC = () => {
     }
 
     setFormData({ ...formData, [name]: value });
+  };
+
+  const getChats = async () => {
+    try {
+      const baseUrl = process.env.REACT_APP_API_URL;
+      const endpoint = '/api/v1/chat-channel/public';
+      const url = `${baseUrl}/${endpoint}`;
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await axios.get(url, { headers });
+      const data = response.data.data;
+
+      dispatch(setAllChats(data));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -122,6 +118,8 @@ const CreateChatForm: React.FC = () => {
             language: selectedLanguage?.name || languages[0].name,
           })
         );
+
+        getChats();
 
         setFormData({ topic: '', category: '', language: '' });
         setMaxCharError(false);

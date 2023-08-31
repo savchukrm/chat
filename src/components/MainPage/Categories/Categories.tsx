@@ -1,40 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
-import axios from 'axios';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../redux/store';
-import { setCategories } from '../../../redux/categories/slice';
-const Categories = () => {
-  const dispatch = useDispatch();
 
-  const { token } = useSelector((state: RootState) => state.user);
+const Categories = () => {
   const categoriesState = useSelector((state: RootState) => state.categories);
 
   const [activeCategory, setActiveCategory] = useState(0);
-
-  useEffect(() => {
-    const getCategories = async () => {
-      try {
-        const baseUrl = process.env.REACT_APP_API_URL;
-        const endpoint = 'api/v1/chat-category';
-        const url = `${baseUrl}/${endpoint}`;
-        const headers = {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        };
-
-        const response = await axios.get(url, { headers });
-        const data = response.data.data;
-
-        dispatch(setCategories(data));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getCategories();
-  }, []);
 
   return (
     <div style={styles.categories}>
