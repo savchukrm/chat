@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
 import { setAllChats } from '../redux/allChats/allChats';
+import { setCategories } from '../redux/categories/slice';
+import { setLanguages } from '../redux/languages/slice';
 import axios from 'axios';
 
 import {
@@ -10,6 +12,7 @@ import {
   Welcome,
   ChatsContainer,
   SearchBlock,
+  AllFilters,
 } from '../components';
 
 const Main = () => {
@@ -43,6 +46,52 @@ const Main = () => {
     getChats();
   }, []);
 
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const baseUrl = process.env.REACT_APP_API_URL;
+        const endpoint = 'api/v1/chat-category';
+        const url = `${baseUrl}/${endpoint}`;
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        };
+
+        const response = await axios.get(url, { headers });
+        const data = response.data.data;
+
+        dispatch(setCategories(data));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getCategories();
+  }, []);
+
+  useEffect(() => {
+    const getLanguages = async () => {
+      try {
+        const baseUrl = process.env.REACT_APP_API_URL;
+        const endpoint = 'api/v1/chat-language';
+        const url = `${baseUrl}/${endpoint}`;
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        };
+
+        const response = await axios.get(url, { headers });
+        const data = response.data.data;
+
+        dispatch(setLanguages(data));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getLanguages();
+  }, []);
+
   const { isExpanded } = useSelector((state: RootState) => state.size);
 
   return (
@@ -55,6 +104,7 @@ const Main = () => {
     >
       <Categories />
       <SearchBlock />
+      <AllFilters />
 
       <ChatsContainer />
 
