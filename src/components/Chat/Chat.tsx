@@ -1,6 +1,6 @@
 import React from "react";
 import NewMessage from "./NewMessage/NewMessage";
-import ButtonOption from "./NewMessage/img/svg/buttonOption";
+import { SlOptionsVertical } from "react-icons/sl";
 
 const Chat = () => {
     return (
@@ -22,7 +22,7 @@ const Chat = () => {
                 </div>
                 <div style={styles.chatBtn}>
                     <button style={styles.chatNameBtn}>
-                        <ButtonOption />
+                        <SlOptionsVertical style={styles.iconOption} />
                     </button>
                 </div>
             </div>
@@ -65,6 +65,10 @@ const styles = {
         backgroundColor: "#222326",
         width: "30px",
         height: "30px",
+    },
+    iconOption: {
+        fill: "#BBB",
+        marginTop: "2px",
     },
     chatBox: {
         width: "100%",
