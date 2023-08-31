@@ -11,9 +11,8 @@ const ActiveChats = () => {
   return (
     <div
       className="page-container"
-      style={{ paddingLeft: isExpanded ? '273px' : '170px' }}
-    >
-      <Chat/>
+      style={{ paddingLeft: isExpanded ? '273px' : '170px' }}>
+      <Chat />
     </div>
   );
 };
