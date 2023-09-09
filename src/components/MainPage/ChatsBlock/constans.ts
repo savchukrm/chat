@@ -1,3 +1,8 @@
+interface ICategories {
+  id: string;
+  name: string;
+}
+
 export const itemsLang = [
   { id: '64b29bb9a268b5150b670003', name: 'English' },
   { id: '64b29c1ba268b5150b670004', name: 'Українська' },
@@ -6,7 +11,11 @@ export const itemsLang = [
   { id: '64b29d17a268b5150b670007', name: 'Deutsch' },
 ];
 
-export const itemsCategories = [
+export const itemsCategories: ICategories[] = [
+  {
+    id: '64eccc5d2519e44fdf531cf1',
+    name: 'All chats',
+  },
   {
     id: '64eccc5d2519e44fdf531cf2',
     name: 'Video games',

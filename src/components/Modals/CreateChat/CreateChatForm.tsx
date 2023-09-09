@@ -31,6 +31,8 @@ const CreateChatForm: React.FC = () => {
 
   const [firstCategory, ...onlyCategories] = categories;
 
+  console.log(firstCategory);
+
   const [formData, setFormData] = useState<FormData>({
     topic: '',
     category: '',
@@ -40,7 +42,7 @@ const CreateChatForm: React.FC = () => {
   const handleChange = (
     event: React.ChangeEvent<
       HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = event.target;
 
@@ -85,10 +87,10 @@ const CreateChatForm: React.FC = () => {
     }
 
     const selectedCategory = onlyCategories.find(
-      (category) => category.id === formData.category
+      (category) => category.id === formData.category,
     );
     const selectedLanguage = languages.find(
-      (language) => language.id === formData.language
+      (language) => language.id === formData.language,
     );
 
     try {
@@ -101,8 +103,7 @@ const CreateChatForm: React.FC = () => {
 
       const requestBody = {
         name: formData.topic,
-        categoryId:
-          formData.category || onlyCategories[onlyCategories.length - 1].id,
+        categoryId: formData.category || categories[categories.length - 1].id,
         languageId: formData.language || languages[0].id,
       };
 
@@ -113,10 +114,9 @@ const CreateChatForm: React.FC = () => {
           createChat({
             topic: formData.topic,
             category:
-              selectedCategory?.name ||
-              onlyCategories[onlyCategories.length - 1].name,
+              selectedCategory?.name || categories[categories.length - 1].name,
             language: selectedLanguage?.name || languages[0].name,
-          })
+          }),
         );
 
         getChats();
@@ -128,7 +128,7 @@ const CreateChatForm: React.FC = () => {
         dispatch(closeCreateChatModal());
       } else if (response.status === 400) {
         console.log(
-          'Failed. Some field of ChatChannelDto don`t fit requirements.'
+          'Failed. Some field of ChatChannelDto don`t fit requirements.',
         );
       } else if (response.status === 404) {
         console.log('Failed. User, ChatCategory, or ChatLanguage not found.');
@@ -154,8 +154,7 @@ const CreateChatForm: React.FC = () => {
           onChange={handleChange}
           maxLength={40}
           rows={3}
-          cols={40}
-        ></textarea>
+          cols={40}></textarea>
         {maxCharError && (
           <p style={styles.error}>
             You have reached the maximum number of characters.
@@ -175,8 +174,7 @@ const CreateChatForm: React.FC = () => {
           name="category"
           value={formData.category}
           onChange={handleChange}
-          style={styles.select}
-        >
+          style={styles.select}>
           {onlyCategories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
@@ -192,10 +190,12 @@ const CreateChatForm: React.FC = () => {
           name="language"
           value={formData.language}
           onChange={handleChange}
-          style={styles.select}
-        >
+          style={styles.select}>
           {languages.map((language) => (
-            <option key={language.id} value={language.id}>
+            <option
+              style={{ cursor: 'pointer' }}
+              key={language.id}
+              value={language.id}>
               {language.name}
             </option>
           ))}
@@ -244,6 +244,7 @@ const styles = {
     color: '#fff',
     margin: '12px 0 20px',
     fontSize: '14px',
+    cursor: 'pointer',
   },
   buttonsContainer: {
     marginTop: '14px',

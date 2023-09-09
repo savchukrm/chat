@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../../../redux/store';
+import { setActiveCategory } from '../../../redux/filters/slice';
 
 const Categories = () => {
+  const dispatch = useDispatch();
+
   const categoriesState = useSelector((state: RootState) => state.categories);
 
-  const [activeCategory, setActiveCategory] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleActiveCategory = (index: number, id: string) => {
+    dispatch(setActiveCategory(id));
+    setActiveIndex(index);
+  };
 
   return (
     <div style={styles.categories}>
@@ -16,11 +24,10 @@ const Categories = () => {
         {categoriesState.categories.map((item, index) => (
           <li
             className={`category-item ${
-              activeCategory === index ? 'category-item-active' : ''
+              activeIndex === index ? 'category-item-active' : ''
             }`}
-            onClick={() => setActiveCategory(index)}
-            key={item.id}
-          >
+            onClick={() => handleActiveCategory(index, item.id)}
+            key={item.id}>
             {item.name}
           </li>
         ))}

@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
 import { CgClose } from 'react-icons/cg';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
+
+import { resetFiltres } from '../../../redux/filters/slice';
 
 import LanguagesFilters from './Languages/Languages';
 import HotOrNot from './HotOrNot/HotOrNot';
 import UpdateFilter from './Update/Update';
 
 const AllFilters = () => {
-  const [activeReset, setActiveReset] = useState<boolean>(false);
+  const dispatch = useDispatch();
+
+  const { active } = useSelector((state: RootState) => state.filters);
+
+  const handleReset = () => {
+    dispatch(resetFiltres());
+  };
+
   return (
     <div style={styles.container}>
       <div style={styles.filterBlock}>
@@ -14,8 +24,8 @@ const AllFilters = () => {
         <UpdateFilter />
         <HotOrNot />
       </div>
-      <div style={styles.resetBtn}>
-        <CgClose color={activeReset ? '#2c3fe1' : '#bbbbbb'} size={10} />
+      <div style={styles.resetBtn} onClick={handleReset}>
+        <CgClose color={active ? '#2c3fe1' : '#bbbbbb'} size={10} />
       </div>
     </div>
   );
@@ -39,6 +49,7 @@ const styles = {
     padding: '10px',
     borderRadius: '4px',
     backgroundColor: '#313338',
+    cursor: 'pointer',
   },
 };
 
