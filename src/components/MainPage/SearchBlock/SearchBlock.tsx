@@ -1,36 +1,49 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetFilters } from '../../../redux/filters/slice';
+import { setFilteredChats } from '../../../redux/allChats/allChats';
+import { setSearchText } from '../../../redux/allChats/allChats';
+import { RootState } from '../../../redux/store';
+
+import './style.css';
 
 const SearchBlock = () => {
-  const [search, setSearch] = useState<string>('');
+  const dispatch = useDispatch();
+  const { allChats, searchText } = useSelector(
+    (state: RootState) => state.allChats,
+  );
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const searchText = event.target.value;
 
-    setSearch(event.target.value);
+      dispatch(setSearchText(searchText));
+
+      performSearch(searchText);
+    },
+    [dispatch],
+  );
+
+  const performSearch = (searchText: string) => {
+    dispatch(resetFilters());
+
+    const filteredChats = allChats.filter((chat) =>
+      chat.name.toLowerCase().includes(searchText.toLowerCase()),
+    );
+
+    dispatch(setFilteredChats(filteredChats));
   };
+
   return (
     <input
-      style={style.inputBlock}
+      className="input"
       type="text"
-      value={search}
+      value={searchText}
       placeholder="Search"
       onChange={handleChange}
       maxLength={100}
     />
   );
-};
-
-const style = {
-  inputBlock: {
-    backgroundColor: '#313338',
-    height: '36px',
-    width: '100%',
-    color: '#bbbbb',
-    borderRadius: '4px',
-    fontSize: '14px',
-    paddingLeft: '12px',
-    marginTop: '23px',
-  },
 };
 
 export default SearchBlock;

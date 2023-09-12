@@ -2,7 +2,7 @@ import { CgClose } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 
-import { resetFiltres } from '../../../redux/filters/slice';
+import { resetFilters } from '../../../redux/filters/slice';
 
 import LanguagesFilters from './Languages/Languages';
 import HotOrNot from './HotOrNot/HotOrNot';
@@ -14,7 +14,7 @@ const AllFilters = () => {
   const { active } = useSelector((state: RootState) => state.filters);
 
   const handleReset = () => {
-    dispatch(resetFiltres());
+    dispatch(resetFilters());
   };
 
   return (
