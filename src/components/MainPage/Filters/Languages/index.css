@@ -1,16 +1,22 @@
 .custom-dropdown-container {
   position: relative;
   display: inline-block;
+  transition: 0.5 ease;
+}
+.custom-dropdown-container.active {
+  margin-right: 20px;
 }
 
 .custom-dropdown-header {
   padding: 8px 20px 8px 32px;
+  width: 100%;
   font-size: 12px;
   color: #bbbbbb;
   background-color: #313338;
   display: flex;
   align-items: center;
   border-radius: 4px;
+  transition: 0.5 ease;
 
   cursor: pointer;
 }
@@ -19,6 +25,23 @@
   color: #ffffff;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
+  box-shadow: 0px 1px 0px 0px rgba(44, 63, 225, 1);
+  transition: 0.5 ease;
+
+}
+.custom-dropdown-header.active {
+  color: #ffffff;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  box-shadow: 0px 1px 0px 0px rgba(44, 63, 225, 1);
+  transition: 0.5 ease;
+  width: calc(100% + 20px);
+
+}
+
+.custom-dropdown-header.open.active {
+  /* padding: 8px 30px 8px 32px; */
+
 }
 
 .dropdown-icon {
@@ -36,6 +59,9 @@
   width: 100%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+.custom-dropdown-options.active {
+  width: calc(100% + 20px);
+}
 
 .custom-dropdown-option {
   padding: 8px 20px 8px 42px;
@@ -44,6 +70,14 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
+.custom-dropdown-option.active {
+  padding: 8px 20px 8px 42px;
+  font-size: 12px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
 
 .custom-dropdown-option:hover {
   background-color: #44444a;
@@ -56,13 +90,13 @@
 .dropdown-triangle {
   width: 6px;
   height: 6px;
+  transform: rotate(180deg);
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
   border-bottom: 5px solid #bbbbbb;
   position: absolute;
-  top: 54%;
+  top: calc(50%-6px);
   right: 7px;
-  transform: translateY(-50%);
   transition: transform 0.4s ease;
 }
 
@@ -79,4 +113,24 @@
 
 .tick-icon {
   position: absolute;
+}
+
+.dropdown-close {
+  visibility: hidden;
+  width: 6px;
+  height: 6px;
+  transform: rotate(180deg);
+  position: relative;
+  top: calc(50%-6px);
+  right: 0px;
+  transition: transform 0.4s ease;
+}
+
+.dropdown-close.show {
+  visibility: visible;
+  width: 13px;
+  height: 13px;
+  border: none;
+  left: 30px;
+  top: -2px;
 }
