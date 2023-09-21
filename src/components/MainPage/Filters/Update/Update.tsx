@@ -22,22 +22,25 @@ const UpdateFilter = () => {
     dispatch(setActive(true));
     setIsOpen(false);
     setIsActive(true);
-
   };
   const handleLanguageReset = () => {
     dispatch(setUpdate(null));
     dispatch(setActive(false));
     setIsOpen(false);
     setIsActive(false);
-
   };
 
   const updateItems = ['First new', 'First old'];
 
   return (
-    <div className={`select custom-dropdown-container ${currentUpdate ? 'active' : ''}`}>
+    <div
+      className={`select custom-dropdown-container ${
+        currentUpdate ? 'active' : ''
+      }`}>
       <div
-        className={`select custom-dropdown-header custom-dropdown-header-update ${isOpen ? 'open' : ''} ${currentUpdate ? 'active' : ''}`}
+        className={`select custom-dropdown-header custom-dropdown-header-update ${
+          isOpen ? 'open' : ''
+        } ${currentUpdate ? 'active' : ''}`}
         onClick={() => setIsOpen(!isOpen)}>
         <div className="dropdown-icon-clock">
           <HiClock
@@ -51,13 +54,18 @@ const UpdateFilter = () => {
           {currentUpdate?.toLocaleLowerCase()}
         </span>
         <div className={`dropdown-triangle ${isOpen ? 'open' : ''}`} />
-        <button className={`dropdown-close ${currentUpdate !== null ? 'show' : ''}`} onClick={() => handleLanguageReset() }>
-        <CgClose color='#ffffff' size={10} />
+        <button
+          className={`dropdown-close ${currentUpdate !== null ? 'show' : ''}`}
+          onClick={() => handleLanguageReset()}>
+          <CgClose color="#ffffff" size={10} />
         </button>
       </div>
       {isOpen && (
-        <div className={`custom-dropdown-options ${currentUpdate ? 'active' : ''}`}>
-        {updateItems.map((item, index) => (
+        <div
+          className={`custom-dropdown-options ${
+            currentUpdate ? 'active' : ''
+          }`}>
+          {updateItems.map((item, index) => (
             <div
               key={item}
               className={`custom-dropdown-option ${

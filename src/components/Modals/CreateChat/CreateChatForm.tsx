@@ -152,6 +152,7 @@ const CreateChatForm: React.FC = () => {
           style={styles.input}
           value={formData.topic}
           onChange={handleChange}
+          placeholder="e.g., Burgers Well-Done Is The Way To Go|"
           maxLength={40}
           rows={3}
           cols={40}></textarea>
