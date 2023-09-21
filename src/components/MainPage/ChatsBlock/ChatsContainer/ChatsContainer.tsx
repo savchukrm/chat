@@ -9,7 +9,9 @@ import ShowMore from './ShowMore';
 import './ChatsContainer.css';
 
 const ChatsContainer = () => {
-  const { allChats } = useSelector((state: RootState) => state.allChats);
+  const { allChats, searchingChats, searchText } = useSelector(
+    (state: RootState) => state.allChats,
+  );
   const { currentLanguage, activeCategory, currentUpdate } = useSelector(
     (state: RootState) => state.filters,
   );
@@ -50,10 +52,12 @@ const ChatsContainer = () => {
     setFilteredChats(newFilteredChats);
   }, [currentLanguage, activeCategory, allChats, currentUpdate]);
 
+  const filteredChatsToRender = searchText ? searchingChats : filteredChats;
+
   return (
     <div>
       <div className="chats-container">
-        {filteredChats.map((chat, index) => {
+        {filteredChatsToRender.map((chat, index) => {
           return (
             <ChatBlock
               topic={chat.name}

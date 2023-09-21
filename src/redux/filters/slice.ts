@@ -13,7 +13,7 @@ const initialState: Filters = {
   currentLanguage: '64b29bb9a268b5150b670003',
   currentUpdate: null,
   hotOrNot: false,
-  activeCategory: 'All chats',
+  activeCategory: '64eccc5d2519e44fdf531cf1',
 };
 
 const filtersSlice = createSlice({
@@ -39,12 +39,13 @@ const filtersSlice = createSlice({
     setActiveCategory: (state, action) => {
       state.activeCategory = action.payload;
     },
-    resetFiltres: (state) => {
+    resetFilters: (state) => {
       // or upload to chosen language
       state.currentLanguage = '64b29bb9a268b5150b670003';
       state.hotOrNot = false;
       state.currentUpdate = null;
       state.active = false;
+      state.activeCategory = '64eccc5d2519e44fdf531cf1';
     },
   },
 });
