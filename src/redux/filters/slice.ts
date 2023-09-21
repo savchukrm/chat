@@ -39,12 +39,12 @@ const filtersSlice = createSlice({
     setActiveCategory: (state, action) => {
       state.activeCategory = action.payload;
     },
-    resetFilters: (state) => {
+    resetFilters: (state, action) => {
       // or upload to chosen language
       state.currentLanguage = '64b29bb9a268b5150b670003';
       state.hotOrNot = false;
       state.currentUpdate = null;
-      state.active = false;
+      state.active = action.payload;
       state.activeCategory = '64eccc5d2519e44fdf531cf1';
     },
   },
@@ -55,9 +55,9 @@ export const {
   setLanguages,
   setHotOrNot,
   toggleHotOrNot,
-  resetFiltres,
   setActive,
   setActiveCategory,
+  resetFilters,
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

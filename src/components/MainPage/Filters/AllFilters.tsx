@@ -8,7 +8,7 @@ import LanguagesFilters from './Languages/Languages';
 import HotOrNot from './HotOrNot/HotOrNot';
 import UpdateFilter from './Update/Update';
 
-import './index.css'
+import './index.css';
 import { useCallback } from 'react';
 
 const AllFilters = () => {
@@ -16,25 +16,22 @@ const AllFilters = () => {
 
   const { active } = useSelector((state: RootState) => state.filters);
 
-
   const handleReset = useCallback(() => {
-    dispatch(resetFiltres());
-  },[dispatch]);
-
+    dispatch(resetFilters(false));
+  }, [dispatch]);
 
   return (
-    <div className='container'>
-      <div className='filterBlock'>
+    <div className="container">
+      <div className="filterBlock">
         <LanguagesFilters />
         <UpdateFilter />
         <HotOrNot />
       </div>
-      <div className='resetBtn' onClick={handleReset}>
+      <div className="resetBtn" onClick={handleReset}>
         <CgClose color={active ? '#ffffff' : '#bbbbbb'} size={10} />
       </div>
     </div>
   );
 };
-
 
 export default AllFilters;

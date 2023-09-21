@@ -6,8 +6,7 @@ import { setSearchText } from '../../../redux/allChats/allChats';
 import { RootState } from '../../../redux/store';
 
 import './style.css';
-import './index.css'
-
+import './index.css';
 
 const SearchBlock = () => {
   const dispatch = useDispatch();
@@ -27,7 +26,7 @@ const SearchBlock = () => {
   );
 
   const performSearch = (searchText: string) => {
-    dispatch(resetFilters());
+    dispatch(resetFilters(false));
 
     const filteredChats = allChats.filter((chat) =>
       chat.name.toLowerCase().includes(searchText.toLowerCase()),
@@ -37,20 +36,23 @@ const SearchBlock = () => {
   };
 
   const handleSearch = (searchTarget: any) => {
-    console.log(searchTarget)
-  }
+    console.log(searchTarget);
+  };
   return (
-    <div className='searchContainer'>
+    <div className="searchContainer">
       <input
-        className='inputBlock'
+        className="inputBlock"
         type="text"
-        value={search}
+        value={searchText}
         placeholder="Search"
         onChange={handleChange}
         maxLength={100}
       />
-      <button className='searchButton'
-        onClick={() => {handleSearch(search)}}
+      <button
+        className="searchButton"
+        onClick={() => {
+          handleSearch(searchText);
+        }}
       />
     </div>
   );
@@ -78,6 +80,5 @@ const SearchBlock = () => {
 //     position: 'relative'
 //   }
 // };
-
 
 export default SearchBlock;
