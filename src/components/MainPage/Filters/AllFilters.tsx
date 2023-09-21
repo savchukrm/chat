@@ -8,49 +8,33 @@ import LanguagesFilters from './Languages/Languages';
 import HotOrNot from './HotOrNot/HotOrNot';
 import UpdateFilter from './Update/Update';
 
+import './index.css'
+import { useCallback } from 'react';
+
 const AllFilters = () => {
   const dispatch = useDispatch();
 
   const { active } = useSelector((state: RootState) => state.filters);
 
-  const handleReset = () => {
-    dispatch(resetFilters());
-  };
+
+  const handleReset = useCallback(() => {
+    dispatch(resetFiltres());
+  },[dispatch]);
+
 
   return (
-    <div style={styles.container}>
-      <div style={styles.filterBlock}>
+    <div className='container'>
+      <div className='filterBlock'>
         <LanguagesFilters />
         <UpdateFilter />
         <HotOrNot />
       </div>
-      <div style={styles.resetBtn} onClick={handleReset}>
-        <CgClose color={active ? '#2c3fe1' : '#bbbbbb'} size={10} />
+      <div className='resetBtn' onClick={handleReset}>
+        <CgClose color={active ? '#ffffff' : '#bbbbbb'} size={10} />
       </div>
     </div>
   );
 };
 
-const styles = {
-  container: {
-    marginTop: '12px',
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  filterBlock: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    gap: '6px',
-  },
-  resetBtn: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '10px',
-    borderRadius: '4px',
-    backgroundColor: '#313338',
-    cursor: 'pointer',
-  },
-};
 
 export default AllFilters;

@@ -5,10 +5,11 @@
 }
 
 .custom-dropdown-header-update.open {
-  width: 180px;
+  min-width: 120px;
   color: #ffffff;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
+
 }
 
 .text.active {

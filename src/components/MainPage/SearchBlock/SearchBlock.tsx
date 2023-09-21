@@ -6,6 +6,8 @@ import { setSearchText } from '../../../redux/allChats/allChats';
 import { RootState } from '../../../redux/store';
 
 import './style.css';
+import './index.css'
+
 
 const SearchBlock = () => {
   const dispatch = useDispatch();
@@ -34,16 +36,48 @@ const SearchBlock = () => {
     dispatch(setFilteredChats(filteredChats));
   };
 
+  const handleSearch = (searchTarget: any) => {
+    console.log(searchTarget)
+  }
   return (
-    <input
-      className="input"
-      type="text"
-      value={searchText}
-      placeholder="Search"
-      onChange={handleChange}
-      maxLength={100}
-    />
+    <div className='searchContainer'>
+      <input
+        className='inputBlock'
+        type="text"
+        value={search}
+        placeholder="Search"
+        onChange={handleChange}
+        maxLength={100}
+      />
+      <button className='searchButton'
+        onClick={() => {handleSearch(search)}}
+      />
+    </div>
   );
 };
+
+// const style = {
+//   searchContainer: {
+//     display: 'flex'
+//   },
+//   inputBlock: {
+//     backgroundColor: '#313338',
+//     height: '36px',
+//     width: '100%',
+//     color: '#bbbbb',
+//     borderRadius: '4px',
+//     fontSize: '14px',
+//     paddingLeft: '12px',
+//     marginTop: '23px',
+//   },
+//   searchButton: {
+//     width: '30px',
+//     height: '30px',
+//     backgroundColor: '#FFF',
+//     marginTop: '25px',
+//     position: 'relative'
+//   }
+// };
+
 
 export default SearchBlock;

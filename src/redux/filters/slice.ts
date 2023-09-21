@@ -30,6 +30,9 @@ const filtersSlice = createSlice({
     setHotOrNot: (state, action) => {
       state.hotOrNot = action.payload;
     },
+    toggleHotOrNot: (state) => {
+      state.hotOrNot = !state.hotOrNot;
+    },
     setUpdate: (state, action) => {
       state.currentUpdate = action.payload;
     },
@@ -51,7 +54,8 @@ export const {
   setUpdate,
   setLanguages,
   setHotOrNot,
-  resetFilters,
+  toggleHotOrNot,
+  resetFiltres,
   setActive,
   setActiveCategory,
 } = filtersSlice.actions;
