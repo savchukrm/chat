@@ -33,19 +33,19 @@ export const itemsCategories: ICategories[] = [
     name: 'Education',
   },
   {
-    id: '64eccc5d2519e44fdf531c6',
+    id: '64eccc5d2519e44fdf531cf6',
     name: 'Fashion',
   },
   {
-    id: '64eccc5d2519e44fdf531c7',
+    id: '64eccc5d2519e44fdf531cf7',
     name: 'Movies',
   },
   {
-    id: '64eccc5d2519e44fdf531c8',
+    id: '64eccc5d2519e44fdf531cf8',
     name: 'Relationships',
   },
   {
-    id: '64eccc5d2519e44fdf531c9',
+    id: '64eccc5d2519e44fdf531cf9',
     name: 'Psychology',
   },
   {
@@ -57,31 +57,27 @@ export const itemsCategories: ICategories[] = [
     name: 'Books',
   },
   {
-    id: '64eccc5d2519e44fdf531cfb',
-    name: 'Books',
-  },
-  {
     id: '64eccc5d2519e44fdf531cfc',
     name: 'Art',
   },
   {
-    id: '64eccc5d2519e44fdf531cfd',
+    id: '64eccc5e2519e44fdf531cfd',
     name: 'Music',
   },
   {
-    id: '64eccc5d2519e44fdf531cfe',
+    id: '64eccc5e2519e44fdf531cfe',
     name: 'Science',
   },
   {
-    id: '64eccc5d2519e44fdf531cff',
+    id: '64eccc5e2519e44fdf531cff',
     name: 'Food',
   },
   {
-    id: '64eccc5d2519e44fdf531d00',
+    id: '64eccc5e2519e44fdf531d00',
     name: 'Travel',
   },
   {
-    id: '64eccc5d2519e44fdf531d01',
+    id: '64eccc5e2519e44fdf531d01',
     name: 'Other',
   },
 ];

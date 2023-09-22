@@ -31,8 +31,6 @@ const CreateChatForm: React.FC = () => {
 
   const [firstCategory, ...onlyCategories] = categories;
 
-  console.log(firstCategory);
-
   const [formData, setFormData] = useState<FormData>({
     topic: '',
     category: '',
@@ -107,6 +105,9 @@ const CreateChatForm: React.FC = () => {
         languageId: formData.language || languages[0].id,
       };
 
+      console.log(requestBody);
+      console.log(formData.category);
+
       const response = await axios.post(url, requestBody, { headers });
 
       if (response.status === 200) {
@@ -114,7 +115,7 @@ const CreateChatForm: React.FC = () => {
           createChat({
             topic: formData.topic,
             category:
-              selectedCategory?.name || categories[categories.length - 1].name,
+              selectedCategory?.name || categories[categories.length - 1].id,
             language: selectedLanguage?.name || languages[0].name,
           }),
         );
@@ -175,7 +176,10 @@ const CreateChatForm: React.FC = () => {
           name="category"
           value={formData.category}
           onChange={handleChange}
-          style={styles.select}>
+          className="selectForm">
+          <option value="" disabled hidden>
+            Choose from category
+          </option>
           {onlyCategories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
