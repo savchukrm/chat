@@ -1,26 +1,32 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../../../redux/store';
+import { setActiveCategory } from '../../../redux/filters/slice';
 
 const Categories = () => {
-  const categoriesState = useSelector((state: RootState) => state.categories);
+  const dispatch = useDispatch();
 
-  const [activeCategory, setActiveCategory] = useState(0);
+  const categories = useSelector(
+    (state: RootState) => state.categories.categories,
+  );
+  const { activeCategory } = useSelector((state: RootState) => state.filters);
+
+  const handleActiveCategory = (id: string) => {
+    dispatch(setActiveCategory(id));
+  };
 
   return (
     <div style={styles.categories}>
       <h2 style={styles.title}>Choose category:</h2>
 
       <div style={styles.itemsBlock}>
-        {categoriesState.categories.map((item, index) => (
+        {categories.map((item, index) => (
           <li
             className={`category-item ${
-              activeCategory === index ? 'category-item-active' : ''
+              activeCategory === item.id ? 'category-item-active' : ''
             }`}
-            onClick={() => setActiveCategory(index)}
-            key={item.id}
-          >
+            onClick={() => handleActiveCategory(item.id)}
+            key={item.id}>
             {item.name}
           </li>
         ))}

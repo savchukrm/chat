@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
-import { setAllChats } from '../redux/allChats/allChats';
 import { setCategories } from '../redux/categories/slice';
 import { setLanguages } from '../redux/languages/slice';
-import axios from 'axios';
+import { setAllChats } from '../redux/allChats/allChats';
+import useChats from '../hooks/useChats';
 
 import {
   Categories,
@@ -19,9 +20,11 @@ const Main = () => {
   const dispatch = useDispatch();
 
   const { welcomeModal, createChatModal } = useSelector(
-    (state: RootState) => state.modals
+    (state: RootState) => state.modals,
   );
   const { token } = useSelector((state: RootState) => state.user);
+
+  // const { getAllChats } = useChats();
 
   useEffect(() => {
     const getChats = async () => {
@@ -33,16 +36,13 @@ const Main = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         };
-
         const response = await axios.get(url, { headers });
         const data = response.data.data;
-
         dispatch(setAllChats(data));
       } catch (error) {
         console.error(error);
       }
     };
-
     getChats();
   }, []);
 
@@ -100,8 +100,7 @@ const Main = () => {
       style={{
         paddingLeft: isExpanded ? '273px' : '170px',
         paddingRight: '43px',
-      }}
-    >
+      }}>
       <Categories />
       <SearchBlock />
       <AllFilters />

@@ -1,23 +1,29 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { AiFillFire } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleHotOrNot } from '../../../../redux/filters/slice';
+import { RootState } from '../../../../redux/store';
 
 const HotOrNot = () => {
-  const [active, setActive] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
-  const handleActiveBtn = () => {
-    setActive(!active);
-  };
+  const { hotOrNot } = useSelector((state: RootState) => state.filters);
+
+  const handleActiveBtn = useCallback(() => {
+    dispatch(toggleHotOrNot())
+  }, [dispatch]);
 
   return (
-    <div style={styles.container} onClick={() => handleActiveBtn()}>
-      <AiFillFire color={active ? '#2c3fe1' : '#bbbbbb'} size={20} />
-      <span style={styles.text}>Hot</span>
+    <div style={styles.container} onClick={handleActiveBtn}>
+      <AiFillFire color={hotOrNot ? '#2c3fe1' : '#bbbbbb'} size={20} />
+      <span style={hotOrNot ? styles.textActive : styles.text}>Hot</span>
     </div>
   );
 };
 
 const styles = {
   container: {
+    transition: '0.5s ease',
     display: 'flex',
     alignItems: 'center',
     gap: '2px',
@@ -28,6 +34,12 @@ const styles = {
   text: {
     fontSize: '12px',
     color: '#bbbbbb',
+    transition: '0.5s ease',
+  },
+  textActive: {
+    fontSize: '12px',
+    color: '#FFFFFF',
+    transition: '0.5s ease',
   },
 };
 
