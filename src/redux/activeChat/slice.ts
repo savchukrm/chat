@@ -11,7 +11,6 @@ interface IChat{
 
 const initialState: IChat = {
     messageList: [],
-
 }
 
 const activeChatSlice = createSlice({

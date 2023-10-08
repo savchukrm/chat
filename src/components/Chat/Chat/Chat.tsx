@@ -1,5 +1,6 @@
 import React from 'react';
-import NewMessage from './NewMessage/NewMessage';
+// import io from 'socket.io-client'
+import NewMessage from '../NewMessage/NewMessage';
 import { SlOptionsVertical } from 'react-icons/sl';
 
 interface IChat {
@@ -7,9 +8,11 @@ interface IChat {
   peopleChat: string;
 }
 
+// const socket = io(/topic/chat-channel/{id})
+
 const Chat: React.FC<IChat> = ({ titleChat, peopleChat }) => {
   return (
-    <>
+    <div style={styles.chat}>
       <div style={styles.chatName}>
         <div>
           <div style={styles.chatTitle}>
@@ -30,11 +33,12 @@ const Chat: React.FC<IChat> = ({ titleChat, peopleChat }) => {
       </div>
       <div style={styles.chatBox}></div>
       <NewMessage />
-    </>
+    </div>
   );
 };
 
 const styles = {
+  chat: { width: '100%' },
   chatName: {
     backgroundColor: '#292B31',
     width: '100%',

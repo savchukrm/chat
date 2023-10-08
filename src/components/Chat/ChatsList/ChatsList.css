@@ -1,0 +1,7 @@
+.custom-scrollbar-thumb {
+  border-radius: 0 !important;
+}
+
+.list {
+  overflow-y: scroll;
+}
