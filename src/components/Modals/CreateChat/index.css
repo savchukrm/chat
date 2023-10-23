@@ -79,7 +79,7 @@
     top: 100%;
     left: 0;
     background-color: #313338;
-    overflow: hidden;
+
     width: 100%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -89,7 +89,15 @@
     box-sizing: border-box;
     z-index: 5;
 
+
 }
+.category-options {
+    overflow: scroll;
+    max-height: 50vh;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
 
 .custom-dropdown-options.active-modal {
     width: calc(100% + 20px);

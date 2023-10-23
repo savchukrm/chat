@@ -227,7 +227,7 @@ const CreateChatForm: React.FC = () => {
         </label>
         <div className={`select custom-dropdown-container-modal category-dropdown`} onClick={() => setIsOpenCategory(isOpenCategory => !isOpenCategory)}>
           <div className={`select custom-dropdown-header-modal`}>
-            <img className="dropdown-icon-modal" />
+            <img className="dropdown-icon-modal" alt='' />
             <span className='dropdown-icon-modal-flag'>{activeCat.name ? activeCat.name : <div className='dorpdown-molad-flag-default'>Choose from the list</div>}</span>
             <div className={`dropdown-triangle-modal `} />
             <button className={`dropdown-close-modal`}>
@@ -235,7 +235,7 @@ const CreateChatForm: React.FC = () => {
             </button>
           </div>
           {isOpenCategory && (
-            <div className={`custom-dropdown-options-modal`}>
+            <div className={`custom-dropdown-options-modal category-options`}>
               {categories.map(({id, name}) => (
                 <div
                   key={id}
@@ -271,7 +271,7 @@ const CreateChatForm: React.FC = () => {
         </label>
         <div className={`select custom-dropdown-container-modal language-dropdown`} onClick={() => setIsOpenLang(isOpenLang => !isOpenLang)}>
           <div className={`select custom-dropdown-header-modal`}>
-            <img className="dropdown-icon-modal" />
+            <img className="dropdown-icon-modal" alt=''/>
             <span>
               <span className='dropdown-icon-modal-flag'>{FLAGS[`${activeLang.name}`]}</span> {activeLang.name}
             </span>
