@@ -38,10 +38,6 @@
     top: 2px;
 }
 
-.custom-dropdown-header-modal {
-
-
-}
 
 .dropdown-category-error {
     position: absolute;
@@ -68,11 +64,6 @@
     box-shadow: 0px 1px 0px 0px rgba(44, 63, 225, 1);
     transition: 0.5 ease;
     width: calc(100% + 20px);
-
-}
-
-.custom-dropdown-header-modal.open.active {
-    /* padding: 8px 30px 8px 32px; */
 
 }
 
