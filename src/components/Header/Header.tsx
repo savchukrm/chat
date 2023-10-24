@@ -6,7 +6,7 @@ import { BsPlusLg, BsFillBellFill } from 'react-icons/bs';
 import { HiCamera } from 'react-icons/hi';
 
 import { RootState } from '../../redux/store';
-import { openCreateChatModal, openNewUserModal } from '../../redux/modals/slice';
+import { openCreateChatModal } from '../../redux/modals/slice';
 import { userPhoto } from '../../constants/images';
 
 const Header = () => {
@@ -19,10 +19,7 @@ const Header = () => {
     navigate('/main');
     dispatch(openCreateChatModal());
   };
-  const openModalNewUser = () => {
-    navigate('/main');
-    dispatch(openNewUserModal());
-  };
+
 
   return (
     <div style={styles.headerContainer}>
@@ -34,9 +31,7 @@ const Header = () => {
           <div onClick={() => openModalCreateChat()} style={styles.plusCircle}>
             <BsPlusLg width={20} height={20} color="#fff" />
           </div>
-          <div onClick={() => openModalNewUser()} style={styles.plusCircle}>
-            New User Modal
-          </div>
+
         </div>
 
         <div style={styles.userInfo}>

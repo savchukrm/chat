@@ -4,13 +4,19 @@ import { CgClose } from 'react-icons/cg';
 import { RootState } from '../../../redux/store';
 import { closeNewUserModal } from '../../../redux/modals/slice';
 import { welcome } from '../../../constants/images';
-import { ENGLISH_FLAG, FRENCH_FLAG, GERMAN_FLAG, POLAND_FLAG, UKRAINE_FLAG } from '../../MainPage/ChatsBlock';
+import {
+  ENGLISH_FLAG,
+  FRENCH_FLAG,
+  GERMAN_FLAG,
+  POLAND_FLAG,
+  UKRAINE_FLAG,
+} from '../../MainPage/ChatsBlock';
 import './index.css';
 
 const NewUser: React.FC = () => {
   const dispatch = useDispatch();
   const { name } = useSelector((state: RootState) => state.user);
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
 
   type FlagType = JSX.Element;
   interface LanguageData {
@@ -18,42 +24,23 @@ const NewUser: React.FC = () => {
     name: string;
   }
 
-  // interface CategoryData {
-  //   'Video games': boolean,
-  //   'Software': boolean,
-  //   'News': boolean,
-  //   'Education': boolean,
-  //   'Movies': boolean,
-  //   'Fashion': boolean,
-  //   'Relationships': boolean,
-  //   'Psychology': boolean,
-  //   'Finance': boolean,
-  //   'Books': boolean,
-  //   'Art': boolean,
-  //   'Music': boolean,
-  //   'Science': boolean,
-  //   'Food': boolean,
-  //   'Travel': boolean
-  // }
-  // const [isOpenCategory, setIsOpenCategory] = useState(false);
   const [activeCat, setActiveCat] = useState<any>({
     'Video games': false,
-    'Software': false,
-    'News': false,
-    'Education': false,
-    'Movies': false,
-    'Fashion': false,
-    'Relationships': false,
-    'Psychology': false,
-    'Finance': false,
-    'Books': false,
-    'Art': false,
-    'Music': false,
-    'Science': false,
-    'Food': false,
-    'Travel': false
-  })
-
+    Software: false,
+    News: false,
+    Education: false,
+    Movies: false,
+    Fashion: false,
+    Relationships: false,
+    Psychology: false,
+    Finance: false,
+    Books: false,
+    Art: false,
+    Music: false,
+    Science: false,
+    Food: false,
+    Travel: false,
+  });
 
   const FLAGS: { [key: string]: FlagType } = {
     English: ENGLISH_FLAG,
@@ -67,65 +54,67 @@ const NewUser: React.FC = () => {
   const [isOpenLang, setIsOpenLang] = useState(false);
   const [activeLang, setActiveLang] = useState<LanguageData>({
     id: languages[0].id,
-    name: languages[0].name
-  })
-  // const [activeCategory, setActiveCategory] = useState(false);
+    name: languages[0].name,
+  });
 
   const { categories } = useSelector((state: RootState) => state.categories);
-  const selectedCategories: any = [];
 
-  const addToCategories = (category: any) => {
-    selectedCategories[category] = !selectedCategories[category];
-    console.log(selectedCategories);
-  }
   const closeModal = () => {
-    dispatch(closeNewUserModal())
+    dispatch(closeNewUserModal());
   };
-
-
-
 
   return (
     <div className="modalBlock">
-      <div className='new-modal-container'>
+      <div className="new-modal-container">
         <div>
           <img src={welcome} alt="welcome" width={210} height={440} />
         </div>
-        {page === 1 &&
-          <div className='new-modal-greeting'>
+        {page === 1 && (
+          <div className="new-modal-greeting">
             <div>
-              <h3 className='new-modal-title'>{name},</h3>
-              <h3 className='new-modal-title'>welcome to Oktotalk!</h3>
-              <p className='new-modal-subtitle'>
-                We are so happy that you are here! Join any chat
-                or create your own and invite friends!
+              <h3 className="new-modal-title">{name},</h3>
+              <h3 className="new-modal-title">welcome to Oktotalk!</h3>
+              <p className="new-modal-subtitle">
+                We are so happy that you are here! Join any chat or create your
+                own and invite friends!
               </p>
             </div>
 
-            <button className='new-modal-button-container' onClick={() => setPage(2)}>
+            <button
+              className="new-modal-button-container"
+              onClick={() => setPage(2)}>
               Next
               <div className="new-modal-button-arrow"></div>
             </button>
-          </div>}
-        {page === 2 &&
-          <div className='new-modal-language'>
+          </div>
+        )}
+        {page === 2 && (
+          <div className="new-modal-language">
             <div>
-              <h3 className='new-modal-title'>Choose Language</h3>
-              <p className='new-modal-subtitle'>
-                Choose the language in which you want to chat.
-                You can always change the language in the Settings.
+              <h3 className="new-modal-title">Choose Language</h3>
+              <p className="new-modal-subtitle">
+                Choose the language in which you want to chat. You can always
+                change the language in the Settings.
               </p>
             </div>
 
             <div>
-              <label style={styles.label} htmlFor="languageSelect" className='language-label'>
+              <label
+                style={styles.label}
+                htmlFor="languageSelect"
+                className="language-label">
                 Language of communication
               </label>
-              <div className={`select custom-dropdown-container-modal language-dropdown`} onClick={() => setIsOpenLang(isOpenLang => !isOpenLang)}>
+              <div
+                className={`select custom-dropdown-container-modal language-dropdown`}
+                onClick={() => setIsOpenLang((isOpenLang) => !isOpenLang)}>
                 <div className={`select custom-dropdown-header-modal`}>
-                  <img className="dropdown-icon-modal" alt='' />
+                  <img className="dropdown-icon-modal" alt="" />
                   <span>
-                    <span className='dropdown-icon-modal-flag'>{FLAGS[`${activeLang.name}`]}</span> {activeLang.name}
+                    <span className="dropdown-icon-modal-flag">
+                      {FLAGS[`${activeLang.name}`]}
+                    </span>{' '}
+                    {activeLang.name}
                   </span>
                   <div className={`dropdown-triangle-modal `} />
                   <button className={`dropdown-close-modal`}>
@@ -137,20 +126,16 @@ const NewUser: React.FC = () => {
                     {languages.map(({ id, name }) => (
                       <div
                         key={id}
-                        className={`custom-dropdown-option-modal ${name === activeLang.name ? 'active' : ''} `}
+                        className={`custom-dropdown-option-modal ${
+                          name === activeLang.name ? 'active' : ''
+                        } `}
                         onClick={() => {
                           setActiveLang({
                             id,
-                            name
+                            name,
                           });
-                        }}
-                      >
+                        }}>
                         {FLAGS[`${name}`]}
-                        {/* {activeLang.name === name && (
-                          <div className="tick">
-                            <img src={tickIcon} alt="tick" className="tick-icon-modal" />
-                          </div>
-                        )} */}
                         {name}
                       </div>
                     ))}
@@ -159,62 +144,62 @@ const NewUser: React.FC = () => {
               </div>
             </div>
 
-            <button className='new-modal-button-container' onClick={() => setPage(3)}>
+            <button
+              className="new-modal-button-container"
+              onClick={() => setPage(3)}>
               Next
               <div className="new-modal-button-arrow"></div>
             </button>
-          </div>}
-        {page === 3 &&
-          <div className='new-modal-categories'>
-            
-              <div>
-                <h3 className='new-modal-title'>Highlight interests</h3>
-                <p className='new-modal-subtitle'>
-                  This will help us understand what you most want to talk about. You can always change it in the Settings.
-                </p>
-              </div>
-
-              <div className="new-modal-categories-container">
-                {categories.map(({ id, name }) => (
-                  name !== 'All chats' && name !== 'Other' &&
-                  <div key={id}
-                  onClick={() => {
-                    addToCategories(name);
-                    // setActiveCategory(activeCategory => !activeCategory);
-                    // @ts-ignore
-                    setActiveCat(activeCat => ({
-                      ...activeCat,
-                      [`${name}`] : !activeCat[`${name}`]
-                    }))
-                    console.log(activeCat)
-                    
-                }}>
-                    <div
-                    key={id}
-                    className={`new-modal-option-modal ${ activeCat[`${name}`] ? 'actived' : '' }`}
-                    
-
-                >
-                {name}
-              </div>
-                  </div>
-              ))}
+          </div>
+        )}
+        {page === 3 && (
+          <div className="new-modal-categories">
+            <div>
+              <h3 className="new-modal-title">Highlight interests</h3>
+              <p className="new-modal-subtitle">
+                This will help us understand what you most want to talk about.
+                You can always change it in the Settings.
+              </p>
             </div>
 
-            <button className='new-modal-button-container' onClick={() => closeModal()}>
+            <div className="new-modal-categories-container">
+              {categories.map(
+                ({ id, name }) =>
+                  name !== 'All chats' &&
+                  name !== 'Other' && (
+                    <div
+                      key={id}
+                      onClick={() => {
+                        setActiveCat({
+                          ...activeCat,
+                          [`${name}`]: !activeCat[`${name}`],
+                        });
+                      }}
+                      className={`new-modal-option-modal ${
+                        activeCat[`${name}`] ? 'actived' : ''
+                      }`}>
+                      {name}
+                    </div>
+                  ),
+              )}
+            </div>
+
+            <button
+              className="new-modal-button-container"
+              onClick={() => closeModal()}>
               Thank you, go to chat! :{')'}
             </button>
-          
-          </div>}
+          </div>
+        )}
+      </div>
     </div>
-    </div >
   );
 };
 
 const styles = {
   label: {
     fontSize: '14px',
-    cursor: 'auto'
+    cursor: 'auto',
   },
   container: {
     width: '640px',
