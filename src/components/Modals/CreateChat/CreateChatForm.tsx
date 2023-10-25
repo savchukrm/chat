@@ -58,11 +58,6 @@ const CreateChatForm: React.FC = () => {
   const [isOpenLang, setIsOpenLang] = useState(false);
   const [isOpenCategory, setIsOpenCategory] = useState(false);
 
-  // const [activeLanguage, setActiveLanguage] = useState('English');
-  // const [activeCategory, setActiveCategory] = useState('');
-  // const [activeLanguageId, setActiveLanguageId] = useState('64b29bb9a268b5150b670003');
-  // const [activeCategoryId, setActiveCategoryId] = useState('');
-
   const [activeLang, setActiveLang] = useState<LanguageData>({
     id: languages[0].id,
     name: languages[0].name,
@@ -75,8 +70,6 @@ const CreateChatForm: React.FC = () => {
   const closeModal = () => {
     dispatch(closeCreateChatModal());
   };
-
-  const [firstCategory, ...onlyCategories] = categories;
 
   const [formData, setFormData] = useState<FormData>({
     topic: '',
@@ -135,13 +128,6 @@ const CreateChatForm: React.FC = () => {
       setEmptyCategoryError(false);
     }
     if (emptyCategoryError || emptyInputError) return;
-
-    const selectedCategory = onlyCategories.find(
-      (category) => category.id === formData.category,
-    );
-    const selectedLanguage = languages.find(
-      (language) => language.id === formData.language,
-    );
 
     try {
       const url = `${process.env.REACT_APP_API_URL}/api/v1/chat-channel/public/new`;
@@ -228,7 +214,7 @@ const CreateChatForm: React.FC = () => {
             setIsOpenCategory((isOpenCategory) => !isOpenCategory)
           }>
           <div className={`select custom-dropdown-header-modal`}>
-            <img className="dropdown-icon-modal" />
+            <img className="dropdown-icon-modal" alt="" />
             <span className="dropdown-icon-modal-flag">
               {activeCat.name ? (
                 activeCat.name
@@ -244,7 +230,7 @@ const CreateChatForm: React.FC = () => {
             </button>
           </div>
           {isOpenCategory && (
-            <div className={`custom-dropdown-options-modal`}>
+            <div className={`custom-dropdown-options-modal category-options`}>
               {categories.map(({ id, name }) => (
                 <div
                   key={id}
@@ -254,7 +240,6 @@ const CreateChatForm: React.FC = () => {
                       id,
                       name,
                     });
-                    // setIsOpenCategory(isOpenCategory => !isOpenCategory);
                   }}>
                   {formData.language === name && (
                     <div className="tick">
@@ -285,7 +270,7 @@ const CreateChatForm: React.FC = () => {
           className={`select custom-dropdown-container-modal language-dropdown`}
           onClick={() => setIsOpenLang((isOpenLang) => !isOpenLang)}>
           <div className={`select custom-dropdown-header-modal`}>
-            <img className="dropdown-icon-modal" />
+            <img className="dropdown-icon-modal" alt="" />
             <span>
               <span className="dropdown-icon-modal-flag">
                 {FLAGS[`${activeLang.name}`]}
@@ -306,10 +291,7 @@ const CreateChatForm: React.FC = () => {
                     name === activeLang.name ? 'active' : ''
                   } `}
                   onClick={() => {
-                    setActiveLang({
-                      id,
-                      name,
-                    });
+                    setActiveLang({ id, name });
                   }}>
                   {FLAGS[`${name}`]}
                   {formData.language === name && (

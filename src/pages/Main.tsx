@@ -15,11 +15,12 @@ import {
   SearchBlock,
   AllFilters,
 } from '../components';
+import NewUser from '../components/Modals/NewUser/NewUser';
 
 const Main = () => {
   const dispatch = useDispatch();
 
-  const { welcomeModal, createChatModal } = useSelector(
+  const { welcomeModal, createChatModal, newUserModal } = useSelector(
     (state: RootState) => state.modals,
   );
   const { token } = useSelector((state: RootState) => state.user);
@@ -109,6 +110,7 @@ const Main = () => {
 
       {createChatModal && <CreateChat />}
       {welcomeModal && <Welcome />}
+      {newUserModal && <NewUser/>}
     </div>
   );
 };
