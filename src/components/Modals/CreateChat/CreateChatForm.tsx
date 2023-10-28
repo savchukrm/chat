@@ -256,7 +256,7 @@ const CreateChatForm: React.FC = () => {
             </div>
           )}
           {emptyCategoryError && !activeCat.name && (
-            <p className="dropdown-category-error">Choose Category</p>
+            <p className="dropdown-category-error">Don't know category? Сhoose “Other” from the list.</p>
           )}
         </div>
 
@@ -381,7 +381,7 @@ const styles = {
   error: {
     position: 'absolute' as 'absolute',
     top: '96px',
-    color: 'red',
+    color: '#F84848',
     fontSize: '11px',
     marginBottom: '8px',
   },

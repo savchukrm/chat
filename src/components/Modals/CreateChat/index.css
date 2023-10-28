@@ -14,6 +14,11 @@
   cursor: pointer;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
+
 .dorpdown-molad-flag-default {
   color: #616161;
   position: relative;
@@ -42,7 +47,7 @@
   position: absolute;
   top: 40px;
   left: -1px;
-  color: red;
+  color: #F84848;
   font-size: 11px;
   margin-bottom: 8px;
 }
