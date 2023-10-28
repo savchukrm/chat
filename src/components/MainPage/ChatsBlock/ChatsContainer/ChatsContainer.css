@@ -5,9 +5,26 @@
   gap: 30px;
 }
 
-.showMoreBtn {
+.buttons-container {
   display: flex;
   justify-content: flex-end;
+}
+
+.bottom-buttons {
+  display: block;
+}
+
+.show-more-container {
+  margin-top: 19px;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  cursor: pointer;
+}
+
+.show-more-button {
+  color: #bbbbbb;
+  font-size: 16px;
 }
 
 @media (max-width: 1440px) {

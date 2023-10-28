@@ -4,10 +4,9 @@ interface ShowMoreProps {
   handleScroll: () => void;
 }
 
-const ShowMore = ({ handleScroll }: ShowMoreProps) => {
+const GoToTop = ({ handleScroll }: ShowMoreProps) => {
   return (
     <div onClick={handleScroll} style={styles.container}>
-      <span style={styles.text}>Show more</span>
       <img src={arrowTop} alt="go to top arrow" />
     </div>
   );
@@ -28,4 +27,4 @@ const styles = {
   },
 };
 
-export default ShowMore;
+export default GoToTop;
