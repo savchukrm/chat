@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { CgClose } from 'react-icons/cg';
 import { RootState } from '../../../redux/store';
@@ -12,11 +12,14 @@ import {
   UKRAINE_FLAG,
 } from '../../MainPage/ChatsBlock';
 import './index.css';
+import axios from 'axios';
 
 const NewUser: React.FC = () => {
   const dispatch = useDispatch();
-  const { name } = useSelector((state: RootState) => state.user);
-  const [page, setPage] = useState(1);
+
+  const { name, email, token } = useSelector((state: RootState) => state.user);
+  const { languages } = useSelector((state: RootState) => state.languages);
+  const { categories } = useSelector((state: RootState) => state.categories);
 
   type FlagType = JSX.Element;
   interface LanguageData {
@@ -41,6 +44,13 @@ const NewUser: React.FC = () => {
     Food: false,
     Travel: false,
   });
+  const [page, setPage] = useState(1);
+  const [interestArray, setInterestArray] = useState<any[]>([]);
+  const [isOpenLang, setIsOpenLang] = useState(false);
+  const [activeLang, setActiveLang] = useState<LanguageData>({
+    id: languages[0].id,
+    name: languages[0].name,
+  });
 
   const FLAGS: { [key: string]: FlagType } = {
     English: ENGLISH_FLAG,
@@ -50,18 +60,36 @@ const NewUser: React.FC = () => {
     Deutsch: GERMAN_FLAG,
   };
 
-  const { languages } = useSelector((state: RootState) => state.languages);
-  const [isOpenLang, setIsOpenLang] = useState(false);
-  const [activeLang, setActiveLang] = useState<LanguageData>({
-    id: languages[0].id,
-    name: languages[0].name,
-  });
-
-  const { categories } = useSelector((state: RootState) => state.categories);
-
   const closeModal = () => {
+    postNewUser();
     dispatch(closeNewUserModal());
   };
+
+  const postNewUser = useCallback(async () => {
+    try {
+      const baseUrl = process.env.REACT_APP_API_URL;
+      const endpoint = '/auth/completeRegistration';
+      const url = `${baseUrl}${endpoint}`;
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+      const response = await axios.post(
+        url,
+        {
+          login: email,
+          name: name,
+          languageId: activeLang.id,
+          interests: interestArray,
+        },
+        {
+          headers,
+        },
+      );
+      const data = response.data.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }, [token, email, name, activeLang, interestArray]);
 
   return (
     <div className="modalBlock">
@@ -174,6 +202,10 @@ const NewUser: React.FC = () => {
                           ...activeCat,
                           [`${name}`]: !activeCat[`${name}`],
                         });
+                        setInterestArray((interestArray) => [
+                          ...interestArray,
+                          name,
+                        ]);
                       }}
                       className={`new-modal-option-modal ${
                         activeCat[`${name}`] ? 'actived' : ''
