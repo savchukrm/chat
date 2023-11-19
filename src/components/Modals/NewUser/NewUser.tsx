@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { CgClose } from 'react-icons/cg';
 import { RootState } from '../../../redux/store';
@@ -12,19 +12,43 @@ import {
   UKRAINE_FLAG,
 } from '../../MainPage/ChatsBlock';
 import './index.css';
+import axios from 'axios';
 
 const NewUser: React.FC = () => {
   const dispatch = useDispatch();
-  const { name } = useSelector((state: RootState) => state.user);
-  const [page, setPage] = useState(1);
+
+  const { name, email, token } = useSelector((state: RootState) => state.user);
+  const { languages } = useSelector((state: RootState) => state.languages);
+  const { categories } = useSelector((state: RootState) => state.categories);
 
   type FlagType = JSX.Element;
+
   interface LanguageData {
     id: string;
     name: string;
+  };
+  interface InterestArray {
+  };
+  interface IActiveCat {
+    // [key: string] : boolean,
+    'Video games': boolean,
+    'Software': boolean,
+    'News': boolean,
+    'Education': boolean,
+    'Movies': boolean,
+    'Fashion': boolean,
+    'Relationships': boolean,
+    'Psychology': boolean,
+    'Finance': boolean,
+    'Books': boolean,
+    'Art': boolean,
+    'Music': boolean,
+    'Science': boolean,
+    'Food': boolean,
+    'Travel': boolean,
   }
 
-  const [activeCat, setActiveCat] = useState<any>({
+  const [activeCat, setActiveCat] = useState<IActiveCat>({
     'Video games': false,
     Software: false,
     News: false,
@@ -41,6 +65,14 @@ const NewUser: React.FC = () => {
     Food: false,
     Travel: false,
   });
+  const [page, setPage] = useState(1);
+  const [interestArray, setInterestArray] = useState<string[]>([]);
+
+  const [isOpenLang, setIsOpenLang] = useState(false);
+  const [activeLang, setActiveLang] = useState<LanguageData>({
+    id: languages[0].id,
+    name: languages[0].name,
+  });
 
   const FLAGS: { [key: string]: FlagType } = {
     English: ENGLISH_FLAG,
@@ -50,17 +82,56 @@ const NewUser: React.FC = () => {
     Deutsch: GERMAN_FLAG,
   };
 
-  const { languages } = useSelector((state: RootState) => state.languages);
-  const [isOpenLang, setIsOpenLang] = useState(false);
-  const [activeLang, setActiveLang] = useState<LanguageData>({
-    id: languages[0].id,
-    name: languages[0].name,
-  });
-
-  const { categories } = useSelector((state: RootState) => state.categories);
-
   const closeModal = () => {
+    postNewUser();
     dispatch(closeNewUserModal());
+  };
+
+  const postNewUser = async () => {
+    try {
+      const baseUrl = process.env.REACT_APP_API_URL;
+      const endpoint = '/api/v1/interest/';
+      const url1 = `${baseUrl}${endpoint}`;
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+      const response = await axios.get(url1, { headers });
+      const data = response.data.data;
+      const dataId = [];
+      for (let i = 0; i < 16; i++) {
+        for (let k = 0; k < 16; k++) {
+          if (interestArray[k] == data[i].name) {
+            dataId.push(data[i].id);
+          }
+        }
+      }
+      const url2 = `${baseUrl}/auth/completeRegistration`;
+      const response2 = await axios.post(
+        url2,
+        {
+          login: email,
+          name: name,
+          languageId: activeLang.id,
+          interests: dataId,
+          token: token,
+        },
+        {
+          headers,
+        },
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const interestSetter = (name: string) => {
+    if (activeCat[name as keyof IActiveCat] === true) {
+      setInterestArray((interestArray) =>
+        interestArray.filter((item) => item !== name),
+      );
+    } else {
+      setInterestArray((interestArray) => [...interestArray, name]);
+    }
   };
 
   return (
@@ -82,7 +153,9 @@ const NewUser: React.FC = () => {
 
             <button
               className="new-modal-button-container"
-              onClick={() => setPage(2)}>
+              onClick={() => {
+                setPage(2);
+              }}>
               Next
               <div className="new-modal-button-arrow"></div>
             </button>
@@ -172,11 +245,12 @@ const NewUser: React.FC = () => {
                       onClick={() => {
                         setActiveCat({
                           ...activeCat,
-                          [`${name}`]: !activeCat[`${name}`],
+                          [`${name}`]: !activeCat[`${name as keyof IActiveCat}`],
                         });
+                        interestSetter(name);
                       }}
                       className={`new-modal-option-modal ${
-                        activeCat[`${name}`] ? 'actived' : ''
+                        activeCat[`${name as keyof IActiveCat}`] ? 'actived' : ''
                       }`}>
                       {name}
                     </div>
@@ -186,7 +260,9 @@ const NewUser: React.FC = () => {
 
             <button
               className="new-modal-button-container"
-              onClick={() => closeModal()}>
+              onClick={() => {
+                closeModal();
+              }}>
               Thank you, go to chat! :{')'}
             </button>
           </div>
