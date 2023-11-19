@@ -46,6 +46,8 @@ const NewUser: React.FC = () => {
   });
   const [page, setPage] = useState(1);
   const [interestArray, setInterestArray] = useState<any[]>([]);
+  const [interestArrayId, setInterestArrayId] = useState<any[]>([]);
+
   const [isOpenLang, setIsOpenLang] = useState(false);
   const [activeLang, setActiveLang] = useState<LanguageData>({
     id: languages[0].id,
@@ -65,31 +67,53 @@ const NewUser: React.FC = () => {
     dispatch(closeNewUserModal());
   };
 
-  const postNewUser = useCallback(async () => {
+  const postNewUser = async () => {
     try {
       const baseUrl = process.env.REACT_APP_API_URL;
-      const endpoint = '/auth/completeRegistration';
-      const url = `${baseUrl}${endpoint}`;
+      const endpoint = '/api/v1/interest/';
+      const url1 = `${baseUrl}${endpoint}`;
       const headers = {
         'Content-Type': 'application/json',
       };
-      const response = await axios.post(
-        url,
+      const response = await axios.get(url1, { headers });
+      const data = response.data.data;
+      const dataId = [];
+      for (let i = 0; i < 16; i++) {
+        for (let k = 0; k < 16; k++) {
+          if (interestArray[k] == data[i].name) {
+            dataId.push(data[i].id);
+            setInterestArrayId(dataId);
+          }
+        }
+      }
+      const url2 = `${baseUrl}/auth/completeRegistration`;
+      const response2 = await axios.post(
+        url2,
         {
           login: email,
           name: name,
           languageId: activeLang.id,
-          interests: interestArray,
+          interests: dataId,
+          token: token,
         },
         {
           headers,
         },
       );
-      const data = response.data.data;
     } catch (error) {
       console.error(error);
     }
-  }, [token, email, name, activeLang, interestArray]);
+  };
+
+  const interestSetter = (name: any) => {
+    if (activeCat[name] === true) {
+      setInterestArray((interestArray) =>
+        interestArray.filter((item) => item !== name),
+      );
+    } else {
+      setInterestArray((interestArray) => [...interestArray, name]);
+    }
+  };
 
   return (
     <div className="modalBlock">
@@ -110,7 +134,9 @@ const NewUser: React.FC = () => {
 
             <button
               className="new-modal-button-container"
-              onClick={() => setPage(2)}>
+              onClick={() => {
+                setPage(2);
+              }}>
               Next
               <div className="new-modal-button-arrow"></div>
             </button>
@@ -202,10 +228,7 @@ const NewUser: React.FC = () => {
                           ...activeCat,
                           [`${name}`]: !activeCat[`${name}`],
                         });
-                        setInterestArray((interestArray) => [
-                          ...interestArray,
-                          name,
-                        ]);
+                        interestSetter(name);
                       }}
                       className={`new-modal-option-modal ${
                         activeCat[`${name}`] ? 'actived' : ''
@@ -218,7 +241,9 @@ const NewUser: React.FC = () => {
 
             <button
               className="new-modal-button-container"
-              onClick={() => closeModal()}>
+              onClick={() => {
+                closeModal();
+              }}>
               Thank you, go to chat! :{')'}
             </button>
           </div>
