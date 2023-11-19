@@ -232,6 +232,7 @@ const CreateChatForm: React.FC = () => {
           {isOpenCategory && (
             <div className={`custom-dropdown-options-modal category-options`}>
               {categories.map(({ id, name }) => (
+                name !== 'All chats' &&
                 <div
                   key={id}
                   className={`custom-dropdown-option-modal`}
