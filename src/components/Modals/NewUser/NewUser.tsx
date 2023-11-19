@@ -22,12 +22,33 @@ const NewUser: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.categories);
 
   type FlagType = JSX.Element;
+
   interface LanguageData {
     id: string;
     name: string;
+  };
+  interface InterestArray {
+  };
+  interface IActiveCat {
+    // [key: string] : boolean,
+    'Video games': boolean,
+    'Software': boolean,
+    'News': boolean,
+    'Education': boolean,
+    'Movies': boolean,
+    'Fashion': boolean,
+    'Relationships': boolean,
+    'Psychology': boolean,
+    'Finance': boolean,
+    'Books': boolean,
+    'Art': boolean,
+    'Music': boolean,
+    'Science': boolean,
+    'Food': boolean,
+    'Travel': boolean,
   }
 
-  const [activeCat, setActiveCat] = useState<any>({
+  const [activeCat, setActiveCat] = useState<IActiveCat>({
     'Video games': false,
     Software: false,
     News: false,
@@ -45,8 +66,7 @@ const NewUser: React.FC = () => {
     Travel: false,
   });
   const [page, setPage] = useState(1);
-  const [interestArray, setInterestArray] = useState<any[]>([]);
-  const [interestArrayId, setInterestArrayId] = useState<any[]>([]);
+  const [interestArray, setInterestArray] = useState<string[]>([]);
 
   const [isOpenLang, setIsOpenLang] = useState(false);
   const [activeLang, setActiveLang] = useState<LanguageData>({
@@ -82,7 +102,6 @@ const NewUser: React.FC = () => {
         for (let k = 0; k < 16; k++) {
           if (interestArray[k] == data[i].name) {
             dataId.push(data[i].id);
-            setInterestArrayId(dataId);
           }
         }
       }
@@ -105,8 +124,8 @@ const NewUser: React.FC = () => {
     }
   };
 
-  const interestSetter = (name: any) => {
-    if (activeCat[name] === true) {
+  const interestSetter = (name: string) => {
+    if (activeCat[name as keyof IActiveCat] === true) {
       setInterestArray((interestArray) =>
         interestArray.filter((item) => item !== name),
       );
@@ -226,12 +245,12 @@ const NewUser: React.FC = () => {
                       onClick={() => {
                         setActiveCat({
                           ...activeCat,
-                          [`${name}`]: !activeCat[`${name}`],
+                          [`${name}`]: !activeCat[`${name as keyof IActiveCat}`],
                         });
                         interestSetter(name);
                       }}
                       className={`new-modal-option-modal ${
-                        activeCat[`${name}`] ? 'actived' : ''
+                        activeCat[`${name as keyof IActiveCat}`] ? 'actived' : ''
                       }`}>
                       {name}
                     </div>
