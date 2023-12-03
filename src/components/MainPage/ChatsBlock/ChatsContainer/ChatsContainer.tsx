@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { RootState } from '../../../../redux/store';
-
 import ChatBlock from '../ChatBlock';
 import AddChat from './AddChat';
-import ShowMore from './ShowMore';
 import './ChatsContainer.css';
+import GoToTop from './GoToTop';
 
 const ChatsContainer = () => {
   const { allChats, searchingChats, searchText } = useSelector(
@@ -23,6 +22,11 @@ const ChatsContainer = () => {
       top: 0,
       behavior: 'smooth',
     });
+  };
+
+  const [pageSize, setPageSize] = useState(15);
+  const handleClick = () => {
+    setPageSize((pageSize) => pageSize + 16);
   };
 
   useEffect(() => {
@@ -57,7 +61,7 @@ const ChatsContainer = () => {
   return (
     <div>
       <div className="chats-container">
-        {filteredChatsToRender.map((chat, index) => {
+        {filteredChatsToRender.slice(0, pageSize).map((chat, index) => {
           return (
             <ChatBlock
               topic={chat.name}
@@ -71,8 +75,17 @@ const ChatsContainer = () => {
       </div>
 
       {filteredChats.length > 16 && (
-        <div className="showMoreBtn">
-          <ShowMore handleScroll={scrollToTop} />
+        <div className="buttons-container">
+          <div className="bottom-buttons">
+            {filteredChatsToRender.length > pageSize + 1 && (
+              <div className="show-more-container">
+                <button className="show-more-button" onClick={handleClick}>
+                  Show more
+                </button>
+              </div>
+            )}
+            <GoToTop handleScroll={scrollToTop} />
+          </div>
         </div>
       )}
     </div>

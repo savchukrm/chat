@@ -7,11 +7,40 @@ import { RootState } from '../../../redux/store';
 import { closeCreateChatModal } from '../../../redux/modals/slice';
 import { createChat } from '../../../redux/chat/slice';
 import { setAllChats } from '../../../redux/allChats/allChats';
+import { CgClose } from 'react-icons/cg';
+import './index.css';
+
+import {
+  ENGLISH_FLAG,
+  UKRAINE_FLAG,
+  POLAND_FLAG,
+  FRENCH_FLAG,
+  GERMAN_FLAG,
+} from '../../MainPage/ChatsBlock/index';
+import { tickIcon } from '../../../constants/images';
+
+type FlagType = JSX.Element;
+
+const FLAGS: { [key: string]: FlagType } = {
+  English: ENGLISH_FLAG,
+  Polski: POLAND_FLAG,
+  Français: FRENCH_FLAG,
+  Українська: UKRAINE_FLAG,
+  Deutsch: GERMAN_FLAG,
+};
 
 interface FormData {
   topic: string;
   category: string;
   language: string;
+}
+interface LanguageData {
+  id: string;
+  name: string;
+}
+interface CategoryData {
+  id: string;
+  name: string;
 }
 
 const CreateChatForm: React.FC = () => {
@@ -24,12 +53,23 @@ const CreateChatForm: React.FC = () => {
 
   const [maxCharError, setMaxCharError] = useState(false);
   const [emptyInputError, setEmptyInputError] = useState(false);
+  const [emptyCategoryError, setEmptyCategoryError] = useState(false);
+
+  const [isOpenLang, setIsOpenLang] = useState(false);
+  const [isOpenCategory, setIsOpenCategory] = useState(false);
+
+  const [activeLang, setActiveLang] = useState<LanguageData>({
+    id: languages[0].id,
+    name: languages[0].name,
+  });
+  const [activeCat, setActiveCat] = useState<CategoryData>({
+    id: '',
+    name: '',
+  });
 
   const closeModal = () => {
     dispatch(closeCreateChatModal());
   };
-
-  const [firstCategory, ...onlyCategories] = categories;
 
   const [formData, setFormData] = useState<FormData>({
     topic: '',
@@ -81,15 +121,13 @@ const CreateChatForm: React.FC = () => {
 
     if (formData.topic.trim() === '') {
       setEmptyInputError(true);
-      return;
     }
-
-    const selectedCategory = onlyCategories.find(
-      (category) => category.id === formData.category,
-    );
-    const selectedLanguage = languages.find(
-      (language) => language.id === formData.language,
-    );
+    if (activeCat.name === '') {
+      setEmptyCategoryError(true);
+    } else {
+      setEmptyCategoryError(false);
+    }
+    if (emptyCategoryError || emptyInputError) return;
 
     try {
       const url = `${process.env.REACT_APP_API_URL}/api/v1/chat-channel/public/new`;
@@ -101,8 +139,8 @@ const CreateChatForm: React.FC = () => {
 
       const requestBody = {
         name: formData.topic,
-        categoryId: formData.category || categories[categories.length - 1].id,
-        languageId: formData.language || languages[0].id,
+        categoryId: activeCat.id || categories[categories.length - 1].id,
+        languageId: activeLang.id || languages[0].id,
       };
 
       console.log(requestBody);
@@ -114,9 +152,8 @@ const CreateChatForm: React.FC = () => {
         dispatch(
           createChat({
             topic: formData.topic,
-            category:
-              selectedCategory?.name || categories[categories.length - 1].id,
-            language: selectedLanguage?.name || languages[0].name,
+            category: activeCat.name || categories[categories.length - 1].name,
+            language: activeLang.name || languages[0].name,
           }),
         );
 
@@ -171,40 +208,108 @@ const CreateChatForm: React.FC = () => {
         <label style={styles.label} htmlFor="categorySelect">
           Category
         </label>
-        <select
-          id="categorySelect"
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-          className="selectForm">
-          <option value="" disabled hidden>
-            Choose from category
-          </option>
-          {onlyCategories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
+        <div
+          className={`select custom-dropdown-container-modal category-dropdown`}
+          onClick={() =>
+            setIsOpenCategory((isOpenCategory) => !isOpenCategory)
+          }>
+          <div className={`select custom-dropdown-header-modal`}>
+            <img className="dropdown-icon-modal" alt="" />
+            <span className="dropdown-icon-modal-flag">
+              {activeCat.name ? (
+                activeCat.name
+              ) : (
+                <div className="dorpdown-molad-flag-default">
+                  Choose from the list
+                </div>
+              )}
+            </span>
+            <div className={`dropdown-triangle-modal `} />
+            <button className={`dropdown-close-modal`}>
+              <CgClose color={'#ffffff'} size={10} />
+            </button>
+          </div>
+          {isOpenCategory && (
+            <div className={`custom-dropdown-options-modal category-options`}>
+              {categories.map(({ id, name }) => (
+                name !== 'All chats' &&
+                <div
+                  key={id}
+                  className={`custom-dropdown-option-modal`}
+                  onClick={() => {
+                    setActiveCat({
+                      id,
+                      name,
+                    });
+                  }}>
+                  {formData.language === name && (
+                    <div className="tick">
+                      <img
+                        src={tickIcon}
+                        alt="tick"
+                        className="tick-icon-modal"
+                      />
+                    </div>
+                  )}
+                  {name}
+                </div>
+              ))}
+            </div>
+          )}
+          {emptyCategoryError && !activeCat.name && (
+            <p className="dropdown-category-error">Don't know category? Сhoose “Other” from the list.</p>
+          )}
+        </div>
 
-        <label style={styles.label} htmlFor="languageSelect">
+        <label
+          style={styles.label}
+          htmlFor="languageSelect"
+          className="language-label">
           Language of communication
         </label>
-        <select
-          id="languageSelect"
-          name="language"
-          value={formData.language}
-          onChange={handleChange}
-          style={styles.select}>
-          {languages.map((language) => (
-            <option
-              style={{ cursor: 'pointer' }}
-              key={language.id}
-              value={language.id}>
-              {language.name}
-            </option>
-          ))}
-        </select>
+        <div
+          className={`select custom-dropdown-container-modal language-dropdown`}
+          onClick={() => setIsOpenLang((isOpenLang) => !isOpenLang)}>
+          <div className={`select custom-dropdown-header-modal`}>
+            <img className="dropdown-icon-modal" alt="" />
+            <span>
+              <span className="dropdown-icon-modal-flag">
+                {FLAGS[`${activeLang.name}`]}
+              </span>{' '}
+              {activeLang.name}
+            </span>
+            <div className={`dropdown-triangle-modal `} />
+            <button className={`dropdown-close-modal`}>
+              <CgClose color={'#ffffff'} size={10} />
+            </button>
+          </div>
+          {isOpenLang && (
+            <div className={`custom-dropdown-options-modal`}>
+              {languages.map(({ id, name }) => (
+                <div
+                  key={id}
+                  className={`custom-dropdown-option-modal ${
+                    name === activeLang.name ? 'active' : ''
+                  } `}
+                  onClick={() => {
+                    setActiveLang({ id, name });
+                  }}>
+                  {FLAGS[`${name}`]}
+                  {formData.language === name && (
+                    <div className="tick">
+                      <img
+                        src={tickIcon}
+                        alt="tick"
+                        className="tick-icon-modal"
+                      />
+                    </div>
+                  )}
+                  {name}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
         <div style={styles.buttonsContainer}>
           <button style={styles.cancelBtn} onClick={() => closeModal()}>
@@ -240,6 +345,7 @@ const styles = {
   },
   label: {
     fontSize: '14px',
+    cursor: 'auto',
   },
   select: {
     backgroundColor: '#313338',
@@ -276,7 +382,7 @@ const styles = {
   error: {
     position: 'absolute' as 'absolute',
     top: '96px',
-    color: 'red',
+    color: '#F84848',
     fontSize: '11px',
     marginBottom: '8px',
   },

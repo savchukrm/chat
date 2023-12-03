@@ -5,6 +5,7 @@ import { RootState } from '../redux/store';
 import { setCategories } from '../redux/categories/slice';
 import { setLanguages } from '../redux/languages/slice';
 import { setAllChats } from '../redux/allChats/allChats';
+import { useNavigate } from 'react-router-dom';
 import useChats from '../hooks/useChats';
 
 import {
@@ -15,11 +16,15 @@ import {
   SearchBlock,
   AllFilters,
 } from '../components';
+import NewUser from '../components/Modals/NewUser/NewUser';
+import { removeUser, setVerified } from '../redux/user/slice';
 
 const Main = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { welcomeModal, createChatModal } = useSelector(
+
+  const { welcomeModal, createChatModal, newUserModal } = useSelector(
     (state: RootState) => state.modals,
   );
   const { token } = useSelector((state: RootState) => state.user);
@@ -38,6 +43,13 @@ const Main = () => {
         };
         const response = await axios.get(url, { headers });
         const data = response.data.data;
+
+        if (response.status === 401) {
+          dispatch(removeUser());
+          dispatch(setVerified(false));
+          navigate('/');
+      }
+
         dispatch(setAllChats(data));
       } catch (error) {
         console.error(error);
@@ -60,11 +72,17 @@ const Main = () => {
         const response = await axios.get(url, { headers });
         const data = response.data.data;
 
+        if (response.status === 401) {
+          dispatch(removeUser());
+          dispatch(setVerified(false));
+          navigate('/');
+      }
+
         dispatch(setCategories(data));
       } catch (error) {
         console.error(error);
       }
-    };
+    }
 
     getCategories();
   }, []);
@@ -82,6 +100,12 @@ const Main = () => {
 
         const response = await axios.get(url, { headers });
         const data = response.data.data;
+
+        if (response.status === 401) {
+            dispatch(removeUser());
+            dispatch(setVerified(false));
+            navigate('/');
+        }
 
         dispatch(setLanguages(data));
       } catch (error) {
@@ -109,6 +133,7 @@ const Main = () => {
 
       {createChatModal && <CreateChat />}
       {welcomeModal && <Welcome />}
+      {newUserModal && <NewUser/>}
     </div>
   );
 };
