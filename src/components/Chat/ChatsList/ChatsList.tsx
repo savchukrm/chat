@@ -1,8 +1,7 @@
 import React from 'react';
-import { Scrollbar } from 'react-scrollbars-custom';
 import { FiSearch } from 'react-icons/fi';
 import ChatRoom from '../ChatRoom/ChatRoom';
-import './ChatsList.css';
+import './ChatsList.scss';
 
 interface IChatList {
   title: string;
@@ -11,86 +10,81 @@ interface IChatList {
 const ChatsList: React.FC<IChatList> = ({ title }) => {
   return (
     <div>
-      <Scrollbar
-        style={{ width: 350, height: 1297 }}
-        maximalThumbSize={34}
-        thumbYProps={{ className: 'custom-scrollbar-thumb' }}>
-        <div style={styles.chatList}>
-          <h1 style={styles.titleList}>{title}</h1>
-          <div style={styles.wrapperList}>
-            <button style={styles.btnList}>All</button>
-            <button style={styles.btnListActive}>Unread</button>
-          </div>
-          <form style={styles.formSearch}>
-            <button style={styles.btnSearch}>
-              <FiSearch style={styles.iconSearch} />
-            </button>
-            <input type="text" placeholder="Search" style={styles.entryField} />
-          </form>
-          <div className="list" style={styles.chatsList}>
-            <ChatRoom
-              name="Music"
-              count={42}
-              text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
-              onClick={() => {}}
-            />
-            <ChatRoom
-              name="Music"
-              count={30}
-              text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
-              onClick={() => {}}
-            />
-            <ChatRoom
-              name="Music"
-              count={32}
-              text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
-              onClick={() => {}}
-            />
-            <ChatRoom
-              name="Music"
-              count={32}
-              text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
-              onClick={() => {}}
-            />
-            <ChatRoom
-              name="Music"
-              count={32}
-              text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
-              onClick={() => {}}
-            />
-            <ChatRoom
-              name="Music"
-              count={32}
-              text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
-              onClick={() => {}}
-            />
-            <ChatRoom
-              name="Music"
-              count={32}
-              text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
-              onClick={() => {}}
-            />
-            <ChatRoom
-              name="Music"
-              count={32}
-              text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
-              onClick={() => {}}
-            />
-            <ChatRoom
-              name="Music"
-              count={32}
-              text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
-              onClick={() => {}}
-            />
-            <ChatRoom
-              name="Music"
-              count={32}
-              text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
-              onClick={() => {}}
-            />
-          </div>
+      <div className="list" style={styles.chatList}>
+        <h1 style={styles.titleList}>{title}</h1>
+        <div style={styles.wrapperList}>
+          <button style={styles.btnList}>All</button>
+          <button style={styles.btnListActive}>Unread</button>
         </div>
-      </Scrollbar>
+        <form style={styles.formSearch}>
+          <button style={styles.btnSearch}>
+            <FiSearch style={styles.iconSearch} />
+          </button>
+          <input type="text" placeholder="Search" style={styles.entryField} />
+        </form>
+        <div style={styles.chatsList}>
+          <ChatRoom
+            name="Music"
+            count={42}
+            text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
+            onClick={() => {}}
+          />
+          <ChatRoom
+            name="Music"
+            count={30}
+            text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
+            onClick={() => {}}
+          />
+          <ChatRoom
+            name="Music"
+            count={32}
+            text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
+            onClick={() => {}}
+          />
+          <ChatRoom
+            name="Music"
+            count={32}
+            text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
+            onClick={() => {}}
+          />
+          <ChatRoom
+            name="Music"
+            count={32}
+            text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
+            onClick={() => {}}
+          />
+          <ChatRoom
+            name="Music"
+            count={32}
+            text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
+            onClick={() => {}}
+          />
+          <ChatRoom
+            name="Music"
+            count={32}
+            text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
+            onClick={() => {}}
+          />
+          <ChatRoom
+            name="Music"
+            count={32}
+            text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
+            onClick={() => {}}
+          />
+          <ChatRoom
+            name="Music"
+            count={32}
+            text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
+            onClick={() => {}}
+          />
+          <ChatRoom
+            name="Music"
+            count={32}
+            text="Why Imagine Dragons supports Ukraine through the UNITED24 platform?"
+            onClick={() => {}}
+          />
+        </div>
+      </div>
     </div>
   );
 };
@@ -98,7 +92,7 @@ const ChatsList: React.FC<IChatList> = ({ title }) => {
 const styles = {
   chatList: {
     width: '350px',
-    minHeight: '1200px',
+    height: '1200px',
     padding: '20px 19px',
     backgroundColor: '#292B31',
   },

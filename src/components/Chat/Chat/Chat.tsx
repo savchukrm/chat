@@ -2,6 +2,7 @@ import React from 'react';
 // import io from 'socket.io-client'
 import NewMessage from '../NewMessage/NewMessage';
 import { SlOptionsVertical } from 'react-icons/sl';
+import './Chat.scss';
 
 interface IChat {
   titleChat: string;
@@ -31,7 +32,7 @@ const Chat: React.FC<IChat> = ({ titleChat, peopleChat }) => {
           </button>
         </div>
       </div>
-      <div style={styles.chatBox}></div>
+      <div style={styles.chatBox} className="chatBox"></div>
       <NewMessage />
     </div>
   );
