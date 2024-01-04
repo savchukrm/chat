@@ -35,7 +35,7 @@ const Main = () => {
     const getChats = async () => {
       try {
         const baseUrl = process.env.REACT_APP_API_URL;
-        const endpoint = '/api/v1/chat-channel/public';
+        const endpoint = 'api/v1/chat-channel/public';
         const url = `${baseUrl}/${endpoint}`;
         const headers = {
           'Content-Type': 'application/json',

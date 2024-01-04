@@ -101,7 +101,7 @@ const CreateChatForm: React.FC = () => {
   const getChats = async () => {
     try {
       const baseUrl = process.env.REACT_APP_API_URL;
-      const endpoint = '/api/v1/chat-channel/public';
+      const endpoint = 'api/v1/chat-channel/public';
       const url = `${baseUrl}/${endpoint}`;
       const headers = {
         'Content-Type': 'application/json',
@@ -117,9 +117,33 @@ const CreateChatForm: React.FC = () => {
     }
   };
 
+  const checkSameName = async () => {
+    try {
+      const baseUrl = process.env.REACT_APP_API_URL;
+      const endpoint = 'api/v1/chat-channel/public';
+      const url = `${baseUrl}/${endpoint}`;
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await axios.get(url, { headers });
+      const data = response.data.data;
+      const nameArr: any = [];
+      for (let i = 0; i < data.length; i++) {
+        nameArr.push(data[i].name);
+      }
+      if (nameArr.indexOf(formData.topic) !== -1) {
+        setSameNameError(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
+    checkSameName();
     if (formData.topic.trim() === '') {
       setEmptyInputError(true);
     }
@@ -144,10 +168,6 @@ const CreateChatForm: React.FC = () => {
         languageId: activeLang.id || languages[0].id,
       };
 
-      console.log(requestBody);
-      console.log(formData.category);
-      
-
       const response = await axios.post(url, requestBody, { headers });
       if (response.status === 200) {
         dispatch(
@@ -171,8 +191,6 @@ const CreateChatForm: React.FC = () => {
         );
       } else if (response.status === 404) {
         console.log('Failed. User, ChatCategory, or ChatLanguage not found.');
-      } else if (response.status === 401) {
-        console.log('same name')
       } else {
         throw new Error('Failed to create chat');
       }
@@ -398,7 +416,6 @@ const styles = {
     color: '#F84848',
     fontSize: '10px',
     marginBottom: '8px',
-
   },
 };
 
