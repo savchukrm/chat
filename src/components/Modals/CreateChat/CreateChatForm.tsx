@@ -54,6 +54,7 @@ const CreateChatForm: React.FC = () => {
   const [maxCharError, setMaxCharError] = useState(false);
   const [emptyInputError, setEmptyInputError] = useState(false);
   const [emptyCategoryError, setEmptyCategoryError] = useState(false);
+  const [sameNameError, setSameNameError] = useState(false);
 
   const [isOpenLang, setIsOpenLang] = useState(false);
   const [isOpenCategory, setIsOpenCategory] = useState(false);
@@ -145,9 +146,9 @@ const CreateChatForm: React.FC = () => {
 
       console.log(requestBody);
       console.log(formData.category);
+      
 
       const response = await axios.post(url, requestBody, { headers });
-
       if (response.status === 200) {
         dispatch(
           createChat({
@@ -170,6 +171,8 @@ const CreateChatForm: React.FC = () => {
         );
       } else if (response.status === 404) {
         console.log('Failed. User, ChatCategory, or ChatLanguage not found.');
+      } else if (response.status === 401) {
+        console.log('same name')
       } else {
         throw new Error('Failed to create chat');
       }
@@ -204,6 +207,12 @@ const CreateChatForm: React.FC = () => {
             You cannot create a chat with an empty input.
           </p>
         )}
+        {sameNameError && (
+          <p style={styles.error}>
+            Oops, chat with the same name already exists. Come up with another
+            name.
+          </p>
+        )}
 
         <label style={styles.label} htmlFor="categorySelect">
           Category
@@ -231,33 +240,37 @@ const CreateChatForm: React.FC = () => {
           </div>
           {isOpenCategory && (
             <div className={`custom-dropdown-options-modal category-options`}>
-              {categories.map(({ id, name }) => (
-                name !== 'All chats' &&
-                <div
-                  key={id}
-                  className={`custom-dropdown-option-modal`}
-                  onClick={() => {
-                    setActiveCat({
-                      id,
-                      name,
-                    });
-                  }}>
-                  {formData.language === name && (
-                    <div className="tick">
-                      <img
-                        src={tickIcon}
-                        alt="tick"
-                        className="tick-icon-modal"
-                      />
+              {categories.map(
+                ({ id, name }) =>
+                  name !== 'All chats' && (
+                    <div
+                      key={id}
+                      className={`custom-dropdown-option-modal`}
+                      onClick={() => {
+                        setActiveCat({
+                          id,
+                          name,
+                        });
+                      }}>
+                      {formData.language === name && (
+                        <div className="tick">
+                          <img
+                            src={tickIcon}
+                            alt="tick"
+                            className="tick-icon-modal"
+                          />
+                        </div>
+                      )}
+                      {name}
                     </div>
-                  )}
-                  {name}
-                </div>
-              ))}
+                  ),
+              )}
             </div>
           )}
           {emptyCategoryError && !activeCat.name && (
-            <p className="dropdown-category-error">Don't know category? Сhoose “Other” from the list.</p>
+            <p className="dropdown-category-error">
+              Don't know category? Сhoose “Other” from the list.
+            </p>
           )}
         </div>
 
@@ -383,8 +396,9 @@ const styles = {
     position: 'absolute' as 'absolute',
     top: '96px',
     color: '#F84848',
-    fontSize: '11px',
+    fontSize: '10px',
     marginBottom: '8px',
+
   },
 };
 
