@@ -7,7 +7,7 @@ import chats from './chat/slice';
 import size from './size/slice';
 import languages from './languages/slice';
 import categories from './categories/slice';
-import activeChat from './activeChat/slice';
+// import activeChat from './activeChat/slice';
 import allChats from './allChats/allChats';
 import filters from './filters/slice';
 
@@ -19,7 +19,7 @@ export const store = configureStore({
     size,
     languages,
     categories,
-    activeChat,
+    // activeChat,
     allChats,
     filters,
   },

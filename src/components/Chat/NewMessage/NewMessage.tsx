@@ -1,7 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { sendMessage } from '../../../redux/activeChat/slice';
+// import { sendMessage } from '../../../redux/activeChat/slice';
 import { ImAttachment } from 'react-icons/im';
 import { BsEmojiSmile, BsFillSendFill } from 'react-icons/bs';
 
@@ -10,12 +10,12 @@ interface IForm {
 }
 
 const NewMessage = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const { register, handleSubmit, reset } = useForm<IForm>();
 
   const onSubmit: SubmitHandler<IForm> = (data) => {
-    dispatch(sendMessage(data.messageText));
+    // dispatch(sendMessage(data.messageText));
     reset();
   };
   return (
