@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import NewMessage from '../NewMessage/NewMessage';
 import { SlOptionsVertical } from 'react-icons/sl';
@@ -10,13 +10,45 @@ interface IChat {
   peopleChat: string;
 }
 
-const socket = io('ws://54.91.159.107:8686/lcws');
-console.log(socket);
-
-socket.connect();
-console.log(socket);
-
 const Chat: React.FC<IChat> = ({ titleChat, peopleChat }) => {
+  // useEffect(() => {
+  //   const userDataString = localStorage.getItem('user');
+
+  //   if (userDataString !== null) {
+  //     const userData = JSON.parse(userDataString);
+  //     if (userData && userData.token) {
+  //       const token = userData.token;
+  //       console.log(token);
+
+  //       const socketUrl = 'ws://lcbe-w2rafwjhaq-oa.a.run.app/lcws';
+  //       const socket = io(socketUrl, {
+  //         extraHeaders: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
+
+  //       socket.connect();
+  //       console.log(socket);
+  //     }
+  //   }
+  // }, []);
+
+  const chatContainerRef = useRef<HTMLDivElement | null>(null);
+  // const unreadMessageRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const chatContainer = chatContainerRef.current;
+    // const unreadMessage = unreadMessageRef.current;
+
+    // if (unreadMessage) {
+    //   chatContainer.scrollTop = unreadMessage.offsetTop;
+    // }
+    //Это для непрочинатых смс
+    if (chatContainer) {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+  }, []);
+
   return (
     <div style={styles.chat}>
       <div style={styles.chatName}>
@@ -37,13 +69,69 @@ const Chat: React.FC<IChat> = ({ titleChat, peopleChat }) => {
           </button>
         </div>
       </div>
-      <div style={styles.chatBox} className="chatBox">
-        <Message
-          image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
-          name="KaRina"
-          text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
-          time={22}
-        />
+      <div className="chatBox">
+        <div className="chatBox1" ref={chatContainerRef}>
+          <Message
+            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
+            name="KaRina"
+            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
+            time={22}
+          />
+          <Message
+            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
+            name="KaRina"
+            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
+            time={22}
+          />
+          <Message
+            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
+            name="KaRina"
+            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
+            time={23}
+          />
+          <Message
+            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
+            name="KaRina"
+            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
+            time={22}
+          />
+          <Message
+            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
+            name="KaRina"
+            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
+            time={22}
+          />
+          <Message
+            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
+            name="KaRina"
+            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
+            time={22}
+          />
+          <Message
+            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
+            name="KaRina"
+            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
+            time={22}
+          />
+          <Message
+            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
+            name="KaRina"
+            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
+            time={22}
+          />
+          <Message
+            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
+            name="KaRina"
+            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
+            time={22}
+          />
+          <Message
+            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
+            name="KaRina"
+            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
+            time={25}
+          />
+        </div>
       </div>
       <NewMessage />
     </div>
@@ -88,11 +176,6 @@ const styles = {
   iconOption: {
     fill: '#BBB',
     marginTop: '2px',
-  },
-  chatBox: {
-    width: '100%',
-    height: '561px',
-    backgroundColor: '#222326',
   },
 };
 
