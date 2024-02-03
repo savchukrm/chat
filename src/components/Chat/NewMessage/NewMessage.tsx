@@ -1,7 +1,7 @@
-import React from 'react';
-// import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-// import { sendMessage } from '../../../redux/activeChat/slice';
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
 import { ImAttachment } from 'react-icons/im';
 import { BsEmojiSmile, BsFillSendFill } from 'react-icons/bs';
 
@@ -9,17 +9,31 @@ interface IForm {
   messageText: string;
 }
 
+interface Position {
+  position?: 'absolute' | 'relative';
+}
+
 const NewMessage = () => {
-  // const dispatch = useDispatch();
+  const [showEmoji, setShowEmoji] = useState(false);
+
+  const handlerShowEmoji = () => {
+    setShowEmoji(!showEmoji);
+    console.log('dfghj');
+  };
+
+  const handleEmojiSelect = (emoji: any) => {
+    // setShowEmoji(true);
+    console.log(emoji);
+  };
 
   const { register, handleSubmit, reset } = useForm<IForm>();
 
   const onSubmit: SubmitHandler<IForm> = (data) => {
-    // dispatch(sendMessage(data.messageText));
     reset();
   };
+
   return (
-    <>
+    <div style={styles.newMessage}>
       <form style={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <input
           style={styles.input}
@@ -34,9 +48,23 @@ const NewMessage = () => {
           <button style={styles.btnBorder} type="button">
             <ImAttachment style={styles.iconAttach} />
           </button>
-          <button style={styles.btnBorder} type="button">
+          <button
+            style={styles.btnBorder}
+            type="button"
+            onClick={handlerShowEmoji}>
             <BsEmojiSmile style={styles.iconEmoji} />
           </button>
+          {showEmoji && (
+            <div style={styles.boxEmoji}>
+              <Picker
+                data={data}
+                isSearch={true}
+                autoFocus={true}
+                onEmojiSelect={handleEmojiSelect}
+              />
+            </div>
+          )}
+
           <button type="submit">
             <BsFillSendFill
               style={{
@@ -48,11 +76,14 @@ const NewMessage = () => {
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 
 const styles = {
+  newMessage: {
+    position: 'relative',
+  } as Position,
   form: {
     width: '100%',
     height: '60px',
@@ -92,6 +123,11 @@ const styles = {
     height: '16px',
     marginTop: '2px',
   },
+  boxEmoji: {
+    position: 'absolute',
+    right: '0',
+    bottom: '100%',
+  } as Position,
 };
 
 export default NewMessage;
