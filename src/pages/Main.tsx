@@ -23,7 +23,6 @@ const Main = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const { welcomeModal, createChatModal, newUserModal } = useSelector(
     (state: RootState) => state.modals,
   );
@@ -31,11 +30,32 @@ const Main = () => {
 
   // const { getAllChats } = useChats();
 
+  const checkLogSession = async () => {
+    try {
+      const baseUrl = process.env.REACT_APP_API_URL;
+      const endpoint = 'api/v1/chat-channel/public';
+      const url = `${baseUrl}/${endpoint}`;
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.get(url, { headers });
+      const data = response.data.data;      
+    } catch (error) {
+      console.log('log')
+      console.error(error);
+      dispatch(removeUser());
+      dispatch(setVerified(false));
+      navigate('/');
+    }
+  };
+
   useEffect(() => {
+    checkLogSession();
     const getChats = async () => {
       try {
         const baseUrl = process.env.REACT_APP_API_URL;
-        const endpoint = '/api/v1/chat-channel/public';
+        const endpoint = 'api/v1/chat-channel/public';
         const url = `${baseUrl}/${endpoint}`;
         const headers = {
           'Content-Type': 'application/json',
@@ -48,7 +68,7 @@ const Main = () => {
           dispatch(removeUser());
           dispatch(setVerified(false));
           navigate('/');
-      }
+        }
 
         dispatch(setAllChats(data));
       } catch (error) {
@@ -59,6 +79,7 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
+    checkLogSession();
     const getCategories = async () => {
       try {
         const baseUrl = process.env.REACT_APP_API_URL;
@@ -76,13 +97,13 @@ const Main = () => {
           dispatch(removeUser());
           dispatch(setVerified(false));
           navigate('/');
-      }
+        }
 
         dispatch(setCategories(data));
       } catch (error) {
         console.error(error);
       }
-    }
+    };
 
     getCategories();
   }, []);
@@ -102,9 +123,9 @@ const Main = () => {
         const data = response.data.data;
 
         if (response.status === 401) {
-            dispatch(removeUser());
-            dispatch(setVerified(false));
-            navigate('/');
+          dispatch(removeUser());
+          dispatch(setVerified(false));
+          navigate('/');
         }
 
         dispatch(setLanguages(data));
@@ -133,7 +154,7 @@ const Main = () => {
 
       {createChatModal && <CreateChat />}
       {welcomeModal && <Welcome />}
-      {newUserModal && <NewUser/>}
+      {newUserModal && <NewUser />}
     </div>
   );
 };

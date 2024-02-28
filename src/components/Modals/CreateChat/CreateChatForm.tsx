@@ -54,6 +54,7 @@ const CreateChatForm: React.FC = () => {
   const [maxCharError, setMaxCharError] = useState(false);
   const [emptyInputError, setEmptyInputError] = useState(false);
   const [emptyCategoryError, setEmptyCategoryError] = useState(false);
+  const [sameNameError, setSameNameError] = useState(false);
 
   const [isOpenLang, setIsOpenLang] = useState(false);
   const [isOpenCategory, setIsOpenCategory] = useState(false);
@@ -100,7 +101,7 @@ const CreateChatForm: React.FC = () => {
   const getChats = async () => {
     try {
       const baseUrl = process.env.REACT_APP_API_URL;
-      const endpoint = '/api/v1/chat-channel/public';
+      const endpoint = 'api/v1/chat-channel/public';
       const url = `${baseUrl}/${endpoint}`;
       const headers = {
         'Content-Type': 'application/json',
@@ -116,9 +117,33 @@ const CreateChatForm: React.FC = () => {
     }
   };
 
+  const checkSameName = async () => {
+    try {
+      const baseUrl = process.env.REACT_APP_API_URL;
+      const endpoint = 'api/v1/chat-channel/public';
+      const url = `${baseUrl}/${endpoint}`;
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await axios.get(url, { headers });
+      const data = response.data.data;
+      const nameArr: any = [];
+      for (let i = 0; i < data.length; i++) {
+        nameArr.push(data[i].name);
+      }
+      if (nameArr.indexOf(formData.topic) !== -1) {
+        setSameNameError(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
+    checkSameName();
     if (formData.topic.trim() === '') {
       setEmptyInputError(true);
     }
@@ -143,11 +168,7 @@ const CreateChatForm: React.FC = () => {
         languageId: activeLang.id || languages[0].id,
       };
 
-      console.log(requestBody);
-      console.log(formData.category);
-
       const response = await axios.post(url, requestBody, { headers });
-
       if (response.status === 200) {
         dispatch(
           createChat({
@@ -204,6 +225,12 @@ const CreateChatForm: React.FC = () => {
             You cannot create a chat with an empty input.
           </p>
         )}
+        {sameNameError && (
+          <p style={styles.error}>
+            Oops, chat with the same name already exists. Come up with another
+            name.
+          </p>
+        )}
 
         <label style={styles.label} htmlFor="categorySelect">
           Category
@@ -231,33 +258,37 @@ const CreateChatForm: React.FC = () => {
           </div>
           {isOpenCategory && (
             <div className={`custom-dropdown-options-modal category-options`}>
-              {categories.map(({ id, name }) => (
-                name !== 'All chats' &&
-                <div
-                  key={id}
-                  className={`custom-dropdown-option-modal`}
-                  onClick={() => {
-                    setActiveCat({
-                      id,
-                      name,
-                    });
-                  }}>
-                  {formData.language === name && (
-                    <div className="tick">
-                      <img
-                        src={tickIcon}
-                        alt="tick"
-                        className="tick-icon-modal"
-                      />
+              {categories.map(
+                ({ id, name }) =>
+                  name !== 'All chats' && (
+                    <div
+                      key={id}
+                      className={`custom-dropdown-option-modal`}
+                      onClick={() => {
+                        setActiveCat({
+                          id,
+                          name,
+                        });
+                      }}>
+                      {formData.language === name && (
+                        <div className="tick">
+                          <img
+                            src={tickIcon}
+                            alt="tick"
+                            className="tick-icon-modal"
+                          />
+                        </div>
+                      )}
+                      {name}
                     </div>
-                  )}
-                  {name}
-                </div>
-              ))}
+                  ),
+              )}
             </div>
           )}
           {emptyCategoryError && !activeCat.name && (
-            <p className="dropdown-category-error">Don't know category? Сhoose “Other” from the list.</p>
+            <p className="dropdown-category-error">
+              Don't know category? Сhoose “Other” from the list.
+            </p>
           )}
         </div>
 
@@ -383,7 +414,7 @@ const styles = {
     position: 'absolute' as 'absolute',
     top: '96px',
     color: '#F84848',
-    fontSize: '11px',
+    fontSize: '10px',
     marginBottom: '8px',
   },
 };
