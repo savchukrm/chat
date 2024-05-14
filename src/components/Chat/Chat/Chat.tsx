@@ -1,5 +1,7 @@
-import React, { useEffect, useRef } from 'react';
-import io from 'socket.io-client';
+import React, { useEffect, useRef, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import Stomp from 'stompjs';
+import SockJS from 'sockjs-client';
 import NewMessage from '../NewMessage/NewMessage';
 import { SlOptionsVertical } from 'react-icons/sl';
 import './Chat.scss';
@@ -11,6 +13,35 @@ interface IChat {
 }
 
 const Chat: React.FC<IChat> = ({ titleChat, peopleChat }) => {
+  const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
+  const [messages, setMessages] = useState<any[]>([]);
+
+  const methods = useForm();
+  // const [messageInput, setMessageInput] = useState('');
+
+  useEffect(() => {
+    const socket = new SockJS('https://lcbe-w2rafwjhaq-oa.a.run.app/lcws');
+    const client = Stomp.over(socket);
+
+    client.connect({}, () => {
+      client.subscribe('/topic/messages', (message) => {
+        const received = JSON.parse(message.body);
+        console.log('SUBSCRIBRED AND RECEIVED MESSAGE: ', received);
+
+        setMessages([...messages, JSON.parse(message.body)]);
+      });
+    });
+    setStompClient(client);
+
+    return () => {
+      if (stompClient) {
+        stompClient.disconnect(() => {
+          console.log('disconnected');
+        });
+      }
+    };
+  }, []);
+
   // useEffect(() => {
   //   const userDataString = localStorage.getItem('user');
 
@@ -81,59 +112,13 @@ const Chat: React.FC<IChat> = ({ titleChat, peopleChat }) => {
             image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
             name="KaRina"
             text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
-            time={22}
-          />
-          <Message
-            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
-            name="KaRina"
-            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
             time={23}
-          />
-          <Message
-            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
-            name="KaRina"
-            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
-            time={22}
-          />
-          <Message
-            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
-            name="KaRina"
-            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
-            time={22}
-          />
-          <Message
-            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
-            name="KaRina"
-            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
-            time={22}
-          />
-          <Message
-            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
-            name="KaRina"
-            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
-            time={22}
-          />
-          <Message
-            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
-            name="KaRina"
-            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
-            time={22}
-          />
-          <Message
-            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
-            name="KaRina"
-            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
-            time={22}
-          />
-          <Message
-            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
-            name="KaRina"
-            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
-            time={25}
           />
         </div>
       </div>
-      <NewMessage />
+      <FormProvider {...methods}>
+        <NewMessage />
+      </FormProvider>
     </div>
   );
 };

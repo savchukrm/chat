@@ -1,32 +1,34 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit"
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 
-interface IMessage{
-id: string,
-text: string
+interface IMessage {
+  id: string;
+  text: string;
 }
 
-interface IChat{
-    messageList: IMessage[],
+interface IChat {
+  messageList: IMessage[];
 }
 
 const initialState: IChat = {
-    messageList: [],
-}
+  messageList: [],
+};
 
 const activeChatSlice = createSlice({
-    name: 'activeChat', 
-    initialState,
-    reducers: {
-
-        sendMessage: (state, action)=>{
-            state.messageList = [...state.messageList, {
-                id: nanoid(),
-                text: action.payload
-            }]
-        }
-    }
-})
+  name: 'activeChat',
+  initialState,
+  reducers: {
+    sendMessage: (state, action) => {
+      state.messageList = [
+        ...state.messageList,
+        {
+          id: nanoid(),
+          text: action.payload,
+        },
+      ];
+    },
+  },
+});
 
 export const { sendMessage } = activeChatSlice.actions;
 
-export default activeChatSlice.reducer
+export default activeChatSlice.reducer;
