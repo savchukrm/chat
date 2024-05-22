@@ -10,9 +10,10 @@ import Message from '../Message/Message';
 interface IChat {
   titleChat: string;
   peopleChat: string;
+  idChat: number;
 }
 
-const Chat: React.FC<IChat> = ({ titleChat, peopleChat }) => {
+const Chat: React.FC<IChat> = ({ titleChat, peopleChat, idChat }) => {
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
   const [messages, setMessages] = useState<any[]>([]);
 
@@ -24,7 +25,7 @@ const Chat: React.FC<IChat> = ({ titleChat, peopleChat }) => {
     const client = Stomp.over(socket);
 
     client.connect({}, () => {
-      client.subscribe('/topic/messages', (message) => {
+      client.subscribe(`/topic/chat-channel/${idChat}`, (message) => {
         const received = JSON.parse(message.body);
         console.log('SUBSCRIBRED AND RECEIVED MESSAGE: ', received);
 
