@@ -9,6 +9,11 @@ import {
   FRENCH_FLAG,
   GERMAN_FLAG,
 } from './index';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addChannel } from '../../../redux/activeChats/slice';
+import { RootState } from '../../../redux/store';
+import { isEmptyArray } from 'formik';
 
 type FlagType = JSX.Element;
 
@@ -24,15 +29,44 @@ interface ChatBlockProps {
   topic: string;
   category: string;
   language: string;
+  id: string;
 }
 
-const ChatBlock: React.FC<ChatBlockProps> = ({ topic, category, language }) => {
+const ChatBlock: React.FC<ChatBlockProps> = ({
+  topic,
+  category,
+  language,
+  id,
+}) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const currentChannelId = useSelector(
+    (state: RootState) => state.activeChats.currentChannelId,
+  );
+  const channelList = useSelector(
+    (state: RootState) => state.activeChats.channelList,
+  );
+
   const languageName =
     itemsLang.find((item) => item.id === language)?.name || '';
   const flagImage = FLAGS[languageName] || null;
 
   const categoryName =
     itemsCategories.find((item) => item.id === category)?.name || 'Other';
+
+  const addingActiveChat = () => {
+    if (channelList.length === 0) {
+      dispatch(addChannel(id));
+    } else {
+      channelList.forEach((chatId) => {
+        if (chatId.id !== currentChannelId) {
+          dispatch(addChannel(id));
+        }
+      });
+    }
+
+    navigate('/active-chats');
+  };
 
   return (
     <div>
@@ -49,7 +83,9 @@ const ChatBlock: React.FC<ChatBlockProps> = ({ topic, category, language }) => {
           <h4 style={styles.title}>{topic}</h4>
 
           <div style={styles.bottomContainer}>
-            <div style={styles.btnJoin}>Join</div>
+            <div style={styles.btnJoin} onClick={addingActiveChat}>
+              Join
+            </div>
             <div style={styles.info}>
               {flagImage && <div style={styles.flagContainer}>{flagImage}</div>}
               <span style={styles.time}>Be first to talk!</span>

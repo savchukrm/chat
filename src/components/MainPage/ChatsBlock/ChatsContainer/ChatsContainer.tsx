@@ -64,6 +64,7 @@ const ChatsContainer = () => {
         {filteredChatsToRender.slice(0, pageSize).map((chat, index) => {
           return (
             <ChatBlock
+              id={chat.id}
               topic={chat.name}
               language={chat.languageId}
               category={chat.categoryId}
