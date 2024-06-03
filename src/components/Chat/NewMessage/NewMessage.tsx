@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { useForm, SubmitHandler, useWatch } from 'react-hook-form'; // Импорт useWatch
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
@@ -12,11 +12,13 @@ interface IForm {
 interface Position {
   position?: 'absolute' | 'relative';
 }
-
-const NewMessage = () => {
+interface INewMessage {
+  sendMessage: (message: string) => void;
+}
+const NewMessage: FC<INewMessage> = ({ sendMessage }) => {
   const [showEmoji, setShowEmoji] = useState(false);
-  const { register, handleSubmit, reset, setValue } = useForm<IForm>();
-  const messageText = useWatch({ name: 'messageText' });
+  const { register, handleSubmit, reset, setValue, control } = useForm<IForm>();
+  const messageText = useWatch({ name: 'messageText', control });
 
   const handlerShowEmoji = () => {
     setShowEmoji(!showEmoji);
@@ -28,7 +30,7 @@ const NewMessage = () => {
   };
 
   const onSubmit: SubmitHandler<IForm> = (data) => {
-    console.log(data);
+    sendMessage(data.messageText);
     reset();
   };
 

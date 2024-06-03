@@ -6,17 +6,21 @@ import NewMessage from '../NewMessage/NewMessage';
 import { SlOptionsVertical } from 'react-icons/sl';
 import './Chat.scss';
 import Message from '../Message/Message';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 
 interface IChat {
   titleChat: string;
   peopleChat: string;
-  idChat: number;
 }
 
-const Chat: React.FC<IChat> = ({ titleChat, peopleChat, idChat }) => {
+const Chat: React.FC<IChat> = ({ titleChat, peopleChat }) => {
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
   const [messages, setMessages] = useState<any[]>([]);
 
+  const currentChannelId = useSelector(
+    (state: RootState) => state.activeChats.currentChannelId,
+  );
   const methods = useForm();
   // const [messageInput, setMessageInput] = useState('');
 
@@ -25,14 +29,21 @@ const Chat: React.FC<IChat> = ({ titleChat, peopleChat, idChat }) => {
     const client = Stomp.over(socket);
 
     client.connect({}, () => {
-      client.subscribe(`/topic/chat-channel/${idChat}`, (message) => {
+      client.subscribe(`/topic/chat-channel/${currentChannelId}`, (message) => {
         const received = JSON.parse(message.body);
         console.log('SUBSCRIBRED AND RECEIVED MESSAGE: ', received);
-
         setMessages([...messages, JSON.parse(message.body)]);
       });
     });
     setStompClient(client);
+    // client.connect({}, () => {
+    //   client.subscribe(`/topic/chat-channel/${currentChannelId}`, (message) => {
+    //     const received = JSON.parse(message.body);
+    //     console.log('SUBSCRIBED AND RECEIVED MESSAGE: ', received);
+    //     setMessages((prevMessages) => [...prevMessages, received]);
+    //   });
+    // });
+    // setStompClient(client);
 
     return () => {
       if (stompClient) {
@@ -43,27 +54,30 @@ const Chat: React.FC<IChat> = ({ titleChat, peopleChat, idChat }) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const userDataString = localStorage.getItem('user');
+  const sendMessage = (message: string) => {
+    if (stompClient && stompClient.connected) {
+      // const formattedMessage = JSON.stringify({ text: message });
+      setMessages([...messages, message]);
+      console.log(message);
 
-  //   if (userDataString !== null) {
-  //     const userData = JSON.parse(userDataString);
-  //     if (userData && userData.token) {
-  //       const token = userData.token;
-  //       console.log(token);
-
-  //       const socketUrl = 'ws://lcbe-w2rafwjhaq-oa.a.run.app/lcws';
-  //       const socket = io(socketUrl, {
-  //         extraHeaders: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-
-  //       socket.connect();
-  //       console.log(socket);
-  //     }
+      const formattedMessage = `{text:"${message}"}`;
+      stompClient.send(
+        `/app/chat.sendMessage/${currentChannelId}`,
+        {},
+        formattedMessage,
+      );
+    }
+  };
+  // const sendMessage = (message: string) => {
+  //   if (stompClient && stompClient.connected) {
+  //     const formattedMessage = `{text:"${message}"}`;
+  //     stompClient.send(
+  //       `/app/chat.sendMessage/${currentChannelId}`,
+  //       {},
+  //       formattedMessage,
+  //     );
   //   }
-  // }, []);
+  // };
 
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
   // const unreadMessageRef = useRef<HTMLDivElement | null>(null);
@@ -103,22 +117,19 @@ const Chat: React.FC<IChat> = ({ titleChat, peopleChat, idChat }) => {
       </div>
       <div className="chatBox">
         <div className="chatBox1" ref={chatContainerRef}>
-          <Message
-            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
-            name="KaRina"
-            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
-            time={22}
-          />
-          <Message
-            image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
-            name="KaRina"
-            text="XDFGHJsdfghj xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk  xcdfvghjk xdfghj xcdfghjk xcfvgbhnjmk xdcfghjk"
-            time={23}
-          />
+          {messages.map((message, index) => (
+            <Message
+              key={index}
+              image="https://upload.wikimedia.org/wikipedia/ru/b/b3/%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80_%D0%9F%D1%83%D1%82%D1%8C_%D0%B2%D0%BE%D0%B4%D1%8B_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg"
+              name="KaRina"
+              text={message.text}
+              time={22}
+            />
+          ))}
         </div>
       </div>
       <FormProvider {...methods}>
-        <NewMessage />
+        <NewMessage sendMessage={sendMessage} />
       </FormProvider>
     </div>
   );

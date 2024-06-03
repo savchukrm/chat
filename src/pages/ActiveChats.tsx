@@ -25,7 +25,6 @@ const ActiveChats = () => {
         titleChat="Why Imagine Dragons supports Ukraine through the UNITED24
               platform?"
         peopleChat="23 Members, 15 online"
-        idChat={20}
       />
     </div>
   );
