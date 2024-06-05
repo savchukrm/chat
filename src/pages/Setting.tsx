@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../redux/store';
+import SettingsList from '../components/SettingsPage/SettingsList/SettingsList';
 // import { removeUser, setVerified } from '../redux/user/slice';
 // import { openNewUserModal } from '../redux/modals/slice';
 
@@ -30,20 +31,7 @@ const Setting = () => {
       <div onClick={() => openModalNewUser()}>new user modal</div> */}
       <div style={styles.selectSettings}>
         <h1 style={styles.title}>Settings:</h1>
-        <ul style={styles.listSettings}>
-          <li style={styles.itemSetting}>
-            <button style={styles.btnSetting}>My profile</button>
-          </li>
-          <li style={styles.itemSetting}>
-            <button style={styles.btnSetting}>Password</button>
-          </li>
-          <li style={styles.itemSetting}>
-            <button style={styles.btnSetting}>Notifications</button>
-          </li>
-          <li style={styles.itemSetting}>
-            <button style={styles.btnSetting}>Acount actions</button>
-          </li>
-        </ul>
+        <SettingsList />
       </div>
     </div>
   );
