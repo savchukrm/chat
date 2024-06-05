@@ -3,7 +3,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../redux/store';
-import SettingsList from '../components/SettingsPage/SettingsList/SettingsList';
+import { SettingsList } from '../components';
+
 // import { removeUser, setVerified } from '../redux/user/slice';
 // import { openNewUserModal } from '../redux/modals/slice';
 
