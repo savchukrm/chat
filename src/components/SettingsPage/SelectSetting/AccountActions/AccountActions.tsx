@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SelectSettingTitle from '../SelectSettingTitle';
 import { settingsStyles } from '../settingsStyles';
-import ButtonWhite from '../../../Buttons/ButtonWhite/ButtonWhite';
+import { ButtonWhite } from '../../../Buttons';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import { IoLogOut } from 'react-icons/io5';
 
 const AccountActions = () => {
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [logOutModal, setlogOutModal] = useState(false);
+
+  const deleteAcount = () => {
+    setDeleteModal(!deleteModal);
+  };
+
+  const logOutFromAcount = () => {
+    setlogOutModal(!logOutModal);
+  };
   return (
     <div>
       <SelectSettingTitle
@@ -21,6 +31,7 @@ const AccountActions = () => {
             </p>
           </div>
           <ButtonWhite
+            onClick={deleteAcount}
             icon={<RiDeleteBin6Fill style={settingsStyles.btnIcon} />}
             text="Delete"
           />
@@ -33,6 +44,7 @@ const AccountActions = () => {
             </p>
           </div>
           <ButtonWhite
+            onClick={logOutFromAcount}
             icon={<IoLogOut style={settingsStyles.btnIcon} />}
             text="Edit"
           />

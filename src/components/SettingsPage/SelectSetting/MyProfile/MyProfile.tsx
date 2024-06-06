@@ -1,5 +1,5 @@
 import SelectSettingTitle from '../SelectSettingTitle';
-import ButtonWhite from '../../../Buttons/ButtonWhite/ButtonWhite';
+import { ButtonWhite } from '../../../Buttons';
 import { HiPencil } from 'react-icons/hi2';
 import { settingsStyles } from '../settingsStyles';
 
@@ -25,6 +25,7 @@ const MyProfile = () => {
             <p style={settingsStyles.editText}>Your profile photo</p>
           </div>
           <ButtonWhite
+            onClick={() => {}}
             icon={<HiPencil style={settingsStyles.btnIcon} />}
             text="Edit"
           />
@@ -35,6 +36,7 @@ const MyProfile = () => {
             <p style={settingsStyles.editText}>Your name</p>
           </div>
           <ButtonWhite
+            onClick={() => {}}
             icon={<HiPencil style={settingsStyles.btnIcon} />}
             text="Edit"
           />
@@ -45,6 +47,7 @@ const MyProfile = () => {
             <p style={settingsStyles.editText}>Your language</p>
           </div>
           <ButtonWhite
+            onClick={() => {}}
             icon={<HiPencil style={settingsStyles.btnIcon} />}
             text="Edit"
           />

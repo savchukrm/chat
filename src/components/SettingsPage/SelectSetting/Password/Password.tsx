@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import SelectSettingTitle from '../SelectSettingTitle';
-import ButtonWhite from '../../../Buttons/ButtonWhite/ButtonWhite';
+import { ButtonWhite } from '../../../Buttons';
 import { HiPencil } from 'react-icons/hi';
 import { settingsStyles } from '../settingsStyles';
 
@@ -28,6 +28,7 @@ const Password: FC<IPassword> = ({ password }) => {
             <p style={settingsStyles.editText}>Password</p>
           </div>
           <ButtonWhite
+            onClick={() => {}}
             icon={<HiPencil style={settingsStyles.btnIcon} />}
             text="Edit"
           />
