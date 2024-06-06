@@ -23,7 +23,7 @@ const SettingsList = () => {
   const renderContent = () => {
     switch (btnActive) {
       case 0:
-        return <MyProfile name="John Smith" language="English" />;
+        return <MyProfile />;
       case 1:
         return <Password password="**********" />;
       case 2:

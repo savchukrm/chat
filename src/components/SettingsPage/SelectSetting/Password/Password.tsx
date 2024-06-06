@@ -8,11 +8,18 @@ interface IPassword {
   password: string;
 }
 const Password: FC<IPassword> = ({ password }) => {
+  const userInfoString = localStorage.getItem('user');
+  let userInfo;
+
+  if (userInfoString) {
+    userInfo = JSON.parse(userInfoString);
+  }
+
   return (
     <div>
       <SelectSettingTitle
         title="Here your email and password"
-        text="Signed in as yabazilev@gmail.com"
+        text={`Signed in as ${userInfo.email}`}
       />
       <div style={settingsStyles.editWrapper}>
         <div style={settingsStyles.editContainer}>

@@ -1,19 +1,21 @@
-import React, { FC } from 'react';
 import SelectSettingTitle from '../SelectSettingTitle';
 import ButtonWhite from '../../../Buttons/ButtonWhite/ButtonWhite';
 import { HiPencil } from 'react-icons/hi2';
 import { settingsStyles } from '../settingsStyles';
 
-interface IMyProfile {
-  name: string;
-  language: string;
-}
-const MyProfile: FC<IMyProfile> = ({ name, language }) => {
+const MyProfile = () => {
+  const userInfoString = localStorage.getItem('user');
+  let userInfo;
+
+  if (userInfoString) {
+    userInfo = JSON.parse(userInfoString);
+  }
+
   return (
     <div>
       <SelectSettingTitle
         title="Choose how you appear and what you see on Oktotalk"
-        text="Signed in as yabazilev@gmail.com"
+        text={`Signed in as ${userInfo.email}`}
       />
       <div style={settingsStyles.editWrapper}>
         <div style={settingsStyles.editContainer}>
@@ -29,8 +31,8 @@ const MyProfile: FC<IMyProfile> = ({ name, language }) => {
         </div>
         <div style={settingsStyles.editContainer}>
           <div>
-            <p style={settingsStyles.editInfo}>{name}</p>
-            <p style={settingsStyles.editText}>Your profile photo</p>
+            <p style={settingsStyles.editInfo}>{userInfo.name}</p>
+            <p style={settingsStyles.editText}>Your name</p>
           </div>
           <ButtonWhite
             icon={<HiPencil style={settingsStyles.btnIcon} />}
@@ -39,7 +41,7 @@ const MyProfile: FC<IMyProfile> = ({ name, language }) => {
         </div>
         <div style={settingsStyles.editContainer}>
           <div>
-            <p style={settingsStyles.editInfo}>{language}</p>
+            <p style={settingsStyles.editInfo}>English</p>
             <p style={settingsStyles.editText}>Your language</p>
           </div>
           <ButtonWhite
