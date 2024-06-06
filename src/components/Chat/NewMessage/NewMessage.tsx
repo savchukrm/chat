@@ -1,9 +1,13 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import Stomp from 'stompjs';
+import SockJS from 'sockjs-client';
 import { useForm, SubmitHandler, useWatch } from 'react-hook-form'; // Импорт useWatch
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { ImAttachment } from 'react-icons/im';
 import { BsEmojiSmile, BsFillSendFill } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 
 interface IForm {
   messageText: string;
@@ -12,13 +16,60 @@ interface IForm {
 interface Position {
   position?: 'absolute' | 'relative';
 }
-interface INewMessage {
-  sendMessage: (message: string) => void;
-}
-const NewMessage: FC<INewMessage> = ({ sendMessage }) => {
+
+const NewMessage = () => {
   const [showEmoji, setShowEmoji] = useState(false);
   const { register, handleSubmit, reset, setValue, control } = useForm<IForm>();
   const messageText = useWatch({ name: 'messageText', control });
+
+  const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
+  const [messages, setMessages] = useState<any[]>([]);
+
+  const currentChannelId = useSelector(
+    (state: RootState) => state.activeChats.currentChannelId,
+  );
+
+  useEffect(() => {
+    const socket = new SockJS('https://lcbe-w2rafwjhaq-oa.a.run.app/lcws');
+    const client = Stomp.over(socket);
+
+    client.connect({}, () => {
+      client.subscribe(`/topic/chat-channel/${currentChannelId}`, (message) => {
+        const received = JSON.parse(message.body);
+        console.log('SUBSCRIBRED AND RECEIVED MESSAGE: ', received);
+        // setMessages([...messages, JSON.parse(message.body)]);
+        setMessages((prevMessages) => [...prevMessages, received]);
+      });
+    });
+    setStompClient(client);
+
+    return () => {
+      if (client) {
+        client.disconnect(() => {
+          console.log('disconnected');
+        });
+      }
+    };
+  }, [currentChannelId]);
+
+  const sendMessage = (message: string) => {
+    if (stompClient && stompClient.connected) {
+      const formattedMessage = JSON.stringify({ text: message });
+
+      console.log(message);
+
+      stompClient.send(
+        `/app/chat.sendMessage/${currentChannelId}`,
+        {},
+        formattedMessage,
+      );
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: message, from: 'me' },
+      ]);
+      console.log(message);
+    }
+  };
 
   const handlerShowEmoji = () => {
     setShowEmoji(!showEmoji);

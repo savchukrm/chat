@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import Stomp from 'stompjs';
+import Stomp, { client } from 'stompjs';
 import SockJS from 'sockjs-client';
 import NewMessage from '../NewMessage/NewMessage';
 import { SlOptionsVertical } from 'react-icons/sl';
@@ -21,65 +20,38 @@ const Chat: React.FC<IChat> = ({ titleChat, peopleChat }) => {
   const currentChannelId = useSelector(
     (state: RootState) => state.activeChats.currentChannelId,
   );
-  const methods = useForm();
-  // const [messageInput, setMessageInput] = useState('');
+
+  const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const socket = new SockJS('https://lcbe-w2rafwjhaq-oa.a.run.app/lcws');
     const client = Stomp.over(socket);
 
     client.connect({}, () => {
+      console.log('Connected to WebSocket');
+
       client.subscribe(`/topic/chat-channel/${currentChannelId}`, (message) => {
         const received = JSON.parse(message.body);
         console.log('SUBSCRIBRED AND RECEIVED MESSAGE: ', received);
-        setMessages([...messages, JSON.parse(message.body)]);
+        setMessages((prevMessages) => [...prevMessages, received]);
+        console.log(received);
+
+        console.log(messages);
       });
     });
     setStompClient(client);
-    // client.connect({}, () => {
-    //   client.subscribe(`/topic/chat-channel/${currentChannelId}`, (message) => {
-    //     const received = JSON.parse(message.body);
-    //     console.log('SUBSCRIBED AND RECEIVED MESSAGE: ', received);
-    //     setMessages((prevMessages) => [...prevMessages, received]);
-    //   });
-    // });
-    // setStompClient(client);
 
     return () => {
-      if (stompClient) {
-        stompClient.disconnect(() => {
+      if (client) {
+        client.disconnect(() => {
           console.log('disconnected');
         });
       }
     };
-  }, []);
+  }, [currentChannelId, messages]);
 
-  const sendMessage = (message: string) => {
-    if (stompClient && stompClient.connected) {
-      // const formattedMessage = JSON.stringify({ text: message });
-      setMessages([...messages, message]);
-      console.log(message);
+  console.log(messages);
 
-      const formattedMessage = `{text:"${message}"}`;
-      stompClient.send(
-        `/app/chat.sendMessage/${currentChannelId}`,
-        {},
-        formattedMessage,
-      );
-    }
-  };
-  // const sendMessage = (message: string) => {
-  //   if (stompClient && stompClient.connected) {
-  //     const formattedMessage = `{text:"${message}"}`;
-  //     stompClient.send(
-  //       `/app/chat.sendMessage/${currentChannelId}`,
-  //       {},
-  //       formattedMessage,
-  //     );
-  //   }
-  // };
-
-  const chatContainerRef = useRef<HTMLDivElement | null>(null);
   // const unreadMessageRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -128,9 +100,11 @@ const Chat: React.FC<IChat> = ({ titleChat, peopleChat }) => {
           ))}
         </div>
       </div>
-      <FormProvider {...methods}>
-        <NewMessage sendMessage={sendMessage} />
-      </FormProvider>
+      {/* <FormProvider {...methods}> */}
+      <NewMessage
+      // sendMessage={sendMessage}
+      />
+      {/* </FormProvider> */}
     </div>
   );
 };
