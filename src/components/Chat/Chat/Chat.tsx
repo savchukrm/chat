@@ -34,9 +34,6 @@ const Chat: React.FC<IChat> = ({ titleChat, peopleChat }) => {
         const received = JSON.parse(message.body);
         console.log('SUBSCRIBRED AND RECEIVED MESSAGE: ', received);
         setMessages((prevMessages) => [...prevMessages, received]);
-        console.log(received);
-
-        console.log(messages);
       });
     });
     setStompClient(client);
