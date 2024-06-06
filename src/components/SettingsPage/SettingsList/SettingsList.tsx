@@ -25,7 +25,7 @@ const SettingsList = () => {
       case 0:
         return <MyProfile name="John Smith" language="English" />;
       case 1:
-        return <Password />;
+        return <Password password="**********" />;
       case 2:
         return <NotificationSettings />;
       case 3:

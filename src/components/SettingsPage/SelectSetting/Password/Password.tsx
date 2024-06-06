@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { FC } from 'react';
 import SelectSettingTitle from '../SelectSettingTitle';
+import ButtonWhite from '../../../Buttons/ButtonWhite/ButtonWhite';
+import { HiPencil } from 'react-icons/hi';
+import { settingsStyles } from '../settingsStyles';
 
-const Password = () => {
+interface IPassword {
+  password: string;
+}
+const Password: FC<IPassword> = ({ password }) => {
   return (
     <div>
       <SelectSettingTitle
         title="Here your email and password"
         text="Signed in as yabazilev@gmail.com"
       />
+      <div style={settingsStyles.editWrapper}>
+        <div style={settingsStyles.editContainer}>
+          <div>
+            <p style={settingsStyles.editInfo}>{password}</p>
+            <p style={settingsStyles.editText}>Password</p>
+          </div>
+          <ButtonWhite
+            icon={<HiPencil style={settingsStyles.btnIcon} />}
+            text="Edit"
+          />
+        </div>
+      </div>
     </div>
   );
 };
