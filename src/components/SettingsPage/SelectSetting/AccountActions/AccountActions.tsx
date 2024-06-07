@@ -4,10 +4,19 @@ import { settingsStyles } from '../settingsStyles';
 import { ButtonWhite } from '../../../Buttons';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import { IoLogOut } from 'react-icons/io5';
+import { DeleteOrLogOut } from '../../../Modals/ModalsSettings';
 
 const AccountActions = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [logOutModal, setlogOutModal] = useState(false);
+  // const [closeModal, setCloseModal] = useState(false);
+
+  const userInfoString = localStorage.getItem('user');
+  let userInfo;
+
+  if (userInfoString) {
+    userInfo = JSON.parse(userInfoString);
+  }
 
   const deleteAcount = () => {
     setDeleteModal(!deleteModal);
@@ -16,6 +25,10 @@ const AccountActions = () => {
   const logOutFromAcount = () => {
     setlogOutModal(!logOutModal);
   };
+
+  // const close = () => {
+  //   setCloseModal(false);
+  // };
   return (
     <div>
       <SelectSettingTitle
@@ -50,6 +63,15 @@ const AccountActions = () => {
           />
         </div>
       </div>
+      {deleteModal && (
+        <DeleteOrLogOut
+          title="Delete User Account"
+          closeModal={deleteAcount}
+          name={userInfo.name}
+          text={`Are you sure you want to delete ${userInfo.name} account? You will lose the access to all chat rooms and private messages.`}
+          email={userInfo.email}
+        />
+      )}
     </div>
   );
 };
