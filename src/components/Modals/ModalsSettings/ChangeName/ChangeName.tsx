@@ -4,7 +4,8 @@ import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { ButtonForModal } from '../../../Buttons';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { setUser } from '../../../../redux/user/slice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../../redux/store';
 
 interface IChangeName {
   title: string;
@@ -18,11 +19,14 @@ interface IForm {
 }
 
 const ChangeName: FC<IChangeName> = ({ title, emoji, closeModal, text }) => {
+  const { email, token } = useSelector((state: RootState) => state.user);
+  console.log(email, token);
+
   const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm<IForm>();
 
   const onSubmit: SubmitHandler<IForm> = (data) => {
-    dispatch(setUser({ name: data.name }));
+    dispatch(setUser({ name: data.name, email: email, token: token }));
     reset();
   };
 
