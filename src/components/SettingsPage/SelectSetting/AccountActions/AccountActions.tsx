@@ -62,7 +62,7 @@ const AccountActions = () => {
       </div>
       {deleteModal && (
         <DeleteOrLogOut
-          еmoji={еmojiDisappointed}
+          emoji={еmojiDisappointed}
           title="Delete User Account"
           closeModal={deleteAcount}
           name={userInfo.name}
@@ -72,7 +72,7 @@ const AccountActions = () => {
       )}
       {logOutModal && (
         <DeleteOrLogOut
-          еmoji={emojiPensive}
+          emoji={emojiPensive}
           title="Log out"
           closeModal={logOutFromAcount}
           name={userInfo.name}

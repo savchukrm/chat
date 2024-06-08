@@ -1,13 +1,21 @@
+const commonModalWrapper = {
+  backgroundColor: '#313338',
+  borderRadius: 4,
+  paddingTop: 24,
+  paddingBottom: 32,
+  paddingLeft: 32,
+  paddingRight: 32,
+  width: 544,
+};
+
 export const stylesModals = {
   modalWrapper: {
-    backgroundColor: '#313338',
-    borderRadius: 4,
-    paddingTop: 24,
-    paddingBottom: 32,
-    paddingLeft: 32,
-    paddingRight: 32,
-    width: 544,
+    ...commonModalWrapper,
     height: 348,
+  },
+  secondModalWrapper: {
+    ...commonModalWrapper,
+    height: 282,
   },
   titleContainer: {
     display: 'flex',
@@ -15,7 +23,7 @@ export const stylesModals = {
     alignItems: 'center' as 'center',
     marginBottom: 32,
   },
-  titleModalContainer: { display: 'flex' },
+  titleModalContainer: { display: 'flex', alignItems: 'end' },
   titleModal: {
     color: '#fff',
     fontWeight: '600',
@@ -32,6 +40,30 @@ export const stylesModals = {
   infoUser: {
     display: 'flex',
     marginBottom: 32,
+  },
+  infoUserChange: { marginBottom: 32 },
+  formUserChange: {
+    backgroundColor: '#313338',
+    border: '1px solid #fff',
+    borderRadius: '4px',
+  },
+  inputUserChange: {
+    width: '100%',
+    backgroundColor: '#313338',
+    borderRadius: 4,
+    borderColor: '#fff',
+    height: 40,
+    paddingLeft: 10,
+    paddingTop: 8,
+    paddingBottom: 8,
+    color: '#fff',
+  },
+  infoUserText: {
+    color: '#fff',
+    fontWeight: 500,
+    fontSize: 14,
+    lineHeight: '214%',
+    marginBottom: 4,
   },
   userImg: { width: 60, height: 60, marginRight: 16 },
   userContainer: { paddingTop: 8, paddingBottom: 8 },

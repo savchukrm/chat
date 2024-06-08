@@ -2,14 +2,23 @@ import SelectSettingTitle from '../SelectSettingTitle';
 import { ButtonWhite } from '../../../Buttons';
 import { HiPencil } from 'react-icons/hi2';
 import { settingsStyles } from '../settingsStyles';
+import { ChangeName } from '../../../Modals/ModalsSettings';
+import { emojiSlightlySmilingFace } from '../../../../constants/images';
+import { useState } from 'react';
 
 const MyProfile = () => {
+  const [changeName, setChangeName] = useState(false);
+
   const userInfoString = localStorage.getItem('user');
   let userInfo;
 
   if (userInfoString) {
     userInfo = JSON.parse(userInfoString);
   }
+
+  const changeNameUser = () => {
+    setChangeName(!changeName);
+  };
 
   return (
     <div>
@@ -36,7 +45,7 @@ const MyProfile = () => {
             <p style={settingsStyles.editText}>Your name</p>
           </div>
           <ButtonWhite
-            onClick={() => {}}
+            onClick={changeNameUser}
             icon={<HiPencil style={settingsStyles.btnIcon} />}
             text="Edit"
           />
@@ -53,6 +62,14 @@ const MyProfile = () => {
           />
         </div>
       </div>
+      {changeName && (
+        <ChangeName
+          title="Let’s change your name"
+          emoji={emojiSlightlySmilingFace}
+          closeModal={changeNameUser}
+          text="Your new name"
+        />
+      )}
     </div>
   );
 };

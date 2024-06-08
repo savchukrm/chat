@@ -5,7 +5,7 @@ import { ButtonForModal } from '../../../Buttons';
 
 interface IDeleteOrLogOut {
   title: string;
-  еmoji: any;
+  emoji: any;
   closeModal: () => void;
   text: string;
   name: string;
@@ -14,7 +14,7 @@ interface IDeleteOrLogOut {
 
 const DeleteOrLogOut: FC<IDeleteOrLogOut> = ({
   title,
-  еmoji,
+  emoji,
   closeModal,
   text,
   name,
@@ -25,7 +25,7 @@ const DeleteOrLogOut: FC<IDeleteOrLogOut> = ({
       <div style={stylesModals.titleContainer}>
         <div style={stylesModals.titleModalContainer}>
           <h1 style={stylesModals.titleModal}>{title}</h1>
-          <img style={stylesModals.titleImg} src={еmoji} alt="" />
+          <img style={stylesModals.titleImg} src={emoji} alt="" />
         </div>
         <button style={stylesModals.closeBtn} onClick={closeModal}>
           <IoMdCloseCircleOutline style={stylesModals.iconClose} />

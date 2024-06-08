@@ -22,6 +22,7 @@ import tickIcon from '../assets/images/tick.svg';
 import earthActive from '../assets/images/earth-active.svg';
 import еmojiDisappointed from '../assets/images/еmojiDisappointed.svg';
 import emojiPensive from '../assets/images/emojiPensive.svg';
+import emojiSlightlySmilingFace from '../assets/images/emojiSlightlySmilingFace.svg';
 
 export {
   background,
@@ -48,4 +49,5 @@ export {
   earthActive,
   еmojiDisappointed,
   emojiPensive,
+  emojiSlightlySmilingFace,
 };
