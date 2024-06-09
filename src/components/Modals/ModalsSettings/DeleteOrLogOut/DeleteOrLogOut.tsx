@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { stylesModals } from '../stylesModals';
 import { ButtonForModal } from '../../../Buttons';
+import ModalTemplate from '../ModalTemplate';
 
 interface IDeleteOrLogOut {
   title: string;
@@ -21,17 +21,12 @@ const DeleteOrLogOut: FC<IDeleteOrLogOut> = ({
   email,
 }) => {
   return (
-    <div style={stylesModals.modalWrapper}>
-      <div style={stylesModals.titleContainer}>
-        <div style={stylesModals.titleModalContainer}>
-          <h1 style={stylesModals.titleModal}>{title}</h1>
-          <img style={stylesModals.titleImg} src={emoji} alt="" />
-        </div>
-        <button style={stylesModals.closeBtn} onClick={closeModal}>
-          <IoMdCloseCircleOutline style={stylesModals.iconClose} />
-        </button>
-      </div>
-      <p style={stylesModals.textModal}>{text}</p>
+    <ModalTemplate
+      style={stylesModals.modalWrapper}
+      title={title}
+      emoji={emoji}
+      text={text}
+      closeModal={closeModal}>
       <div style={stylesModals.infoUser}>
         <img style={stylesModals.userImg} src="" alt="" />
         <div style={stylesModals.userContainer}>
@@ -53,7 +48,7 @@ const DeleteOrLogOut: FC<IDeleteOrLogOut> = ({
           backgroundColor="#f84848"
         />
       </div>
-    </div>
+    </ModalTemplate>
   );
 };
 

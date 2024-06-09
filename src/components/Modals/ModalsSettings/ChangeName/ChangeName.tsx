@@ -34,7 +34,7 @@ const ChangeName: FC<IChangeName> = ({ title, emoji, closeModal, text }) => {
     handleSubmit(onSubmit)();
   };
   return (
-    <div style={stylesModals.secondModalWrapper}>
+    <div style={stylesModals.changeNameModal}>
       <div style={stylesModals.titleContainer}>
         <div style={stylesModals.titleModalContainer}>
           <h1 style={stylesModals.titleModal}>{title}</h1>

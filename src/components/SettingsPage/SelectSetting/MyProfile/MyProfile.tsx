@@ -2,12 +2,13 @@ import SelectSettingTitle from '../SelectSettingTitle';
 import { ButtonWhite } from '../../../Buttons';
 import { HiPencil } from 'react-icons/hi2';
 import { settingsStyles } from '../settingsStyles';
-import { ChangeName } from '../../../Modals/ModalsSettings';
+import { ChangeLanguege, ChangeName } from '../../../Modals/ModalsSettings';
 import { emojiSlightlySmilingFace } from '../../../../constants/images';
 import { useState } from 'react';
 
 const MyProfile = () => {
   const [changeName, setChangeName] = useState(false);
+  const [changeLanguage, setChangeLanguage] = useState(false);
 
   const userInfoString = localStorage.getItem('user');
   let userInfo;
@@ -18,6 +19,10 @@ const MyProfile = () => {
 
   const changeNameUser = () => {
     setChangeName(!changeName);
+  };
+
+  const changeLanguageUser = () => {
+    setChangeLanguage(!changeLanguage);
   };
 
   return (
@@ -56,7 +61,7 @@ const MyProfile = () => {
             <p style={settingsStyles.editText}>Your language</p>
           </div>
           <ButtonWhite
-            onClick={() => {}}
+            onClick={changeLanguageUser}
             icon={<HiPencil style={settingsStyles.btnIcon} />}
             text="Edit"
           />
@@ -70,6 +75,7 @@ const MyProfile = () => {
           text="Your new name"
         />
       )}
+      {changeLanguage && <ChangeLanguege closeModal={changeLanguageUser} />}
     </div>
   );
 };

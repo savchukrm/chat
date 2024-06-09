@@ -13,10 +13,11 @@ export const stylesModals = {
     ...commonModalWrapper,
     height: 348,
   },
-  secondModalWrapper: {
+  changeNameModal: {
     ...commonModalWrapper,
     height: 282,
   },
+  languageModal: { ...commonModalWrapper, height: 383 },
   titleContainer: {
     display: 'flex',
     justifyContent: 'space-between',
