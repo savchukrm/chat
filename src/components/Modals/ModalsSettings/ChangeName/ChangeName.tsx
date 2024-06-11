@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { setUser } from '../../../../redux/user/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
+import axios from 'axios';
 
 interface IChangeName {
   title: string;
@@ -20,14 +21,39 @@ interface IForm {
 
 const ChangeName: FC<IChangeName> = ({ title, emoji, closeModal, text }) => {
   const { email, token } = useSelector((state: RootState) => state.user);
-  console.log(email, token);
+
+  const url = `${process.env.REACT_APP_API_URL}api/v1/user/update/ptofile`;
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  };
 
   const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm<IForm>();
 
-  const onSubmit: SubmitHandler<IForm> = (data) => {
-    dispatch(setUser({ name: data.name, email: email, token: token }));
-    reset();
+  const onSubmit: SubmitHandler<IForm> = async (data) => {
+    try {
+      const response = await axios.post(
+        url,
+        {
+          name: data.name,
+        },
+        { headers },
+      );
+
+      if (response.status === 200) {
+        console.log(response.statusText, 'Good');
+        console.log(response.data.message);
+
+        dispatch(setUser({ name: data.name, email: email, token: token }));
+        closeModal();
+        reset();
+      } else {
+        console.error('Failed to update name:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error updating name:', error);
+    }
   };
 
   const handleSaveButtonClick = () => {
