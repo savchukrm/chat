@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import SelectSettingTitle from '../SelectSettingTitle';
 import { ButtonWhite } from '../../../Buttons';
 import { HiPencil } from 'react-icons/hi';

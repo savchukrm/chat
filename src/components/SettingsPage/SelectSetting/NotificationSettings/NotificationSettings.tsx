@@ -1,4 +1,3 @@
-import React from 'react';
 import SelectSettingTitle from '../SelectSettingTitle';
 
 const NotificationSettings = () => {

@@ -7,6 +7,7 @@ interface IDeleteOrLogOut {
   title: string;
   emoji: any;
   closeModal: () => void;
+  deleteOrLogOutAccount: () => void;
   text: string;
   name: string;
   email: string;
@@ -16,6 +17,7 @@ const DeleteOrLogOut: FC<IDeleteOrLogOut> = ({
   title,
   emoji,
   closeModal,
+  deleteOrLogOutAccount,
   text,
   name,
   email,
@@ -43,7 +45,7 @@ const DeleteOrLogOut: FC<IDeleteOrLogOut> = ({
         />
         <ButtonForModal
           text="Delete"
-          onClick={() => {}}
+          onClick={deleteOrLogOutAccount}
           color="#fff"
           backgroundColor="#f84848"
         />
