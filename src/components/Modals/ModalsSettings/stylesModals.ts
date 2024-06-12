@@ -6,6 +6,10 @@ const commonModalWrapper = {
   paddingLeft: 32,
   paddingRight: 32,
   width: 544,
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  right: '50%',
+  left: '50%',
 };
 
 export const stylesModals = {

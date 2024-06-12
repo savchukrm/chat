@@ -9,6 +9,7 @@ import { useState } from 'react';
 const MyProfile = () => {
   const [changeName, setChangeName] = useState(false);
   const [changeLanguage, setChangeLanguage] = useState(false);
+  const [disabledBtn, setDisabledBtn] = useState(false);
 
   const userInfoString = localStorage.getItem('user');
   let userInfo;
@@ -19,10 +20,12 @@ const MyProfile = () => {
 
   const changeNameUser = () => {
     setChangeName(!changeName);
+    setDisabledBtn(!disabledBtn);
   };
 
   const changeLanguageUser = () => {
     setChangeLanguage(!changeLanguage);
+    setDisabledBtn(!disabledBtn);
   };
 
   return (
@@ -40,6 +43,7 @@ const MyProfile = () => {
           </div>
           <ButtonWhite
             onClick={() => {}}
+            disabled={disabledBtn}
             icon={<HiPencil style={settingsStyles.btnIcon} />}
             text="Edit"
           />
@@ -51,6 +55,7 @@ const MyProfile = () => {
           </div>
           <ButtonWhite
             onClick={changeNameUser}
+            disabled={disabledBtn}
             icon={<HiPencil style={settingsStyles.btnIcon} />}
             text="Edit"
           />
@@ -62,6 +67,7 @@ const MyProfile = () => {
           </div>
           <ButtonWhite
             onClick={changeLanguageUser}
+            disabled={disabledBtn}
             icon={<HiPencil style={settingsStyles.btnIcon} />}
             text="Edit"
           />

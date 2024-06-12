@@ -10,6 +10,7 @@ import { emojiPensive, еmojiDisappointed } from '../../../../constants/images';
 const AccountActions = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [logOutModal, setlogOutModal] = useState(false);
+  const [disabledBtn, setDisabledBtn] = useState(false);
 
   const userInfoString = localStorage.getItem('user');
   let userInfo;
@@ -20,10 +21,12 @@ const AccountActions = () => {
 
   const deleteAcount = () => {
     setDeleteModal(!deleteModal);
+    setDisabledBtn(!disabledBtn);
   };
 
   const logOutFromAcount = () => {
     setlogOutModal(!logOutModal);
+    setDisabledBtn(!disabledBtn);
   };
 
   return (
@@ -42,6 +45,7 @@ const AccountActions = () => {
           </div>
           <ButtonWhite
             onClick={deleteAcount}
+            disabled={disabledBtn}
             icon={<RiDeleteBin6Fill style={settingsStyles.btnIcon} />}
             text="Delete"
           />
@@ -55,6 +59,7 @@ const AccountActions = () => {
           </div>
           <ButtonWhite
             onClick={logOutFromAcount}
+            disabled={disabledBtn}
             icon={<IoLogOut style={settingsStyles.btnIcon} />}
             text="Edit"
           />

@@ -22,7 +22,7 @@ interface IForm {
 const ChangeName: FC<IChangeName> = ({ title, emoji, closeModal, text }) => {
   const { email, token } = useSelector((state: RootState) => state.user);
 
-  const url = `${process.env.REACT_APP_API_URL}api/v1/user/update/ptofile`;
+  const url = `${process.env.REACT_APP_API_URL}api/v1/user/update/profile`;
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
@@ -42,17 +42,21 @@ const ChangeName: FC<IChangeName> = ({ title, emoji, closeModal, text }) => {
       );
 
       if (response.status === 200) {
-        console.log(response.statusText, 'Good');
-        console.log(response.data.message);
-
-        dispatch(setUser({ name: data.name, email: email, token: token }));
+        dispatch(setUser({ name: data.name, email, token }));
         closeModal();
         reset();
       } else {
         console.error('Failed to update name:', response.statusText);
       }
-    } catch (error) {
-      console.error('Error updating name:', error);
+    } catch (error: any) {
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+      } else if (error.request) {
+        console.error('Error request:', error.request);
+      } else {
+        console.error('Error message:', error.message);
+      }
+      console.error('Error config:', error.config);
     }
   };
 

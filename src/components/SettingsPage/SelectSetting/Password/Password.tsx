@@ -29,6 +29,7 @@ const Password: FC<IPassword> = ({ password }) => {
           </div>
           <ButtonWhite
             onClick={() => {}}
+            disabled={false}
             icon={<HiPencil style={settingsStyles.btnIcon} />}
             text="Edit"
           />

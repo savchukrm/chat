@@ -2,13 +2,14 @@ import { FC, ReactNode } from 'react';
 
 interface IButtonWhite {
   onClick: () => void;
+  disabled: boolean;
   icon: ReactNode;
   text: string;
 }
 
-const ButtonWhite: FC<IButtonWhite> = ({ onClick, icon, text }) => {
+const ButtonWhite: FC<IButtonWhite> = ({ onClick, disabled, icon, text }) => {
   return (
-    <button style={styles.btnWhite} onClick={onClick}>
+    <button style={styles.btnWhite} onClick={onClick} disabled={disabled}>
       <div style={styles.btnIcon}>{icon}</div>
       <p style={styles.btnText}>{text}</p>
     </button>
