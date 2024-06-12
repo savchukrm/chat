@@ -7,6 +7,12 @@ import { RootState } from '../redux/store';
 import { GreetModals } from '../components';
 
 import { background, logo } from '../constants/images';
+import {
+  AboutChatSection,
+  AboutInterestsSection,
+  AboutLanguageSection,
+  AboutRoles,
+} from '../components/LandingPage';
 
 const Greeting = () => {
   const navigate = useNavigate();
@@ -72,6 +78,11 @@ const Greeting = () => {
         forgotPasswordModal={forgotPasswordModal}
         setForgotPasswordModal={setForgotPasswordModal}
       />
+
+      <AboutChatSection />
+      <AboutInterestsSection />
+      <AboutLanguageSection />
+      <AboutRoles />
     </>
   );
 };

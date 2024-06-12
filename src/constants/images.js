@@ -24,6 +24,9 @@ import еmojiDisappointed from '../assets/images/еmojiDisappointed.svg';
 import emojiPensive from '../assets/images/emojiPensive.svg';
 import emojiSlightlySmilingFace from '../assets/images/emojiSlightlySmilingFace.svg';
 import emojiStuckOutTongue from '../assets/images/emojiStuckOutTongue.svg';
+import illustration from '../assets/images/illustration.svg';
+import illystrationTwo from '../assets/images/illystrationTwo.svg';
+import illustrationThree from '../assets/images/illustrationThree.svg';
 
 export {
   background,
@@ -52,4 +55,7 @@ export {
   emojiPensive,
   emojiSlightlySmilingFace,
   emojiStuckOutTongue,
+  illustration,
+  illystrationTwo,
+  illustrationThree,
 };
