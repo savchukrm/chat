@@ -1,4 +1,4 @@
-import Subtitle from '../Subtitle/Subtitle';
+import { Subtitle } from '../Subtitle/Subtitle';
 import landingStyles from '../landingStyles';
 
 const AboutInterestsSection = () => {

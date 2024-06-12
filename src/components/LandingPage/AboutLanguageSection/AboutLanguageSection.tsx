@@ -1,6 +1,10 @@
+import { FC } from 'react';
 import landingStyles from '../landingStyles';
 
-const AboutLanguageSection = () => {
+interface ILanguageSection {
+  openSighUp: () => void;
+}
+const AboutLanguageSection: FC<ILanguageSection> = ({ openSighUp }) => {
   return (
     <section style={landingStyles.aboutLanguage}>
       <div style={landingStyles.container}>
@@ -15,7 +19,7 @@ const AboutLanguageSection = () => {
               :) Meanwhile, our developers will add your language.
             </p>
           </div>
-          <button style={landingStyles.aboutLanguageBtn}>
+          <button style={landingStyles.aboutLanguageBtn} onClick={openSighUp}>
             Create free account
           </button>
         </div>

@@ -20,4 +20,4 @@ const Subtitle: FC<ISubtitle> = ({ titleAccent, title, text }) => {
   );
 };
 
-export default Subtitle;
+export { Subtitle };

@@ -12,6 +12,7 @@ import {
   AboutInterestsSection,
   AboutLanguageSection,
   AboutRoles,
+  Footer,
 } from '../components/LandingPage';
 
 const Greeting = () => {
@@ -81,8 +82,9 @@ const Greeting = () => {
 
       <AboutChatSection />
       <AboutInterestsSection />
-      <AboutLanguageSection />
+      <AboutLanguageSection openSighUp={openSighModal} />
       <AboutRoles />
+      <Footer />
     </>
   );
 };
